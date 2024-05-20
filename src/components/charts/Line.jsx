@@ -1,19 +1,39 @@
 
-import { LineChart } from '@mui/x-charts'
-import React from 'react'
+import React from 'react';
 
-const Line = () => {
+import { LineChart, markElementClasses, lineElementClasses } from '@mui/x-charts';
+import { styled } from '@mui/material';
+
+const Line = ({xAxisData, seriesData, labelChart, colorChart, widthChart, heightChart}) => {
+
+  const CustomChart = styled(LineChart)( () => ({
+    [`& .${lineElementClasses.root}`]: {
+      stroke: '#8884d8',
+      strokeWidth: 2,
+    },
+    [`& .${markElementClasses.root}`]: {
+        stroke: '#8884d8',
+      scale: '0.6',
+      fill: '#fff',
+      strokeWidth: 0,
+    },
+  }));
   return (
    
-    <LineChart
-  xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
-  series={[
-    {
-      data: [2, 5.5, 2, 8.5, 1.5, 5],
-    },
-  ]}
-  width={500}
-  height={300}
+    <CustomChart
+   
+    xAxis={[{ data: {xAxisData}, scaleType:"point" }]}
+    series={[
+      {
+        data: {seriesData},
+        label:{labelChart},
+        color:{colorChart}
+      },
+    ]}
+
+
+    width={widthChart}
+    height={heightChart}
 />
   )
 }

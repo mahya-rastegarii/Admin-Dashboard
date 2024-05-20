@@ -19,4 +19,4 @@ const Bars = () => {
   )
 }
 
-export default Bars
+export default Bars;
