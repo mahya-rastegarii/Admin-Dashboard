@@ -1,10 +1,10 @@
 
 import React from 'react';
 
-import { LineChart, markElementClasses, lineElementClasses } from '@mui/x-charts';
 import { styled } from '@mui/material';
+import { LineChart, markElementClasses, lineElementClasses } from '@mui/x-charts';
 
-const Line = ({xAxisData, seriesData, labelChart, colorChart, widthChart, heightChart}) => {
+const Line = ({numberOfUser, monthChart, labelChart, colorChart, widthChart, heightChart}) => {
 
   const CustomChart = styled(LineChart)( () => ({
     [`& .${lineElementClasses.root}`]: {
@@ -22,12 +22,12 @@ const Line = ({xAxisData, seriesData, labelChart, colorChart, widthChart, height
    
     <CustomChart
    
-    xAxis={[{ data: {xAxisData}, scaleType:"point" }]}
+    xAxis={[{ data: monthChart, scaleType:"point" }]}
     series={[
       {
-        data: {seriesData},
-        label:{labelChart},
-        color:{colorChart}
+        data: numberOfUser,
+        label:labelChart,
+        color:colorChart
       },
     ]}
 
@@ -38,4 +38,4 @@ const Line = ({xAxisData, seriesData, labelChart, colorChart, widthChart, height
   )
 }
 
-export default Line
+export default Line;
