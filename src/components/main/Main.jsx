@@ -47,7 +47,7 @@ const handleDrawer = () => {
     setDarkMode={setDarkMode}
   />
   <Sidebar drawerWidth={drawerWidth} open={open} />
-  <Box sx={{ my: "160px", mx:"auto", width:"100%", px:"10px" }}>
+  <Box sx={{ my:14, mx:"auto", width:"100%" }}>
   <Outlet/>
   </Box>
   </Box>

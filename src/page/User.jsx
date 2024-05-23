@@ -21,6 +21,7 @@ import {
 } from "@mui/material";
 import  React, { useState  } from "react";
 import SearchBox from "../components/search/SearchBox";
+import HeaderTable from "../components/table/HeaderTable"
 
 export default function User() {
 
@@ -40,13 +41,13 @@ export default function User() {
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.grey[400],
+      // backgroundColor: theme.palette.grey[400],
       color: theme.palette.common.black,
       
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
-    
+     
     },
   }));
   const headCells = [
@@ -77,7 +78,13 @@ export default function User() {
     },
     {
       id: 5,
-      label: "number Of Courses",
+      label: "Registery Date",
+      align: "center",
+      minWidth: 10,
+    },
+    {
+      id: 6,
+      label: "Courses",
       align: "center",
       minWidth: 10,
     },
@@ -92,6 +99,7 @@ export default function User() {
       email: "mahyarastegarii@gmail.com",
       phone: "093022222033",
       numberOfCourses: 4,
+      date:"2024/3/2"
     },
     {
       id: 2,
@@ -100,7 +108,8 @@ export default function User() {
       // lastName: "rastegari",
       email: "mahyarastegarii@gmail.com",
       phone: "093022222033",
-      numberOfCourses: 4,
+      numberOfCourses: 5,
+      date:"2024/3/2"
     },
     {
       id: 3,
@@ -110,6 +119,7 @@ export default function User() {
       email: "mahyarastegarii@gmail.com",
       phone: "093022222033",
       numberOfCourses: 4,
+      date:"2024/3/2"
     },
     {
       id: 4,
@@ -119,6 +129,7 @@ export default function User() {
       email: "mahyarastegarii@gmail.com",
       phone: "093022222033",
       numberOfCourses: 4,
+      date:"2024/3/2"
     },
     {
       id: 5,
@@ -128,6 +139,7 @@ export default function User() {
       email: "mahyarastegarii@gmail.com",
       phone: "093022222033",
       numberOfCourses: 5,
+      date:"2024/3/2"
     },
     {
       id: 6,
@@ -137,6 +149,7 @@ export default function User() {
       email: "mahyarastegarii@gmail.com",
       phone: "093022222033",
       numberOfCourses: 8,
+      date:"2024/3/2"
     },
     {
       id: 7,
@@ -146,6 +159,7 @@ export default function User() {
       email: "mahyarastegarii@gmail.com",
       phone: "093022222033",
       numberOfCourses: 4,
+      date:"2024/3/2"
     },
     {
       id: 8,
@@ -155,6 +169,7 @@ export default function User() {
       email: "mahyarastegarii@gmail.com",
       phone: "093022222033",
       numberOfCourses: 4,
+      date:"2024/3/2"
     },
     {
       id: 9,
@@ -164,6 +179,7 @@ export default function User() {
       email: "mahyarastegarii@gmail.com",
       phone: "093022222033",
       numberOfCourses: 4,
+      date:"2024/3/2"
     },
     {
       id: 10,
@@ -173,6 +189,7 @@ export default function User() {
       email: "mahyarastegarii@gmail.com",
       phone: "093022222033",
       numberOfCourses: 4,
+      date:"2024/3/2"
     },
     {
       id: 11,
@@ -182,6 +199,7 @@ export default function User() {
       email: "mahyarastegarii@gmail.com",
       phone: "093022222033",
       numberOfCourses: 4,
+      date:"2024/3/2"
     },
     {
       id: 12,
@@ -191,6 +209,7 @@ export default function User() {
       email: "mahyarastegarii@gmail.com",
       phone: "093022222033",
       numberOfCourses: 4,
+      date:"2024/3/2"
     },
     {
       id: 13,
@@ -200,6 +219,7 @@ export default function User() {
       email: "mahyarastegarii@gmail.com",
       phone: "093022222033",
       numberOfCourses: 4,
+      date:"2024/3/2"
     },
     {
       id: 14,
@@ -209,6 +229,7 @@ export default function User() {
       email: "mahyarastegarii@gmail.com",
       phone: "093022222033",
       numberOfCourses: 4,
+      date:"2024/3/2"
     },
     {
       id: 15,
@@ -218,6 +239,7 @@ export default function User() {
       email: "mahyarastegarii@gmail.com",
       phone: "093022222033",
       numberOfCourses: 4,
+      date:"2024/3/2"
     },
   ];
 
@@ -231,16 +253,26 @@ export default function User() {
 
   return (
     <Box component={Paper} elevation={2}>
-      <Stack direction="row" spacing={2} sx={{ padding: 2}} >
+      {/* <Stack direction="row" spacing={1} sx={{ padding: 2}} >
       <IconButton aria-label="Sort">
-      <Sort/>
+      <FilterList  sx={{ fontSize:27}} />
+        <Typography variant="body2" component="span" color="#000">
+          filter
+        </Typography>
   
       </IconButton>
        
-    <SearchBox/>
-    
+      <IconButton aria-label="Sort">
+      <Sort  sx={{ fontSize:27}} />
+        <Typography variant="body2" component="span" color="#000">
+          sort
+        </Typography>
+  
+      </IconButton>
       
-      </Stack>
+    <SearchBox/>
+      </Stack> */}
+     <HeaderTable/>
     <TableContainer  sx={{width: "100%"}}>
       <Table >
         <TableHead>
@@ -267,7 +299,7 @@ export default function User() {
                 {headCell.label}
                 </Typography>
               } */}
-            <Typography variant="body1" component="h2">
+            <Typography variant="body1" component="h2" sx={{ fontWeight:"bold" }}>
                 {headCell.label}
                 </Typography>
                 
@@ -302,7 +334,14 @@ export default function User() {
                
 
                 <Typography variant="body2">
-                {item.numberOfCourses}  course
+               {item.date}
+                </Typography> 
+                </TableCell>
+              <TableCell align="center">
+               
+
+                <Typography variant="body2">
+                {item.numberOfCourses}  
                 </Typography> 
                 </TableCell>
             </TableRow>

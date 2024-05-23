@@ -1,7 +1,8 @@
 
 import React from 'react'
-import { Avatar, Chip, Rating, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Avatar, Box, Chip, Rating, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import jsPic from "../../assets/img/images.png"
+import { StarRate } from '@mui/icons-material';
 
 const NewCourse = () => {
 
@@ -9,7 +10,7 @@ const NewCourse = () => {
         {
            id: 1,
            label: "Title",
-           align: "start",
+           align: "left",
           //  minWidth: 20,
          },
         {
@@ -26,7 +27,7 @@ const NewCourse = () => {
          },
         {
            id: 4,
-           label: "Rating",
+           label: "Favour",
            align: "center",
           //  minWidth: 20,
          },
@@ -39,7 +40,7 @@ const NewCourse = () => {
         title:"javascript",
         date: "2024/3/1",
         status:"Completed",
-        rating: 4,
+        rating: "4.9"
       },
       {
         id: 2,
@@ -47,7 +48,7 @@ const NewCourse = () => {
         title:"javascript",
         date: "2024/3/1",
         status:"Completed",
-        rating: 4,
+        rating: "5.0",
       },
       {
         id: 3,
@@ -55,7 +56,7 @@ const NewCourse = () => {
         title:"javascript",
         date: "2024/3/1",
         status:"Completed",
-        rating: 4,
+        rating: "4.3",
       },
     
       {
@@ -64,7 +65,7 @@ const NewCourse = () => {
         title:"javascript",
         date: "2024/3/1",
         status:"Completed",
-        rating: 4,
+        rating: "4.6",
       },
     ];
 
@@ -117,8 +118,14 @@ const NewCourse = () => {
                 <Chip  label= {row.status} color="primary" variant="outlined" />
               </TableCell>
               <TableCell  align="center">
-                
-                <Rating name="half-rating-read" defaultValue={row.rating} precision={0.5} readOnly size="small" />
+                <Box sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+
+                <StarRate  sx={{color:"#ffc400", fontSize:26}} /> 
+                <Typography  variant="body2" >
+                {row.rating}
+                </Typography>
+                </Box>
+                {/* <Rating name="half-rating-read" defaultValue={row.rating} precision={0.5} readOnly size="small" /> */}
               </TableCell>
             </TableRow>
           ))

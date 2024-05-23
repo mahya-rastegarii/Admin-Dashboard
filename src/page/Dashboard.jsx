@@ -1,18 +1,29 @@
 
-import React from 'react'
-import { Avatar, Box, Chip, Container, Divider, List, ListItem, ListItemAvatar, ListItemText, Paper, Rating, Stack, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import {PeopleAlt,MonetizationOn, School, Person, People} from '@mui/icons-material';
-import { red, green } from '@mui/material/colors';
+import React from 'react';
+import { Favorite, MonetizationOn, People, PeopleAlt, School } from '@mui/icons-material';
+import { Box, Paper, Stack, styled, Typography } from '@mui/material';
 import Counter from '../components/Counter';
 
 import DashboardBox from '../components/box/DashboardBox';
-import NewUser from '../components/user/NewUser';
-import NewCourse from '../components/course/NewCourse';
 import Line from '../components/charts/Line';
+import NewCourse from '../components/course/NewCourse';
+import NewUser from '../components/user/NewUser';
+import { LineChart, lineElementClasses, markElementClasses } from '@mui/x-charts';
 
  const Dashboard = () => {
 
-
+  const CustomChart = styled(LineChart)( () => ({
+    [`& .${lineElementClasses.root}`]: {
+      stroke: '#8884d8',
+      strokeWidth: 2,
+    },
+    [`& .${markElementClasses.root}`]: {
+        stroke: '#8884d8',
+      scale: '0.6',
+      fill: '#fff',
+      strokeWidth: 0,
+    },
+  }));
  
 
     const BoxContent = [
@@ -33,11 +44,20 @@ import Line from '../components/charts/Line';
         },
         {
             id: 3,
-            title:"میزان فروش",
-            count: 350,
+            title:" رضایت کاربران",
+            count: 70,
+            percent: "%",
             num:10,
-            icon: <MonetizationOn sx={{ fontSize: 50 }}/>
+            icon: <Favorite sx={{ fontSize: 50 }}/>
         },
+
+        // {
+        //     id: 4,
+        //     title:"میزان فروش",
+        //     count: 350,
+        //     num:10,
+        //     icon: <MonetizationOn sx={{ fontSize: 50 }}/>
+        // }
         
     ];
 
@@ -47,14 +67,14 @@ import Line from '../components/charts/Line';
     const monthChart = ["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور"];
 
 
-    const chartData = [{
-      xAxisData: monthChart,
-      seriesData: numberOfUser,
+    const chartData = {
+      monthChart,
+      numberOfUser,
       labelChart:"number Of User added",
       colorChart:'#8884d8',
       widthChart:1100,
       heightChart:400
-    }]
+    }
    
 
 
@@ -64,6 +84,7 @@ import Line from '../components/charts/Line';
        title: "New user",
        data: <NewUser/>,
        width:"30%",
+       icon: <People />
     },
 
     {
@@ -71,7 +92,7 @@ import Line from '../components/charts/Line';
        title: "New Course",
        data: <NewCourse/>,
        width:"70%",
-
+       icon: <School />
     },
 ]
 
@@ -80,7 +101,7 @@ import Line from '../components/charts/Line';
   return (  
      
     
-      <Box>
+      <Box >
            <Box mx="auto"  display="grid" gap={2}  gridTemplateColumns="repeat(3, 1fr)"   maxWidth="md">
       {
         BoxContent.map((item) => (
@@ -92,6 +113,7 @@ import Line from '../components/charts/Line';
      
    </Box>
 <Box mx="auto" display="flex" component={Paper}   square={false} elevation={3}  sx={{borderRadius:2}} mt={6}>
+
  <Line {...chartData}/>
 </Box>
 
@@ -103,11 +125,11 @@ import Line from '../components/charts/Line';
   {
     componentData.map((item) => (
 
-      <Box width={item.width} display="flex"   alignItems="flex-start" flexDirection="column"  pt={2}  component={Paper} square={false} elevation={3} sx={{borderRadius:2}} key={item.id}>
+      <Box width={item.width} display="flex" alignItems="flex-start" flexDirection="column"  pt={2}  component={Paper} square={false} elevation={3} sx={{borderRadius:2}} key={item.id}>
 <Stack display="flex" alignItems="center" direction='row' 
   spacing={1} sx={{ paddingX:2, marginBottom:2}} >
 
-<People />
+{item.icon}
   <Typography  variant='h6'  component="span" sx={{fontWeight:"bold" }}>
    {item.title}
   </Typography>
@@ -118,19 +140,10 @@ import Line from '../components/charts/Line';
     ))
   }
 
-{/* <Box width="70%" display="flex"  alignItems="flex-start" flexDirection="column"  pt={2}  component={Paper} square={false} elevation={3} sx={{borderRadius:2}} >
-<Stack display="flex" alignItems="center" direction='row' 
-  spacing={1} sx={{ paddingX:2, marginBottom:2}} >
-
-<School />
-  <Typography  variant='h6'  component="span">
-    New Course
-  </Typography>
-</Stack>
 
 
 
-</Box> */}
+
 </Stack>
    </Box>
    

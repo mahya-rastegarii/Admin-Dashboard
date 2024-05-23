@@ -10,7 +10,7 @@ const DashboardBox = ({item, children}) => {
             square={false}
             elevation={3}
             //  gridColumn=" span 4"
-            sx={{ padding:3,  borderRadius:2}}
+            sx={{ padding:2,  borderRadius:2}}
             key={item.id}
             >
              {/* <Box  sx={{ width:"40%", display:" flex", justifyContent:"space-around"}}> */}
@@ -23,16 +23,23 @@ const DashboardBox = ({item, children}) => {
            
           
                 {/* </Box>    */}
-          
+          <Box display="flex" justifyContent="center" alignItems="center">
          <Typography  variant="h4"  mt={2} component="div"  gutterBottom>
          
       {children}
-        
+   
        </Typography>
-    
+       {
+        item.percent ?
+         <Typography  variant="body1"  mt={2} component="span"  gutterBottom>
+      {item.percent}
+       </Typography> : 
+       null
+       }
+    </Box>
        <Typography  variant="body1" mt={2}  component="div" gutterBottom>
             {item.title}
-        
+      
           
            
           </Typography>

@@ -1,4 +1,4 @@
-import { Add, FilterList } from "@mui/icons-material";
+import { Add, FilterList, Sort, StarRate } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -8,20 +8,51 @@ import {
   Paper,
   Rating,
   Stack,
+  styled,
   Table,
   TableBody,
   TableCell,
+  tableCellClasses,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import JsPic from "../assets/img/images.png";
 import SearchBox from "../components/search/SearchBox";
+import HeaderTable from "../components/table/HeaderTable";
 
 const Course = () => {
+
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      // backgroundColor: theme.palette.grey[400],
+      color: theme.palette.common.black,
+      
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    
+    },
+  }));
+
   const rowCourse = [
     {
       title: " Js",
@@ -31,7 +62,7 @@ const Course = () => {
       status: "completed",
       time: 2,
       lastUpdate: "2024/3/1",
-      rating: 4.5,
+      rating: "4.5",
     },
     {
       title: " Js",
@@ -41,7 +72,7 @@ const Course = () => {
       status: "completed",
       time: 2,
       lastUpdate: "2024/3/1",
-      rating: 4.5,
+      rating: "4.5",
     },
     {
       title: " Js",
@@ -51,7 +82,7 @@ const Course = () => {
       status: "completed",
       time: 2,
       lastUpdate: "2024/3/1",
-      rating: 4.5,
+      rating: "4.5",
     },
     {
       title: " Js",
@@ -61,7 +92,7 @@ const Course = () => {
       status: "completed",
       time: 2,
       lastUpdate: "2024/3/1",
-      rating: 4.5,
+      rating: "4.5",
     },
     {
       title: " Js",
@@ -71,7 +102,7 @@ const Course = () => {
       status: "completed",
       time: 2,
       lastUpdate: "2024/3/1",
-      rating: 4.5,
+      rating: "4.5",
     },
     {
       title: " Js",
@@ -81,7 +112,7 @@ const Course = () => {
       status: "completed",
       time: 2,
       lastUpdate: "2024/3/1",
-      rating: 4.5,
+      rating: "4.5",
     },
     {
       title: " Js",
@@ -91,9 +122,13 @@ const Course = () => {
       status: "completed",
       time: 2,
       lastUpdate: "2024/3/1",
-      rating: 4.5,
+      rating: "4.5",
     },
   ];
+
+  const rowTable = rowCourse.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+
+
   const headCells = [
     {
       id: 1,
@@ -121,7 +156,7 @@ const Course = () => {
     },
     {
       id: 5,
-      label: "Time",
+      label: "Time (Hour)",
       align: "center",
       //  minWidth: 20,
     },
@@ -133,7 +168,7 @@ const Course = () => {
     },
     {
       id: 6,
-      label: "Rating",
+      label: "Favour",
       align: "center",
       //  minWidth: 20,
     },
@@ -141,86 +176,128 @@ const Course = () => {
 
   return (
     <Box component={Paper} elevation={2}>
-      <Box display="flex" justifyContent="flex-start" gap={4}  sx={{ padding: 2, marginBottom: 5}} >
-        <Stack direction="row" spacing={2}>
-          <IconButton aria-label="Sort">
-            <FilterList />
-          </IconButton>
+      {/* <Box display="flex" justifyContent="flex-start" gap={4}  sx={{ padding: 2, marginBottom:  3}} >
+        <Stack direction="row" spacing={1}>
+        <IconButton aria-label="Filter">
+      <FilterList  sx={{ fontSize:27}} />
+        <Typography variant="body2" component="span" color="#000">
+          filter
+        </Typography>
+  
+      </IconButton>
+        <IconButton aria-label="Sort">
+      <Sort  sx={{ fontSize:27}} />
+        <Typography variant="body2" component="span" color="#000">
+          sort
+        </Typography>
+  
+      </IconButton>
 
-          <SearchBox />
         </Stack>
+          <SearchBox /> */}
+           <HeaderTable>
+
         <Button
           variant="contained"
           startIcon={<Add />}
           sx={{ borderRadius: 3 }}
           component={Link}
           to="/course/addCourse"
-          color="error"
+          color="secondary"
         >
           {" "}
           Add Course
         </Button>
-      </Box>
+           </HeaderTable>
+      {/* </Box> */}
       {/* <Box display="grid"  gap={10} gridTemplateColumns="repeat(3, 1fr)"> */}
-
+       
       <TableContainer sx={{ width:"100%"}}>
         <Table sx={{ padding: 0 }}>
-          <TableHead sx={{ bgColor: "#212121" }}>
+          <TableHead >
             <TableRow>
               {headCells.map((headCell) => (
-                <TableCell key={headCell.id} align={headCell.align}>
-                  <Typography variant="h6" sx={{ fontWeight:'bold'}} component="span">
+                <StyledTableCell key={headCell.id} align={headCell.align}>
+                  <Typography variant="body1" sx={{ fontWeight:'bold'}} component="span">
                     {headCell.label}
                   </Typography>
-                </TableCell>
+                </StyledTableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rowCourse.map((row) => (
-              <TableRow key={row.title}>
-                <TableCell component="th" scope="row">
+          {rowTable.map((item) => (
+              <TableRow key={item.title}>
+                <TableCell >
                   <Stack
                     direction="row"
                     spacing={5}
+                  
                     display="flex"
                     alignItems="center "
                   >
-                    <Avatar
-                      sx={{ width: 45 }}
-                      src={row.pic}
+                    <img src={item.pic} width="25%"/>
+                    {/* <Avatar
+                      // sx={{ width:"35%"}}
+                      src={item.pic}
                       variant="square"
-                    ></Avatar>
-                    <Typography variant="body2">{row.title}</Typography>
+                    ></Avatar> */}
+                    <Typography variant="h6">{item.title}</Typography>
                   </Stack>
                 </TableCell>
                 <TableCell align="center">
-                  <Typography variant="body2">{row.teacher}</Typography>
+                  <Typography variant="body2">{item.teacher}</Typography>
                 </TableCell>
                 <TableCell align="center">
-                  <Typography variant="body2">{row.student}</Typography>
+                  <Typography variant="body2">{item.student}</Typography>
                 </TableCell>
                 <TableCell align="center">
-                  <Chip label={row.status} color="primary" variant="outlined" />
+                  <Chip label={item.status} color="primary" variant="outlined" />
                 </TableCell>
                 <TableCell align="center">
-                  <Typography variant="body2">{row.time} Hour</Typography>
+              
+                  <Typography variant="body2">{item.time}</Typography>
+
+
+               
                 </TableCell>
                 <TableCell align="center">
-                  <Typography variant="body2">{row.lastUpdate}</Typography>
+                  <Typography variant="body2">{item.lastUpdate}</Typography>
                 </TableCell>
                 <TableCell align="center">
-                  <Rating
+
+                  {/* <Rating
                     name="half-rating-read"
-                    defaultValue={row.rating}
+                    defaultValue={item.rating}
                     precision={0.5}
                     readOnly
                     size="small"
-                  />
+                  /> */}
+                          <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
+          
+          <StarRate  sx={{color:"#ffc400", fontSize:26}} /> 
+          <Typography  variant="body2" >
+          {item.rating}
+          </Typography>
+          </Stack>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
+          <TableFooter >
+          <TableRow >
+          <TablePagination
+        rowsPerPageOptions={[5, 10, 15]}
+        // colSpan={3}
+      
+        count={rowCourse.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+          </TableRow>
+        </TableFooter>
         </Table>
       </TableContainer>
       {/* {Data.map((item) => (
