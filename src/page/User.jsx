@@ -78,7 +78,7 @@ export default function User() {
     },
     {
       id: 5,
-      label: "Registery Date",
+      label: "date",
       align: "center",
       minWidth: 10,
     },
@@ -288,7 +288,7 @@ export default function User() {
 
               {/* {
                 headCell.label === "name" ?  
-                <TableSortLabel   > 
+                <TableSortLabel  > 
              <Typography variant="body1" component="h2">
 
                 {headCell.label}
@@ -299,10 +299,19 @@ export default function User() {
                 {headCell.label}
                 </Typography>
               } */}
+
+{
+                headCell.label === "name" ||  headCell.label === "date" ?  
+                <TableSortLabel active > 
+             <Typography variant="body1" component="h2" sx={{ fontWeight:"bold"}} >
+
+                {headCell.label}
+                </Typography>
+                </TableSortLabel> :
             <Typography variant="body1" component="h2" sx={{ fontWeight:"bold" }}>
                 {headCell.label}
                 </Typography>
-                
+      }
               </StyledTableCell>
             ))}
           </TableRow>

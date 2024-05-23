@@ -12,7 +12,7 @@ const HeaderTable = ({children}) => {
     <Box  display="flex" justifyContent="flex-start" gap={4}  sx={{ padding: 2, marginBottom:  2}} >
     <Stack direction="row" spacing={1}>
    <FilterBox/>
-   <SortBox/>
+   {/* <SortBox/> */}
 
     </Stack>
       <SearchBox />

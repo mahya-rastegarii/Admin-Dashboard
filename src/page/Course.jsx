@@ -1,12 +1,10 @@
-import { Add, FilterList, Sort, StarRate } from "@mui/icons-material";
+import { Add, Delete, StarRate } from "@mui/icons-material";
 import {
-  Avatar,
   Box,
   Button,
+  Checkbox,
   Chip,
-  IconButton,
   Paper,
-  Rating,
   Stack,
   styled,
   Table,
@@ -18,17 +16,15 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TableSortLabel,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import JsPic from "../assets/img/images.png";
-import SearchBox from "../components/search/SearchBox";
 import HeaderTable from "../components/table/HeaderTable";
+import { useModalContext } from "../context/modal/ModalContext";
 
 const Course = () => {
-
-
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -45,11 +41,9 @@ const Course = () => {
     [`&.${tableCellClasses.head}`]: {
       // backgroundColor: theme.palette.grey[400],
       color: theme.palette.common.black,
-      
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
-    
     },
   }));
 
@@ -126,8 +120,10 @@ const Course = () => {
     },
   ];
 
-  const rowTable = rowCourse.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-
+  const rowTable = rowCourse.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
 
   const headCells = [
     {
@@ -172,71 +168,90 @@ const Course = () => {
       align: "center",
       //  minWidth: 20,
     },
+    {
+      id: 7,
+      label: "Option",
+      align: "center",
+      //  minWidth: 20,
+    },
   ];
 
+  const { setOpen } = useModalContext();
+  // const handleOpen = () => setOpen(true);
   return (
     <Box component={Paper} elevation={2}>
-      {/* <Box display="flex" justifyContent="flex-start" gap={4}  sx={{ padding: 2, marginBottom:  3}} >
-        <Stack direction="row" spacing={1}>
-        <IconButton aria-label="Filter">
-      <FilterList  sx={{ fontSize:27}} />
-        <Typography variant="body2" component="span" color="#000">
-          filter
-        </Typography>
-  
-      </IconButton>
-        <IconButton aria-label="Sort">
-      <Sort  sx={{ fontSize:27}} />
-        <Typography variant="body2" component="span" color="#000">
-          sort
-        </Typography>
-  
-      </IconButton>
-
-        </Stack>
-          <SearchBox /> */}
-           <HeaderTable>
-
+      <HeaderTable>
         <Button
           variant="contained"
           startIcon={<Add />}
+          onClick={() => setOpen(true)}
           sx={{ borderRadius: 3 }}
-          component={Link}
-          to="/course/addCourse"
-          color="secondary"
+          color="success"
         >
-          {" "}
-          Add Course
+          Add
         </Button>
-           </HeaderTable>
-      {/* </Box> */}
-      {/* <Box display="grid"  gap={10} gridTemplateColumns="repeat(3, 1fr)"> */}
-       
-      <TableContainer sx={{ width:"100%"}}>
+        <Button
+          variant="contained"
+          startIcon={<Delete/>}
+          sx={{ borderRadius: 3 }}
+          disabled
+          color="error"
+        >
+          Delete
+        </Button>
+      </HeaderTable>
+
+      <TableContainer sx={{ width: "100%" }}>
         <Table sx={{ padding: 0 }}>
-          <TableHead >
+          <TableHead>
             <TableRow>
+               <TableCell padding="checkbox">
+          <Checkbox />
+        </TableCell>
+
               {headCells.map((headCell) => (
                 <StyledTableCell key={headCell.id} align={headCell.align}>
-                  <Typography variant="body1" sx={{ fontWeight:'bold'}} component="span">
+                  {headCell.label === "Title" ||
+                  headCell.label === "Last Update" ? (
+                    <TableSortLabel>
+                      <Typography
+                        variant="body1"
+                        component="h2"
+                        sx={{ fontWeight: "bold" }}
+                      >
+                        {headCell.label}
+                      </Typography>
+                    </TableSortLabel>
+                  ) : (
+                    <Typography
+                      variant="body1"
+                      component="h2"
+                      sx={{ fontWeight: "bold" }}
+                    >
+                      {headCell.label}
+                    </Typography>
+                  )}
+                  {/* <Typography variant="body1" sx={{ fontWeight:'bold'}} component="span">
                     {headCell.label}
-                  </Typography>
+                  </Typography> */}
                 </StyledTableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-          {rowTable.map((item) => (
+            {rowTable.map((item) => (
               <TableRow key={item.title}>
-                <TableCell >
+                <TableCell padding="checkbox">
+                      <Checkbox/>
+                    </TableCell>
+                <TableCell>
                   <Stack
                     direction="row"
                     spacing={5}
-                  
                     display="flex"
                     alignItems="center "
                   >
-                    <img src={item.pic} width="25%"/>
+                    <img src={item.pic} width="25%" />
                     {/* <Avatar
                       // sx={{ width:"35%"}}
                       src={item.pic}
@@ -252,20 +267,19 @@ const Course = () => {
                   <Typography variant="body2">{item.student}</Typography>
                 </TableCell>
                 <TableCell align="center">
-                  <Chip label={item.status} color="primary" variant="outlined" />
+                  <Chip
+                    label={item.status}
+                    color="primary"
+                    variant="outlined"
+                  />
                 </TableCell>
                 <TableCell align="center">
-              
                   <Typography variant="body2">{item.time}</Typography>
-
-
-               
                 </TableCell>
                 <TableCell align="center">
                   <Typography variant="body2">{item.lastUpdate}</Typography>
                 </TableCell>
                 <TableCell align="center">
-
                   {/* <Rating
                     name="half-rating-read"
                     defaultValue={item.rating}
@@ -273,31 +287,41 @@ const Course = () => {
                     readOnly
                     size="small"
                   /> */}
-                          <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
-          
-          <StarRate  sx={{color:"#ffc400", fontSize:26}} /> 
-          <Typography  variant="body2" >
-          {item.rating}
-          </Typography>
-          </Stack>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <StarRate sx={{ color: "#ffc400", fontSize: 26 }} />
+                    <Typography variant="body2">{item.rating}</Typography>
+                  </Stack>
+                </TableCell>
+                <TableCell align="center">
+                  <Button
+                   variant="contained"
+                   onClick={() => setOpen(true)}
+                  color="secondary"
+                  >
+                     edit </Button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
-          <TableFooter >
-          <TableRow >
-          <TablePagination
-        rowsPerPageOptions={[5, 10, 15]}
-        // colSpan={3}
-      
-        count={rowCourse.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-          </TableRow>
-        </TableFooter>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 15]}
+                // colSpan={3}
+
+                count={rowCourse.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </TableRow>
+          </TableFooter>
         </Table>
       </TableContainer>
       {/* {Data.map((item) => (

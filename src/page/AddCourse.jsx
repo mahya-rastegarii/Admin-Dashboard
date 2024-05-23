@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { CloudUpload, Person, PersonOutline, AccessTimeOutlined, InfoOutlined, SchoolOutlined } from '@mui/icons-material'
 import { Box, styled, TextField, Typography, Stack, MenuItem, Modal, Button, Slider } from '@mui/material'
+import { useModalContext } from '../context/modal/ModalContext';
 
 const AddCourse = () => {
 
@@ -27,14 +28,13 @@ const AddCourse = () => {
      "In Progress",
   ];
 
-  const [open, setOpen] = useState(false);
+  const {open, setOpen} = useModalContext()
   const [value, setValue]= useState(10);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  
 
-  const handleSliderChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  // const handleSliderChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -50,12 +50,9 @@ const VisuallyHiddenInput = styled('input')({
 });
   return (
     <>
-    <Button onClick={handleOpen}>
-      open
-    </Button>
     <Modal
     open={open}
-    onClose={handleClose}
+    onClose={() => setOpen(false)}
     aria-labelledby="modal-modal-title"
     aria-describedby="modal-modal-description"
   >

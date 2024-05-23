@@ -3,6 +3,8 @@ import { Box, Container } from '@mui/material'
 import Navbar from '../navbar/Navbar'
 import Sidebar from '../sidebar/Sidebar'
 import React, { useState } from 'react'
+import { ModalProvider } from '../../context/modal/ModalContext'
+// import { FilterProvider } from '../../context/filter/FilterContext'
 
 const Main = () => {
 
@@ -47,9 +49,12 @@ const handleDrawer = () => {
     setDarkMode={setDarkMode}
   />
   <Sidebar drawerWidth={drawerWidth} open={open} />
+  <ModalProvider>
+
   <Box sx={{ my:14, mx:"auto", width:"100%" }}>
   <Outlet/>
   </Box>
+  </ModalProvider>
   </Box>
   )
 }
