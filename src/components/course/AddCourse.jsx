@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { CloudUpload, Person, PersonOutline, AccessTimeOutlined, InfoOutlined, SchoolOutlined } from '@mui/icons-material'
-import { Box, styled, TextField, Typography, Stack, MenuItem, Modal, Button, Slider } from '@mui/material'
-import { useModalContext } from '../context/modal/ModalContext';
+import { CloudUpload, Person, PersonOutline, AccessTimeOutlined, InfoOutlined, SchoolOutlined, Close } from '@mui/icons-material'
+import { Box, styled, TextField, Typography, Stack, MenuItem, Modal, Button, Slider, Backdrop, Fade, IconButton, InputAdornment } from '@mui/material'
+import { useModalContext } from '../../context/modal/ModalContext';
+import ModalComponent from '../modal/ModalComponent';
 
 const AddCourse = () => {
 
@@ -48,19 +49,19 @@ const VisuallyHiddenInput = styled('input')({
   margin:3
   
 });
-  return (
-    <>
-    <Modal
-    open={open}
-    onClose={() => setOpen(false)}
-    aria-labelledby="modal-modal-title"
-    aria-describedby="modal-modal-description"
-  >
-   <Box display="flex" width={400} sx={{ backgroundColor:"background.paper", border:"1px solid #fafafa", position:"absolute", top:50, left:50,padding:4,borderRadius:1, boxShadow:24}} flexDirection="column" gap={2} justifyContent="center" alignItems="center">
 
+const insertCourse= () =>{
+
+ alert("Add Course ...")
+
+}
+  return (
+ 
+  <ModalComponent align="center" Title="Add Course" titleButton="Save" clicked={insertCourse}>
+    <>
     <Box  component="label"
       // role={undefined}
-       sx={{position:"relative", border:"3px dashed #ccc", padding:5,borderRadius:1, display:"flex", gap:2, justifyContent:"center", alignItems:"center"}}>
+       sx={{position:"relative", cursor:"pointer", border:"3px dashed #ccc", marginBottom: 3, padding:5,borderRadius:1, display:"flex", gap:2, justifyContent:"center", alignItems:"center"}}>
          <CloudUpload />
 
          <Typography variant="h6" component="span">
@@ -73,7 +74,7 @@ const VisuallyHiddenInput = styled('input')({
 
     <Stack key={data.label}  direction="row"  spacing={2} alignItems="center">
         {data.icon}
-       <TextField id="outlined-basic" label={data.label}   type={data.type ? data.type : 'text'} color="secondary" variant="outlined" size="small" />
+       <TextField id="outlined-basic" label={data.label}   type={data.type ? data.type : 'text'} color="secondary" variant="outlined" size="small"   InputProps={{ endAdornment :  data.type === "number" ? <InputAdornment position="end">hour</InputAdornment> : null  }} />
        </Stack>
       ))
     }
@@ -91,9 +92,9 @@ const VisuallyHiddenInput = styled('input')({
         }
        </TextField>
        </Stack>
-        <Button variant="contained" color="success">
+        {/* <Button variant="contained" color="success" sx={{ marginTop: 2}}>
           Save
-        </Button>
+        </Button> */}
        {/* <Stack width="60%" direction="row"  spacing={2} alignItems="center">
         <PersonOutline/>
        <Slider
@@ -107,9 +108,10 @@ const VisuallyHiddenInput = styled('input')({
           {value}
           </Typography>
        </Stack> */}
-   </Box>
-   </Modal>
-   </>
+    </>
+  </ModalComponent>
+
+
   )
 }
 

@@ -7,8 +7,7 @@ import Dashboard from "./page/Dashboard";
 import Support from "./page/Support";
 import User from "./page/User";
 import Main from "./components/main/Main";
-import AddCourse from './page/AddCourse';
-import CourseDetails from "./page/CourseDetails";
+// import CourseDetails from "./page/CourseDetails";
 
 const router = createBrowserRouter([
   {
@@ -29,14 +28,10 @@ const router = createBrowserRouter([
 
     },
   
-      {
-        path: "course/addCourse",
-      element: <AddCourse/>
-    },
-      {
-        path: "course/:name",
-      element: <CourseDetails/>
-    },
+    //   {
+    //     path: "course/:name",
+    //   element: <CourseDetails/>
+    // },
   
     {
       path: "calendar",

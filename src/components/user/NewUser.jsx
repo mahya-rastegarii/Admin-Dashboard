@@ -52,7 +52,7 @@ const NewUser = () => {
    user.map( item => (
      <>
    
-     <ListItem key={item.name} sx={{ paddingX:2}} alignItems="center">
+     <ListItem key={item.name} sx={{ paddingX:2}} alignItems="center" >
         <ListItemAvatar>
           <Avatar > {item.avatar} </Avatar>
         </ListItemAvatar>

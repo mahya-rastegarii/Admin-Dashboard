@@ -1,8 +1,8 @@
+import React, { useState } from "react";
 import { ArrowDropDown, Palette } from "@mui/icons-material";
 import { Box, Grid, IconButton, Menu, MenuItem } from "@mui/material";
-import {amber, blue, cyan, deepPurple, green, lime, pink, purple, red, teal, yellow} from "@mui/material/colors"
-import React, { useState } from "react";
-
+import {amber, blue, cyan, deepPurple, green, lime, pink, purple, red, teal, yellow} from "@mui/material/colors";
+import PaletteBox from '../box/PaletteBox'
 export const PaletteMenu = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -17,8 +17,43 @@ export const PaletteMenu = () => {
     setAnchorEl(null);
   };
 
-  const themeColors = [teal[500], amber[500], lime[500], pink[500], cyan[500], purple[500]
-]
+  const [themePage, setThemePage] = useState('#009688');
+  // const themeColors = [teal[500], amber[500], lime[500], pink[500], cyan[500], purple[500] ]
+  const themeColors = [
+    {
+      id:1,
+      color:"#009688",
+
+    },
+    {
+      id:2,
+       color:"#ffc107",
+
+    },
+      {
+        id:3,
+        color:"#cddc39",
+
+      },
+      {
+        id:4,
+         color:"#e91e63",
+
+      },
+        {
+          id: 5,
+          color:"#00bcd4",
+
+        },
+        
+        
+        {
+          id: 6,
+          color:"#9c27b0"
+        }
+
+        ]
+
   return (
     <Box>
       <IconButton
@@ -53,30 +88,7 @@ export const PaletteMenu = () => {
    
      <Box display="grid" gap={1}
       gridTemplateColumns="repeat(3, 1fr)">
-      { themeColors.map((theme, index) => (
-       
-          <MenuItem
-            // sx={}
-            
-            key={theme}
-            selected={index === selectedIndex}
-            onClick={() => handleClickItem(index)}
-          >
-            
-            <Box
-          
-             sx={{
-                width: 25,
-                height: 25,
-                borderRadius: 2,
-                bgcolor: theme
-                }}/>
-
-          </MenuItem>
-       
-
-      ))}
-
+     <PaletteBox themeColors={themeColors} selectedColor={themePage} setSelectedColor={setThemePage}  />
       </Box>
     {/* </Grid> */}
       </Menu>

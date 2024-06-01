@@ -1,8 +1,7 @@
-import React, { useState } from "react";
 import { FilterList } from "@mui/icons-material";
 import {
   Box,
-  Chip,
+  Button,
   FormControl,
   IconButton,
   Menu,
@@ -11,11 +10,16 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import React, { useState } from "react";
+import { useFilterContext } from "../../../context/filter/FilterContext";
+import { OtherFilter, StatusFilter } from "./SelectData";
 
 const FilterBox = () => {
-  const filterData = ["Status", "Student","Time", "LastUpdate", "Favour"]
-  const [value, setValue] = useState(filterData);
-  // const [selectedIndex, setSelectedIndex] = useState(0);
+  const { selectValue } = useFilterContext();
+
+  // const filterData = ["Status", "Student", "Time(Hour)", "Favour"];
+  const [filterBy, setFilterBy] = useState(selectValue[0]);
+  const [boxItem, setBoxItem] = useState(selectValue);
   const [anchorEl, setAnchorEl] = useState(null);
   //  const openMenu = Boolean(anchorEl)
 
@@ -27,8 +31,6 @@ const FilterBox = () => {
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };
-
-  const [filterBy, setFilterBy] = useState("Status");
 
   const handleChange = (event) => {
     setFilterBy(event.target.value);
@@ -46,13 +48,17 @@ const FilterBox = () => {
         </Typography>
       </IconButton>
       <Menu
-       
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}
-      
+        sx={{ width: "33%" }}
       >
-        <Stack direction="row" sx={{padding:2}} alignItems="center"  spacing={2}>
+        <Stack
+          direction="row"
+          sx={{ padding: 2 }}
+          alignItems="center"
+          spacing={2}
+        >
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
             <Select
               value={filterBy}
@@ -61,32 +67,31 @@ const FilterBox = () => {
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
             >
-            {
-              value.map(item => (
-
-              <MenuItem key={item} value={item}>{item}</MenuItem>
-              ))
-            }
-            
+              {boxItem.map((item, index) => (
+                <MenuItem key={index} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
           <Box>
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-            <Select
-              value={filterBy}
-              size="small"
-              onChange={handleChange}
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>
-              
-              </MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl>
+            <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+              {filterBy === "Status" ? <StatusFilter /> : <OtherFilter />}
+              {/* <OtherFilter /> */}
+              {/* <StatusFilter />  */}
+            </FormControl>
           </Box>
+        </Stack>
+        <Stack
+          sx={{ marginX: 2 }}
+          alignItems="center"
+          justifyContent="center"
+          direction="row"
+        >
+          <Button variant="contained" size="small" color="success">
+            {" "}
+            Search{" "}
+          </Button>
         </Stack>
       </Menu>
     </Box>

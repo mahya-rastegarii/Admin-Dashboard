@@ -19,9 +19,10 @@ import {
   InputBase,
   IconButton
 } from "@mui/material";
-import  React, { useState  } from "react";
+import  React, { useEffect, useState  } from "react";
 import SearchBox from "../components/search/SearchBox";
 import HeaderTable from "../components/table/HeaderTable"
+import { useFilterContext } from "../context/filter/FilterContext";
 
 export default function User() {
 
@@ -41,8 +42,10 @@ export default function User() {
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      // backgroundColor: theme.palette.grey[400],
+
+      backgroundColor: theme.palette.grey[100],
       color: theme.palette.common.black,
+      borderTop: "1px solid #ccc",
       
     },
     [`&.${tableCellClasses.body}`]: {
@@ -82,12 +85,12 @@ export default function User() {
       align: "center",
       minWidth: 10,
     },
-    {
-      id: 6,
-      label: "Courses",
-      align: "center",
-      minWidth: 10,
-    },
+    // {
+    //   id: 6,
+    //   label: "Courses",
+    //   align: "center",
+    //   minWidth: 10,
+    // },
   ];
 
   const rows = [
@@ -245,11 +248,18 @@ export default function User() {
 
  
 
+  // const {setSelectValue}= useFilterContext()
 
- 
+  // const filterData= ["Courses", "phone Number"]
+//  setSelectValue(filterData)
 
   
   const rowTable = rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+
+
+  // useEffect(() => {
+  //   setSelectValue(filterData)
+  // }, [])
 
   return (
     <Box component={Paper} elevation={2}>
@@ -272,7 +282,7 @@ export default function User() {
       
     <SearchBox/>
       </Stack> */}
-     <HeaderTable/>
+     <HeaderTable direction="row"/>
     <TableContainer  sx={{width: "100%"}}>
       <Table >
         <TableHead>
@@ -301,7 +311,7 @@ export default function User() {
               } */}
 
 {
-                headCell.label === "name" ||  headCell.label === "date" ?  
+                headCell.label === "name" ?  
                 <TableSortLabel active > 
              <Typography variant="body1" component="h2" sx={{ fontWeight:"bold"}} >
 
@@ -346,13 +356,13 @@ export default function User() {
                {item.date}
                 </Typography> 
                 </TableCell>
-              <TableCell align="center">
+              {/* <TableCell align="center">
                
 
                 <Typography variant="body2">
                 {item.numberOfCourses}  
                 </Typography> 
-                </TableCell>
+                </TableCell> */}
             </TableRow>
           ))}
         </TableBody>

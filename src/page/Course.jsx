@@ -1,9 +1,10 @@
-import { Add, Delete, StarRate } from "@mui/icons-material";
+import { Add, Delete, Edit, StarRate } from "@mui/icons-material";
 import {
   Box,
   Button,
   Checkbox,
   Chip,
+  IconButton,
   Paper,
   Stack,
   styled,
@@ -19,16 +20,19 @@ import {
   TableSortLabel,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import JsPic from "../assets/img/images.png";
+import AddCourse from "../components/course/AddCourse";
 import HeaderTable from "../components/table/HeaderTable";
 import { useModalContext } from "../context/modal/ModalContext";
+import { useFilterContext } from "../context/filter/FilterContext";
 
 const Course = () => {
+  
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (newPage) => {
     setPage(newPage);
   };
 
@@ -39,8 +43,9 @@ const Course = () => {
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      // backgroundColor: theme.palette.grey[400],
+      backgroundColor: theme.palette.grey[100],
       color: theme.palette.common.black,
+      borderTop: "1px solid #ccc",
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
@@ -176,44 +181,76 @@ const Course = () => {
     },
   ];
 
+  // const status = () => {
+  //   return (
+
+  //   <Select
+  //   value={filterBy}
+  //   size="small"
+  //   onChange={handleChange}
+  //   displayEmpty
+  //   inputProps={{ "aria-label": "Without label" }}
+  // >
+
+  //   <MenuItem value={10}>Ten</MenuItem>
+
+  //   <MenuItem value={30}>Thirty</MenuItem>
+  // </Select>
+
+  // )
+  // }
   const { setOpen } = useModalContext();
-  // const handleOpen = () => setOpen(true);
+  const {setSelectValue} = useFilterContext()
+
+  const filterData = [ "Status", "Student", "Time(Hour)" ];
+
+  
+  const handleOpen = () => {
+    setOpen(true);
+   
+  };
+  
+  useEffect(() => {
+    setSelectValue(filterData)
+  }, [])
+
   return (
     <Box component={Paper} elevation={2}>
-      <HeaderTable>
+      <AddCourse />
+
+      <HeaderTable direction="column" filter >
         <Button
           variant="contained"
           startIcon={<Add />}
-          onClick={() => setOpen(true)}
+          onClick={handleOpen}
           sx={{ borderRadius: 3 }}
           color="success"
         >
           Add
         </Button>
-        <Button
+        {/* <Button
           variant="contained"
-          startIcon={<Delete/>}
+          startIcon={<Delete />}
           sx={{ borderRadius: 3 }}
           disabled
           color="error"
         >
           Delete
-        </Button>
+        </Button> */}
       </HeaderTable>
 
       <TableContainer sx={{ width: "100%" }}>
         <Table sx={{ padding: 0 }}>
-          <TableHead>
+          <TableHead >
             <TableRow>
-               <TableCell padding="checkbox">
-          <Checkbox />
-        </TableCell>
+              {/* <StyledTableCell padding="checkbox">
+                <Checkbox />
+              </StyledTableCell> */}
 
               {headCells.map((headCell) => (
                 <StyledTableCell key={headCell.id} align={headCell.align}>
-                  {headCell.label === "Title" ||
-                  headCell.label === "Last Update" ? (
-                    <TableSortLabel>
+                  {headCell.label === "Title"  || headCell.label === "Favour" ? (
+                    <TableSortLabel active>
                       <Typography
                         variant="body1"
                         component="h2"
@@ -241,9 +278,9 @@ const Course = () => {
           <TableBody>
             {rowTable.map((item) => (
               <TableRow key={item.title}>
-                <TableCell padding="checkbox">
-                      <Checkbox/>
-                    </TableCell>
+                {/* <TableCell padding="checkbox">
+                  <Checkbox />
+                </TableCell> */}
                 <TableCell>
                   <Stack
                     direction="row"
@@ -298,12 +335,30 @@ const Course = () => {
                   </Stack>
                 </TableCell>
                 <TableCell align="center">
-                  <Button
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <IconButton
+                      aria-label="Edit"
+                      onClick={() => setOpen(true)}
+                      title="Edit"
+                      sx={{ color: "#1e88e5" }}
+                    >
+                      <Edit />
+                    </IconButton>
+                    <IconButton
+                      aria-label="Delete"
+                      title="Delete"
+                      sx={{ color: "#e53935" }}
+                      // onClick={() => {}}
+                    >
+                      <Delete />
+                    </IconButton>
+                    {/* <Button
                    variant="contained"
-                   onClick={() => setOpen(true)}
+                  
                   color="secondary"
                   >
-                     edit </Button>
+                     edit </Button> */}
+                  </Stack>
                 </TableCell>
               </TableRow>
             ))}
