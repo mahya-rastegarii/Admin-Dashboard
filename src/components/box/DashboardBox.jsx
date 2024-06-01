@@ -1,12 +1,14 @@
 import React from 'react'
-import { Box, Paper, Typography } from '@mui/material'
+import { Box, Paper, Stack, Typography } from '@mui/material'
 
 const DashboardBox = ({item, children}) => {
   return (
    
-            <Box
+            <Stack
             component={Paper}
-            align="center"
+           direction="row"
+           alignItems="center"
+           justifyContent="space-between"
             square={false}
             elevation={3}
             //  gridColumn=" span 4"
@@ -14,37 +16,41 @@ const DashboardBox = ({item, children}) => {
             key={item.id}
             >
              {/* <Box  sx={{ width:"40%", display:" flex", justifyContent:"space-around"}}> */}
-             <Typography  variant="h5"  component="div" gutterBottom>
-         
-        
-         {item.icon}
-        
-       </Typography>
+           
            
           
                 {/* </Box>    */}
-          <Box display="flex" justifyContent="center" alignItems="center">
-         <Typography  variant="h4"  mt={2} component="div"  gutterBottom>
+          <Box>
+
+         
+          <Stack direction="row" spacing={0} justifyContent="center" alignItems="center">
+         <Typography  variant="h4"   component="div"  gutterBottom>
          
       {children}
    
        </Typography>
        {
         item.percent ?
-         <Typography  variant="body1"  mt={2} component="span"  gutterBottom>
+         <Typography  variant="body1"   component="span"  gutterBottom>
       {item.percent}
        </Typography> : 
        null
        }
-    </Box>
-       <Typography  variant="body1" mt={2}  component="div" gutterBottom>
+    </Stack>
+       <Typography  variant="body1"   component="div" gutterBottom>
             {item.title}
       
           
            
           </Typography>
+          </Box>
+          <Typography  variant="h5"  component="div" gutterBottom>
          
-            </Box>
+        
+         {item.icon}
+        
+       </Typography>
+            </Stack>
    
   )
 }
