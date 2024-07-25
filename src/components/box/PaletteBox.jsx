@@ -1,11 +1,14 @@
 import { Box, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 
-const PaletteBox = ({ themeColors, selectedColor, setSelectedColor }) => {
+const PaletteBox = ({ themeColors, selectedColor, setSelectedColor, color, value }) => {
   
+
   const handleClickItem = (theme) => {
     setSelectedColor(theme);
+    console.log(selectedColor)
   };
+
 
   return (
     <>
@@ -14,15 +17,16 @@ const PaletteBox = ({ themeColors, selectedColor, setSelectedColor }) => {
           // sx={}
 
           key={theme.id}
-          selected={theme.color === selectedColor}
+          selected={ color ? theme.color === color : theme.color === selectedColor}
           onClick={() => handleClickItem(theme.color)}
         >
           <Box
+
             sx={{
               width: 25,
               height: 25,
               borderRadius: 2,
-              bgcolor: theme.color,
+              bgcolor: value ? theme.color[value] : theme.color,
             }}
           />
         </MenuItem>

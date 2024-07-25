@@ -4,8 +4,15 @@ import enFlag from "../../assets/img/united kingdom.svg";
 import { ArrowDropDown } from "@mui/icons-material";
 import { Avatar, Box, IconButton, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
+import { useThemeContext } from '../../context/theme/ThemeContext';
+import MenuComponent from '../menu/MenuComponent';
 
 export const LanguageMenu = () => {
+  const { theme} =useThemeContext()
+const iconColor = theme.palette.mode.typography;
+const bgBox = theme.palette.mode.boxBg;
+const typography = theme.palette.mode.typography;
+
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   //  const openMenu = Boolean(anchorEl)
@@ -39,7 +46,7 @@ export const LanguageMenu = () => {
         // aria-controls={openMenu ? 'basic-menu' : undefined}
         // aria-haspopup="true"
         // aria-expanded={openMenu ? 'true' : undefined}
-
+        sx={{ color: iconColor}}
         // color="inherit"
       >
         <Avatar
@@ -50,21 +57,10 @@ export const LanguageMenu = () => {
         <ArrowDropDown sx={{ position: "absolute", left: "66%", top: "35%" }} />
       </IconButton>
 
-      <Menu
-        // id="basic-menu"
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleCloseMenu}
-        // value={language}
-        // MenuListProps={{
-        //   'aria-labelledby': 'basic-button',
-        // }}
-        //     transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        // anchorOrigin={{ horizontal:'left', vertical: 'bottom' }}
-      >
+       <MenuComponent anchorEl={anchorEl}  handleCloseMenu={handleCloseMenu}>
         {language.map((option, index) => (
           <MenuItem
-            sx={{ display: "flex" }}
+            sx={{ display: "flex",  color: typography }}
             key={option.text}
             selected={index === selectedIndex}
             onClick={() => handleClickItem(index)}
@@ -77,7 +73,7 @@ export const LanguageMenu = () => {
             {option.text}
           </MenuItem>
         ))}
-      </Menu>
+      </MenuComponent>
     </Box>
   );
 };

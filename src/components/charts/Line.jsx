@@ -3,24 +3,26 @@ import React from 'react';
 
 import { styled } from '@mui/material';
 import { LineChart, markElementClasses, lineElementClasses } from '@mui/x-charts';
+import { useThemeContext } from '../../context/theme/ThemeContext';
+
+import "./chartStyle.css";
+
 
 const Line = ({numberOfUser, monthChart, labelChart, colorChart, widthChart, heightChart}) => {
 
-  const CustomChart = styled(LineChart)( () => ({
-    [`& .${lineElementClasses.root}`]: {
-      stroke: '#8884d8',
-      strokeWidth: 2,
-    },
-    [`& .${markElementClasses.root}`]: {
-        stroke: '#8884d8',
-      scale: '0.6',
-      fill: '#fff',
-      strokeWidth: 0,
-    },
-  }));
+  const {theme} = useThemeContext()
+
+const typography = theme.palette.mode.typography;
+
+ 
   return (
    
-    <CustomChart
+    <LineChart
+    sx={{ fill:typography,
+      "& .MuiChartsAxis-line": {
+        stroke:typography
+      }
+    }}
    
     xAxis={[{ data: monthChart, scaleType:"point" }]}
     series={[

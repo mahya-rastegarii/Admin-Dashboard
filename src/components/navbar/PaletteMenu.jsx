@@ -3,6 +3,8 @@ import { ArrowDropDown, Palette } from "@mui/icons-material";
 import { Box, Grid, IconButton, Menu, MenuItem } from "@mui/material";
 import {amber, blue, cyan, deepPurple, green, lime, pink, purple, red, teal, yellow} from "@mui/material/colors";
 import PaletteBox from '../box/PaletteBox'
+import { useThemeContext } from "../../context/theme/ThemeContext";
+import MenuComponent from "../menu/MenuComponent";
 export const PaletteMenu = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -17,39 +19,42 @@ export const PaletteMenu = () => {
     setAnchorEl(null);
   };
 
-  const [themePage, setThemePage] = useState('#009688');
-  // const themeColors = [teal[500], amber[500], lime[500], pink[500], cyan[500], purple[500] ]
+  // const [themePage, setThemePage] = useState(teal[500]);
+  const {setColor, theme, color}= useThemeContext()
+  const iconColor = theme.palette.mode.typography;
+  // const themeColors = [teal, amber, lime, pink, cyan, purple ]
   const themeColors = [
+
     {
       id:1,
-      color:"#009688",
-
+      color: teal,
+      
     },
     {
       id:2,
-       color:"#ffc107",
+       color:amber,
 
     },
       {
         id:3,
-        color:"#cddc39",
+        color:lime,
 
       },
       {
         id:4,
-         color:"#e91e63",
+         color:pink,
 
       },
         {
           id: 5,
-          color:"#00bcd4",
+          color: cyan,
 
         },
         
         
         {
           id: 6,
-          color:"#9c27b0"
+          color:purple,
         }
 
         ]
@@ -62,36 +67,24 @@ export const PaletteMenu = () => {
         edge="end"
         // aria-label="Palette"
         onClick={(e) => setAnchorEl(e.currentTarget)}
-        sx={{ mr: "1px" }}
+        sx={{ mr: "1px", color : iconColor }}
+        
       >
         <Palette />
         <ArrowDropDown sx={{ position: "absolute", left: "52%", top: "44%" }} />
       </IconButton>
 
-      <Menu
-        // id="basic-menu"
-        // sx={{display: 'flex'}}
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleCloseMenu}
-        // value={language}
-        // MenuListProps={{
-        //   'aria-labelledby': 'basic-button',
-        // }}
-        //     transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        // anchorOrigin={{ horizontal:'left', vertical: 'bottom' }}
-      >
-  
+    <MenuComponent anchorEl={anchorEl}  handleCloseMenu={handleCloseMenu}>
    
    
  
    
      <Box display="grid" gap={1}
       gridTemplateColumns="repeat(3, 1fr)">
-     <PaletteBox themeColors={themeColors} selectedColor={themePage} setSelectedColor={setThemePage}  />
+     <PaletteBox themeColors={themeColors} value={500}  selectedColor={theme} color={color} setSelectedColor={setColor}  />
       </Box>
     {/* </Grid> */}
-      </Menu>
+      </MenuComponent>
     </Box>
   );
 };

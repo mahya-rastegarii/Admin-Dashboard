@@ -1,7 +1,13 @@
 import React from 'react'
 import { Box, Paper, Stack, Typography } from '@mui/material'
-
+import {useThemeContext} from "../../context/theme/ThemeContext"
 const DashboardBox = ({item, children}) => {
+
+ const {theme } =useThemeContext();
+
+ const boxBgColor = theme.palette.mode.boxBg
+ const typography = theme.palette.mode.typography
+ 
   return (
    
             <Stack
@@ -11,8 +17,9 @@ const DashboardBox = ({item, children}) => {
            justifyContent="space-between"
             square={false}
             elevation={3}
+            width={{xs:"90%", md:"30%"}}
             //  gridColumn=" span 4"
-            sx={{ padding:2,  borderRadius:2}}
+            sx={{ padding:2,  borderRadius:2, backgroundColor: boxBgColor}}
             key={item.id}
             >
              {/* <Box  sx={{ width:"40%", display:" flex", justifyContent:"space-around"}}> */}
@@ -23,8 +30,8 @@ const DashboardBox = ({item, children}) => {
           <Box>
 
          
-          <Stack direction="row" spacing={0} justifyContent="center" alignItems="center">
-         <Typography  variant="h4"   component="div"  gutterBottom>
+          <Stack direction="row" spacing={0} justifyContent="center" alignItems="center" sx={{ color: typography}}>
+         <Typography  variant="h4"   component="div"   gutterBottom>
          
       {children}
    
@@ -37,7 +44,7 @@ const DashboardBox = ({item, children}) => {
        null
        }
     </Stack>
-       <Typography  variant="body1"   component="div" gutterBottom>
+       <Typography  variant="body1"  component="div" gutterBottom sx={{color: typography}}>
             {item.title}
       
           

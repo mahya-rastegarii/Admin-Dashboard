@@ -1,8 +1,12 @@
 
-import { Avatar, Divider, List, ListItem, ListItemAvatar, ListItemText, Stack, Typography } from '@mui/material'
+import { Avatar, Box, Divider, List, ListItem, ListItemAvatar, ListItemText, Stack, Typography } from '@mui/material'
 import React from 'react'
+import { useThemeContext } from '../../context/theme/ThemeContext'
 
 const NewUser = () => {
+
+  const {theme } =useThemeContext()
+  const typography = theme.palette.mode.typography
 
     const user =[
         {
@@ -46,21 +50,31 @@ const NewUser = () => {
 
   return (
 
-    <List display="flex"  sx={{ width: '100%', maxWidth: 500, padding:0 }}>
+    <Box 
+    // width="100%"
+    sx={{ width:"100%", overflow: {sx:"scroll", md:"hidden"}}}
+    //  overflow= "scroll"
+     >
+    <List display="flex"  sx={{ width: '100%', padding:0 }}>
   
   {
    user.map( item => (
      <>
    
-     <ListItem key={item.name} sx={{ paddingX:2}} alignItems="center" >
+     <ListItem key={item.name} sx={{ paddingX:2}} alignItems="center"  >
         <ListItemAvatar>
           <Avatar > {item.avatar} </Avatar>
         </ListItemAvatar>
+        <Stack
+         width="100%"
+         direction={{sx:"column", sm:"row"}}
+         spacing={3}>
+
         <ListItemText
           primary={
 
             <Typography
-            sx={{ display: 'inline' }}
+            sx={{ display: 'inline', color: typography }}
             component="span"
             variant="body1"
             color= "black"
@@ -87,12 +101,17 @@ const NewUser = () => {
         />
       <Typography  
     component="span"
+   
                 variant="body3"
-                color="gray">
+                sx={{color: typography, }}>
         {
             item.data
         }
       </Typography>
+
+        </Stack>
+      
+      
       </ListItem>
      
       <Divider />
@@ -102,6 +121,7 @@ const NewUser = () => {
       
     
     </List>
+    </Box>
   )
 }
 

@@ -7,6 +7,7 @@ import Sidebar from "./components/sidebar/Sidebar";
 import router from "./router";
 
 import { RouterProvider } from "react-router-dom";
+import { ThemeProvider } from "./context/theme/ThemeContext";
 
 
 function App() {
@@ -17,8 +18,10 @@ function App() {
  
   return (
     <>
-    
+        <ThemeProvider>
+          
           <RouterProvider router={router} />
+        </ThemeProvider>
       
     </>
   );

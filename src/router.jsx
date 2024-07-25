@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import Analytics from "./page/Analytics";
-import Calendar from "./page/Calendar";
+import Calendar from "./page/calendar/Calendar";
 import Course from "./page/Course";
 import Dashboard from "./page/Dashboard";
 import Support from "./page/Support";

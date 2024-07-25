@@ -1,7 +1,9 @@
-import { FilterList, Search, Sort } from "@mui/icons-material";
 import {
+  alpha,
   Avatar,
+  Box,
   Paper,
+  Stack,
   styled,
   Table,
   TableBody,
@@ -12,24 +14,28 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Stack,
-  Typography,
   TableSortLabel,
-  Box,
-  InputBase,
-  IconButton
+  Typography,
 } from "@mui/material";
-import  React, { useEffect, useState  } from "react";
+import { debounce } from "lodash";
+import React, { useEffect, useState } from "react";
 import SearchBox from "../components/search/SearchBox";
-import HeaderTable from "../components/table/HeaderTable"
-import { useFilterContext } from "../context/filter/FilterContext";
+import SortBox from "../components/table/sort/SortBox";
+import { rows } from "../components/user/UserData";
+import { useThemeContext } from "../context/theme/ThemeContext";
 
 export default function User() {
+  const { theme: customTheme } = useThemeContext();
+  const boxBgColor = customTheme.palette.mode.boxBg;
+  const headerTableColor = alpha(customTheme.palette.primary.light, 0.2);
+  const borderColor = customTheme.palette.mode.borderColor;
+  const typography = customTheme.palette.mode.typography;
+  const btnColor = customTheme.palette.primary.main;
 
-  
-
-   const [page, setPage] = useState(0);
+  const [users, setUsers] = useState(rows);
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [userSortValue, setUserSortValue] = useState("Newest");
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -42,19 +48,16 @@ export default function User() {
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-
-      backgroundColor: theme.palette.grey[100],
+      backgroundColor: headerTableColor,
       color: theme.palette.common.black,
-      borderTop: "1px solid #ccc",
-      
+      borderTop: "1px solid  ",
+      borderColor: borderColor,
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
-     
     },
   }));
   const headCells = [
-  
     {
       id: 1,
       label: "name",
@@ -93,176 +96,65 @@ export default function User() {
     // },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      avatar: "M",
-      name: "mahya rastegari",
-      // lastName: "rastegari",
-      email: "mahyarastegarii@gmail.com",
-      phone: "093022222033",
-      numberOfCourses: 4,
-      date:"2024/3/2"
-    },
-    {
-      id: 2,
-      avatar: "M",
-      name: "mahya rastegari",
-      // lastName: "rastegari",
-      email: "mahyarastegarii@gmail.com",
-      phone: "093022222033",
-      numberOfCourses: 5,
-      date:"2024/3/2"
-    },
-    {
-      id: 3,
-      avatar: "M",
-      name: "mahya rastegari",
-      // lastName: "rastegari",
-      email: "mahyarastegarii@gmail.com",
-      phone: "093022222033",
-      numberOfCourses: 4,
-      date:"2024/3/2"
-    },
-    {
-      id: 4,
-      avatar: "M",
-      name: "mahya rastegari",
-      // lastName: "rastegari",
-      email: "mahyarastegarii@gmail.com",
-      phone: "093022222033",
-      numberOfCourses: 4,
-      date:"2024/3/2"
-    },
-    {
-      id: 5,
-      avatar: "M",
-      name: "mahya rastegari",
-      // lastName: "rastegari",
-      email: "mahyarastegarii@gmail.com",
-      phone: "093022222033",
-      numberOfCourses: 5,
-      date:"2024/3/2"
-    },
-    {
-      id: 6,
-      avatar: "M", 
-      name: "mahya rastegari",
-      // lastName: "rastegari",
-      email: "mahyarastegarii@gmail.com",
-      phone: "093022222033",
-      numberOfCourses: 8,
-      date:"2024/3/2"
-    },
-    {
-      id: 7,
-      avatar: "M",
-      name: "mahya rastegari",
-      // lastName: "rastegari",
-      email: "mahyarastegarii@gmail.com",
-      phone: "093022222033",
-      numberOfCourses: 4,
-      date:"2024/3/2"
-    },
-    {
-      id: 8,
-      avatar: "M",
-      name: "mahya rastegari",
-      // lastName: "rastegari",
-      email: "mahyarastegarii@gmail.com",
-      phone: "093022222033",
-      numberOfCourses: 4,
-      date:"2024/3/2"
-    },
-    {
-      id: 9,
-      avatar: "M",
-      name: "mahya rastegari",
-      // lastName: "rastegari",
-      email: "mahyarastegarii@gmail.com",
-      phone: "093022222033",
-      numberOfCourses: 4,
-      date:"2024/3/2"
-    },
-    {
-      id: 10,
-      avatar: "M",
-      name: "mahya rastegari",
-      // lastName: "rastegari",
-      email: "mahyarastegarii@gmail.com",
-      phone: "093022222033",
-      numberOfCourses: 4,
-      date:"2024/3/2"
-    },
-    {
-      id: 11,
-      avatar: "M",
-      name: "mahya rastegari",
-      // lastName: "rastegari",
-      email: "mahyarastegarii@gmail.com",
-      phone: "093022222033",
-      numberOfCourses: 4,
-      date:"2024/3/2"
-    },
-    {
-      id: 12,
-      avatar: "M",
-      name: "mahya rastegari",
-      // lastName: "rastegari",
-      email: "mahyarastegarii@gmail.com",
-      phone: "093022222033",
-      numberOfCourses: 4,
-      date:"2024/3/2"
-    },
-    {
-      id: 13,
-      avatar: "M",
-      name: "mahya rastegari",
-      // lastName: "rastegari",
-      email: "mahyarastegarii@gmail.com",
-      phone: "093022222033",
-      numberOfCourses: 4,
-      date:"2024/3/2"
-    },
-    {
-      id: 14,
-      avatar: "M",
-      name: "mahya rastegari",
-      // lastName: "rastegari",
-      email: "mahyarastegarii@gmail.com",
-      phone: "093022222033",
-      numberOfCourses: 4,
-      date:"2024/3/2"
-    },
-    {
-      id: 15,
-      avatar: "M",
-      name: "mahya rastegari",
-      // lastName: "rastegari",
-      email: "mahyarastegarii@gmail.com",
-      phone: "093022222033",
-      numberOfCourses: 4,
-      date:"2024/3/2"
-    },
-  ];
-
- 
-
   // const {setSelectValue}= useFilterContext()
 
   // const filterData= ["Courses", "phone Number"]
-//  setSelectValue(filterData)
+  //  setSelectValue(filterData)
 
-  
-  const rowTable = rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-
+  const rowTable = users.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
 
   // useEffect(() => {
   //   setSelectValue(filterData)
   // }, [])
+  const searchUser = (name) => {
+    const newList = users.filter((item) =>
+      item.name.toLowerCase().includes(name.toLowerCase())
+    );
+
+    setUsers(newList);
+  };
+
+  const debouncedFetchUser = debounce((value) => {
+    if (value.length > 1) {
+      searchUser(value);
+    } else if (!value) setUsers(rows);
+  }, 500);
+
+  const ascendingSort = () => {
+    const sortUsers = users.sort((a, b) => {
+      const date1 = new Date(a.date);
+      const date2 = new Date(b.date);
+      return date1 - date2;
+    });
+    setUsers(sortUsers);
+  };
+
+  const descendingSort = () => {
+    const sortUsers = users.sort((a, b) => {
+      const date1 = new Date(a.date);
+      const date2 = new Date(b.date);
+      return date2 - date1;
+    });
+    setUsers(sortUsers);
+  };
+
+  const sortUserDate = () => {
+    if (userSortValue === "Newest") {
+      ascendingSort();
+    } else {
+      descendingSort();
+    }
+  };
+
+  useEffect(() => {
+    descendingSort();
+  }, []);
 
   return (
-    <Box component={Paper} elevation={2}>
+    <Box component={Paper} elevation={2} sx={{ backgroundColor: boxBgColor }}>
       {/* <Stack direction="row" spacing={1} sx={{ padding: 2}} >
       <IconButton aria-label="Sort">
       <FilterList  sx={{ fontSize:27}} />
@@ -282,21 +174,37 @@ export default function User() {
       
     <SearchBox/>
       </Stack> */}
-     <HeaderTable direction="row"/>
-    <TableContainer  sx={{width: "100%"}}>
-      <Table >
-        <TableHead>
-       
+      {/* <HeaderTable direction="row" HandleSearch={debouncedFetch}/> */}
 
-          <TableRow  >
-            {headCells.map((headCell) => (
-              <StyledTableCell
-                key={headCell.id}
-                align={headCell.align}
-                style={{ minWidth: headCell.minWidth }}
-              >
+      <Stack
+        direction={{xs:"column-reverse", md:"row"}}
+        alignItems={{xs:"flex-start", md:"center"}}
+        justifyContent=" flex-start"
+        spacing={3}
+        sx={{ padding: 2, marginBottom: 2 }}
+      >
+        <SortBox
+          sortDate={sortUserDate}
+          value={userSortValue}
+          setValue={setUserSortValue}
+        />
+        
+        <SearchBox handleSearch={debouncedFetchUser} />
 
-              {/* {
+        
+      </Stack>
+
+      <TableContainer sx={{ width: "100%" }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              {headCells.map((headCell) => (
+                <StyledTableCell
+                  key={headCell.id}
+                  align={headCell.align}
+                  style={{ minWidth: headCell.minWidth }}
+                >
+                  {/* {
                 headCell.label === "name" ?  
                 <TableSortLabel  > 
              <Typography variant="body1" component="h2">
@@ -310,78 +218,96 @@ export default function User() {
                 </Typography>
               } */}
 
-{
-                headCell.label === "name" ?  
-                <TableSortLabel active > 
-             <Typography variant="body1" component="h2" sx={{ fontWeight:"bold"}} >
-
-                {headCell.label}
-                </Typography>
-                </TableSortLabel> :
-            <Typography variant="body1" component="h2" sx={{ fontWeight:"bold" }}>
-                {headCell.label}
-                </Typography>
-      }
-              </StyledTableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rowTable.map((item) => (
-            <TableRow hover sx={{}} key={item.id} >
-               {/* <TableCell align="center"><Avatar>{ item.avatar}</Avatar></TableCell> */}
-              <TableCell align="center">
-              <Stack direction="row" spacing={3} display="flex" alignItems="center ">
-              <Avatar>{ item.avatar}</Avatar>
-                <Typography variant="body2">
-                 {item.name}
-                </Typography> 
-                </Stack>
-              </TableCell>
-              {/* <TableCell align="center">{item.lastName}</TableCell> */}
-              <TableCell align="center">
-                 <Typography variant="body2">
-                 {item.email}
-                </Typography> 
+                  {headCell.label === "name" ? (
+                    <TableSortLabel active>
+                      <Typography
+                        variant="body1"
+                        component="h2"
+                        sx={{ fontWeight: "bold" }}
+                      >
+                        {headCell.label}
+                      </Typography>
+                    </TableSortLabel>
+                  ) : (
+                    <Typography
+                      variant="body1"
+                      component="h2"
+                      sx={{ fontWeight: "bold" }}
+                    >
+                      {headCell.label}
+                    </Typography>
+                  )}
+                </StyledTableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rowTable.map((item) => (
+              <TableRow hover sx={{}} key={item.id}>
+                {/* <TableCell align="center"><Avatar>{ item.avatar}</Avatar></TableCell> */}
+                <TableCell sx={{ borderColor: borderColor }} align="center">
+                  <Stack
+                    direction="row"
+                    spacing={3}
+                    display="flex"
+                    alignItems="center "
+                  >
+                    <Avatar>{item.avatar}</Avatar>
+                    <Typography variant="body2" sx={{ color: typography }}>
+                      {item.name}
+                    </Typography>
+                  </Stack>
                 </TableCell>
-              <TableCell align="center">
-              <Typography variant="body2">
-              {item.phone}
-                </Typography> 
-              </TableCell>
-              <TableCell align="center">
-               
-
-                <Typography variant="body2">
-               {item.date}
-                </Typography> 
+                {/* <TableCell align="center">{item.lastName}</TableCell> */}
+                <TableCell sx={{ borderColor: borderColor }} align="center">
+                  <Typography variant="body2" sx={{ color: typography }}>
+                    {item.email}
+                  </Typography>
                 </TableCell>
-              {/* <TableCell align="center">
+                <TableCell sx={{ borderColor: borderColor }} align="center">
+                  <Typography variant="body2" sx={{ color: typography }}>
+                    {item.phone}
+                  </Typography>
+                </TableCell>
+                <TableCell sx={{ borderColor: borderColor }} align="center">
+                  <Typography variant="body2" sx={{ color: typography }}>
+                    {item.date}
+                  </Typography>
+                </TableCell>
+                {/* <TableCell align="center">
                
 
                 <Typography variant="body2">
                 {item.numberOfCourses}  
                 </Typography> 
                 </TableCell> */}
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter 
+            sx={{
+              "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
+                fill:typography
+              }
+
+            }}
+              >
+            <TableRow>
+              <TablePagination
+              sx={{ border:"none", color:typography  }}
+                rowsPerPageOptions={[5, 10, 15]}
+                // colSpan={3}
+
+                count={users.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
             </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter >
-          <TableRow >
-          <TablePagination
-        rowsPerPageOptions={[5, 10, 15]}
-        // colSpan={3}
-      
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+          </TableFooter>
+        </Table>
+      </TableContainer>
     </Box>
   );
 }

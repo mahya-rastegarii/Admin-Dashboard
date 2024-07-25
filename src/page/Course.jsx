@@ -1,5 +1,6 @@
 import { Add, Delete, Edit, StarRate } from "@mui/icons-material";
 import {
+  alpha,
   Box,
   Button,
   Checkbox,
@@ -26,13 +27,35 @@ import AddCourse from "../components/course/AddCourse";
 import HeaderTable from "../components/table/HeaderTable";
 import { useModalContext } from "../context/modal/ModalContext";
 import { useFilterContext } from "../context/filter/FilterContext";
-
+import {rowCourse} from '../components/course/CourseData';
+import FilterBox from "../components/table/filter/FilterBox";
+import SortBox from "../components/table/sort/SortBox";
+import SearchBox from "../components/search/SearchBox";
+import { debounce } from "lodash";
+import RemoveComponent from "../components/remove/RemoveComponent";
+import CourseAction from "../components/course/CourseAction";
+import {useThemeContext}from "../context/theme/ThemeContext"
+import EditCourse from "../components/course/EditCourse";
 const Course = () => {
   
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const {theme: customTheme } =useThemeContext()
+  const boxBgColor = customTheme.palette.mode.boxBg
+  const headerTableColor = alpha(customTheme.palette.primary.light, 0.2)
+  const borderColor = customTheme.palette.mode.borderColor
+  const typography = customTheme.palette.mode.typography
+  const btnColor = customTheme.palette.primary.main
 
-  const handleChangePage = (newPage) => {
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [courses, setCourses]= useState(rowCourse)
+  const [CourseId, setCourseId] =useState(0)
+  const [courseData,  setCourseData]=  useState(null)
+  const [modal, setModal] = useState("Add Course")
+  const [courseSortValue, setCourseSortValue] = useState("Newest");
+
+
+
+  const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
@@ -43,89 +66,90 @@ const Course = () => {
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.grey[100],
+      backgroundColor: headerTableColor,
       color: theme.palette.common.black,
-      borderTop: "1px solid #ccc",
+      borderTop: "1px solid  " ,
+      borderColor:borderColor,
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
     },
   }));
 
-  const rowCourse = [
-    {
-      title: " Js",
-      pic: JsPic,
-      teacher: "mahya Rastegari",
-      student: 230,
-      status: "completed",
-      time: 2,
-      lastUpdate: "2024/3/1",
-      rating: "4.5",
-    },
-    {
-      title: " Js",
-      pic: JsPic,
-      teacher: "mahya Rastegari",
-      student: 230,
-      status: "completed",
-      time: 2,
-      lastUpdate: "2024/3/1",
-      rating: "4.5",
-    },
-    {
-      title: " Js",
-      pic: JsPic,
-      teacher: "mahya Rastegari",
-      student: 230,
-      status: "completed",
-      time: 2,
-      lastUpdate: "2024/3/1",
-      rating: "4.5",
-    },
-    {
-      title: " Js",
-      pic: JsPic,
-      teacher: "mahya Rastegari",
-      student: 230,
-      status: "completed",
-      time: 2,
-      lastUpdate: "2024/3/1",
-      rating: "4.5",
-    },
-    {
-      title: " Js",
-      pic: JsPic,
-      teacher: "mahya Rastegari",
-      student: 230,
-      status: "completed",
-      time: 2,
-      lastUpdate: "2024/3/1",
-      rating: "4.5",
-    },
-    {
-      title: " Js",
-      pic: JsPic,
-      teacher: "mahya Rastegari",
-      student: 230,
-      status: "completed",
-      time: 2,
-      lastUpdate: "2024/3/1",
-      rating: "4.5",
-    },
-    {
-      title: " Js",
-      pic: JsPic,
-      teacher: "mahya Rastegari",
-      student: 230,
-      status: "completed",
-      time: 2,
-      lastUpdate: "2024/3/1",
-      rating: "4.5",
-    },
-  ];
+  // const rowCourse = [
+  //   {
+  //     title: " Js",
+  //     pic: JsPic,
+  //     teacher: "mahya Rastegari",
+  //     student: 230,
+  //     status: "completed",
+  //     time: 2,
+  //     lastUpdate: "2024/3/1",
+  //     rating: "4.5",
+  //   },
+  //   {
+  //     title: " Js",
+  //     pic: JsPic,
+  //     teacher: "mahya Rastegari",
+  //     student: 230,
+  //     status: "completed",
+  //     time: 2,
+  //     lastUpdate: "2024/3/1",
+  //     rating: "4.5",
+  //   },
+  //   {
+  //     title: " Js",
+  //     pic: JsPic,
+  //     teacher: "mahya Rastegari",
+  //     student: 230,
+  //     status: "completed",
+  //     time: 2,
+  //     lastUpdate: "2024/3/1",
+  //     rating: "4.5",
+  //   },
+  //   {
+  //     title: " Js",
+  //     pic: JsPic,
+  //     teacher: "mahya Rastegari",
+  //     student: 230,
+  //     status: "completed",
+  //     time: 2,
+  //     lastUpdate: "2024/3/1",
+  //     rating: "4.5",
+  //   },
+  //   {
+  //     title: " Js",
+  //     pic: JsPic,
+  //     teacher: "mahya Rastegari",
+  //     student: 230,
+  //     status: "completed",
+  //     time: 2,
+  //     lastUpdate: "2024/3/1",
+  //     rating: "4.5",
+  //   },
+  //   {
+  //     title: " Js",
+  //     pic: JsPic,
+  //     teacher: "mahya Rastegari",
+  //     student: 230,
+  //     status: "completed",
+  //     time: 2,
+  //     lastUpdate: "2024/3/1",
+  //     rating: "4.5",
+  //   },
+  //   {
+  //     title: " Js",
+  //     pic: JsPic,
+  //     teacher: "mahya Rastegari",
+  //     student: 230,
+  //     status: "completed",
+  //     time: 2,
+  //     lastUpdate: "2024/3/1",
+  //     rating: "4.5",
+  //   },
+  // ];
 
-  const rowTable = rowCourse.slice(
+  const rowTable = courses.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
@@ -199,26 +223,152 @@ const Course = () => {
 
   // )
   // }
-  const { setOpen } = useModalContext();
+  const { open, setOpen } = useModalContext();
   const {setSelectValue} = useFilterContext()
 
-  const filterData = [ "Status", "Student", "Time(Hour)" ];
 
+  // const filterData = [ "Status", "Student", "Time(Hour)" ];
   
-  const handleOpen = () => {
-    setOpen(true);
+ 
+
+
+
+
+ 
+  const searchCourse = (title) =>{
+    const newList = courses.filter( item => item.title.toLowerCase().includes(title.toLowerCase()));
+  
+    setCourses(newList)
+  }
+  
+  const debouncedFetchCourses = debounce((value) => {
+    if(value.length> 1){
+      searchCourse(value)
+    }else if(!value)
+      setCourses(rowCourse);
+    }, 500);
+  
+  
+  
+
+
+ const ascendingSort =() => {
+ const sortCourse = courses.sort( (a, b) => {
+  const date1= new Date(a.lastUpdate)
+  const date2= new Date(b.lastUpdate) 
+   return date1 - date2
+ })
+  setCourses(sortCourse)
+  
+ }
+
+ const descendingSort= () =>{
+  
+  const sortCourse = courses.sort( (a, b) => {
+    const date1= new Date(a.lastUpdate)
+    const date2= new Date(b.lastUpdate) 
+     return  date2 - date1
+   })
+       setCourses(sortCourse)
+
+ }
+
+  const sortCourseDate= () => {
+    
+     if(courseSortValue === "Newest"){
+     
+      
+     
+      ascendingSort()
+    
+    }
+    else {
+      
+     descendingSort()
+    
+  }
    
-  };
-  
+  }
+
+  const openModalEdit =(item) => {
+    setModal("Edit Course")
+    setCourseData(item)
+    setOpen(true)
+  }
+
+  const openModalInsert  =(item) => {
+    setModal("Add Course")
+    setOpen(true)
+  }
+
+
+  const openModalDelete= (id) => {
+    setModal("Delete Course")
+    setOpen(true)
+    setCourseId(id)
+  }
+  const deleteCourse = () =>{
+    const newListCourses = courses.filter((item) => item.id !== CourseId)
+
+    setCourses(newListCourses)
+    setOpen(false)
+    setCourseId(0)
+  }
+
   useEffect(() => {
-    setSelectValue(filterData)
+    setSelectValue("Status")
+    descendingSort()
   }, [])
 
-  return (
-    <Box component={Paper} elevation={2}>
-      <AddCourse />
 
-      <HeaderTable direction="column" filter >
+  // useEffect( () => {
+   
+  // }, [])
+
+  return (
+    
+    <Box component={Paper} elevation={2} sx={{backgroundColor: boxBgColor, }}>
+
+     
+
+       
+        {
+          modal ==="Add Course" ? <AddCourse/>
+       :modal ==="Edit Course" ? <EditCourse courseData= {courseData}/>
+         : modal === "Delete Course" ? 
+      <RemoveComponent title=" remove Course" body="Delete  Course ?" clicked={deleteCourse} />
+       : null 
+}
+      
+
+
+    
+      <Stack direction={{ xs:"column-reverse", md:"row"}}   alignItems={{ xs:"flex-start", md:"center"}}  justifyContent="flex-start" spacing={3}  sx={{ padding: 2, marginBottom: 2 }}>
+      
+      
+     
+        <Stack direction="row"    spacing={3}>
+        <FilterBox  setCourses={setCourses}/>
+
+        <SortBox sortDate={sortCourseDate} value={courseSortValue} setValue={setCourseSortValue}/>
+
+        </Stack>
+
+        <Stack direction={{xs:"column-reverse", md:"row"}}   spacing={3}>
+        <SearchBox handleSearch={debouncedFetchCourses} />
+
+        <Button
+          variant="contained"
+          startIcon={<Add />}
+          onClick={openModalInsert}
+          sx={{ borderRadius: 3, backgroundColor: btnColor  }}
+          
+        >
+          Add
+        </Button>
+        </Stack>
+      </Stack>
+      {/* <HeaderTable direction="column" filter >
         <Button
           variant="contained"
           startIcon={<Add />}
@@ -237,12 +387,13 @@ const Course = () => {
         >
           Delete
         </Button> */}
-      </HeaderTable>
+      {/* </HeaderTable>  */}
+
 
       <TableContainer sx={{ width: "100%" }}>
         <Table sx={{ padding: 0 }}>
           <TableHead >
-            <TableRow>
+            <TableRow >
               {/* <StyledTableCell padding="checkbox">
                 <Checkbox />
               </StyledTableCell> */}
@@ -275,48 +426,51 @@ const Course = () => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {rowTable.map((item) => (
-              <TableRow key={item.title}>
+             
+          <TableBody  >
+            {
+            
+            rowTable.map((item) => (
+              <TableRow key={item.title} >
                 {/* <TableCell padding="checkbox">
                   <Checkbox />
                 </TableCell> */}
-                <TableCell>
+                <TableCell sx={{ borderColor: borderColor}} >
                   <Stack
                     direction="row"
                     spacing={5}
                     display="flex"
                     alignItems="center "
                   >
-                    <img src={item.pic} width="25%" />
+                    <img src={item.pic} width="20%" />
                     {/* <Avatar
                       // sx={{ width:"35%"}}
                       src={item.pic}
                       variant="square"
                     ></Avatar> */}
-                    <Typography variant="h6">{item.title}</Typography>
+                    <Typography variant="h6" sx={{ color:typography}}>{item.title}</Typography>
                   </Stack>
                 </TableCell>
-                <TableCell align="center">
-                  <Typography variant="body2">{item.teacher}</Typography>
+                <TableCell sx={{borderColor: borderColor}} align="center">
+                  <Typography variant="body2" sx={{ color:typography}}>{item.teacher}</Typography>
                 </TableCell>
-                <TableCell align="center">
-                  <Typography variant="body2">{item.student}</Typography>
+                <TableCell sx={{borderColor: borderColor}} align="center">
+                  <Typography variant="body2" sx={{ color:typography}}>{item.student}</Typography>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell sx={{borderColor: borderColor}} align="center">
                   <Chip
                     label={item.status}
                     color="primary"
                     variant="outlined"
                   />
                 </TableCell>
-                <TableCell align="center">
-                  <Typography variant="body2">{item.time}</Typography>
+                <TableCell sx={{borderColor: borderColor}} align="center">
+                  <Typography variant="body2" sx={{ color:typography}}>{item.time}</Typography>
                 </TableCell>
-                <TableCell align="center">
-                  <Typography variant="body2">{item.lastUpdate}</Typography>
+                <TableCell sx={{borderColor: borderColor}} align="center">
+                  <Typography variant="body2" sx={{ color:typography}}>{item.lastUpdate}</Typography>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell sx={{borderColor: borderColor}} align="center">
                   {/* <Rating
                     name="half-rating-read"
                     defaultValue={item.rating}
@@ -331,14 +485,14 @@ const Course = () => {
                     justifyContent="center"
                   >
                     <StarRate sx={{ color: "#ffc400", fontSize: 26 }} />
-                    <Typography variant="body2">{item.rating}</Typography>
+                    <Typography variant="body2" sx={{ color:typography}}>{item.rating}</Typography>
                   </Stack>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell sx={{borderColor: borderColor}} align="center">
                   <Stack direction="row" spacing={1} alignItems="center">
                     <IconButton
                       aria-label="Edit"
-                      onClick={() => setOpen(true)}
+                      onClick={() => openModalEdit(item)}
                       title="Edit"
                       sx={{ color: "#1e88e5" }}
                     >
@@ -348,7 +502,7 @@ const Course = () => {
                       aria-label="Delete"
                       title="Delete"
                       sx={{ color: "#e53935" }}
-                      // onClick={() => {}}
+                      onClick={() => openModalDelete(item.id)}
                     >
                       <Delete />
                     </IconButton>
@@ -363,13 +517,20 @@ const Course = () => {
               </TableRow>
             ))}
           </TableBody>
-          <TableFooter>
-            <TableRow>
+          <TableFooter 
+           sx={{
+            "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
+              fill:typography
+            }
+          }}>
+            <TableRow >
               <TablePagination
+             sx={{ border:"none", color:typography  }}
                 rowsPerPageOptions={[5, 10, 15]}
+                
                 // colSpan={3}
 
-                count={rowCourse.length}
+                count={courses.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

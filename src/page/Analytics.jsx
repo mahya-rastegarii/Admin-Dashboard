@@ -1,74 +1,143 @@
-import React, { useState } from 'react'
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Box, Paper, Tab } from '@mui/material';
-import Bars from '../components/charts/Bars';
-import Line from '../components/charts/Line';
-import Pie from '../components/charts/Pie';
+import { Favorite, Person } from "@mui/icons-material";
+import { Box, Paper, Stack, Typography } from "@mui/material";
+import React, { useState } from "react";
+import Bars from "../components/charts/Bars";
+import Line from "../components/charts/Line";
+import Pie from "../components/charts/Pie";
+import { useThemeContext } from "../context/theme/ThemeContext";
 
 const Analytics = () => {
+  const { theme } = useThemeContext();
+
+  const bgColor = theme.palette.mode.boxBg;
+  const typography = theme.palette.mode.typography;
 
   const numberOfUser = [20, 45, 35, 15, 60, 80];
-  const monthChart = ["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور"];
-
+  const monthChart = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور"];
 
   const LineChartData = {
     monthChart,
     numberOfUser,
-    labelChart:"User ",
-    colorChart:'#8884d8',
-    widthChart:1000,
-    heightChart:500
-  }
+    labelChart: "User ",
+    colorChart: "#8884d8",
+    widthChart: 800,
+    heightChart: 550,
+  };
 
   const coursesData = [
-    { data: [35, 44, 24, 34],label:"frontEnd" },
-    { data: [51, 6, 49, 30], label:"backEnd"  },
-    { data: [15, 25, 30, 50], label:"AI"  },
-    { data: [60, 50, 15, 25], label:"security"  },
-  ]
+    { data: [35, 44, 24, 34], label: "frontEnd" },
+    { data: [51, 6, 49, 30], label: "backEnd" },
+    { data: [15, 25, 30, 50], label: "AI" },
+    { data: [60, 50, 15, 25], label: "security" },
+  ];
 
-  const years = ['2021', '2022', '2023', '2024'];
+  const years = ["2021", "2022", "2023", "2024"];
 
   const barsChartData = {
     coursesData,
     years,
-    widthChart: 1000,
-    heightChart : 500,
-    marginChart:{ top: 10, bottom: 30, left: 40, right: 10 }
-  }
-  const [value, setValue] = useState('1');
+    widthChart: 700,
+    heightChart: 550,
+    marginChart: { top: 50, bottom: 20, left: 10, right: 10 },
+  };
+  const [value, setValue] = useState("1");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const Charts = [
+    {
+      chart: <Pie />,
+      icon: <Favorite />,
+      title: "popular Course from past years",
+    },
+    {
+      chart: <Bars {...barsChartData} />,
+      icon: <Favorite />,
+      title: "popular Course from past years",
+    },
+    {
+      chart: <Line {...LineChartData} />,
+      icon: <Person />,
+      title: "popular Course from past years",
+    },
+  ];
 
   return (
-    <Box sx={{ width: '100%', typography: 'body1' }}>
-      <TabContext value={value} sx={{ width: '100%'}}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label="chart Tab">
-            <Tab label="Item One" value="1" />
-            <Tab label="Item Two" value="2" />
-            <Tab label="Item Three" value="3" />
-          </TabList>
+    <Box
+      sx={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        gap: 3,
+      }}
+    >
+      {/* <Box component={Paper} elevation={2}  display="flex" flexDirection="column" justifyContent="center" alignItems="center" mx="auto" p={2} width="80%" mt={6} gap={7}>
+  <Stack direction="row" width="90%" spacing={1} justifyContent="flex-start" alignItems="center">
+  <Favorite/>
+<Typography  variant="h6" sx={{fontWeight:"bold" }} >
+  popular Course from past years
+</Typography>
+  </Stack>
+<Bars {...barsChartData}/>
+        
         </Box>
-        <TabPanel value="1"> 
-<Box  display="flex" mx="auto"  mt={6}>
-
-        <Line {...LineChartData}/>
-        </Box>
-        </TabPanel>
-        <TabPanel value="2">
-  <Box mx="auto" display="flex"      mt={6}>
-          <Bars {...barsChartData}/>
-        </Box>
-          </TabPanel>
        
-        {/* <TabPanel value="3"><Pie/> </TabPanel> */}
-      </TabContext>
+        <Box component={Paper} elevation={2}  display="flex" flexDirection="column" justifyContent="center" alignItems="center" mx="auto" p={2} width="80%" mt={6} gap={7}>
+  <Stack direction="row" width="90%" spacing={1} justifyContent="flex-start" alignItems="center">
+  <Person/>
+<Typography  variant="h6" sx={{fontWeight:"bold" }} >
+  count Users from past month
+</Typography>
+  </Stack>
+  <Line {...LineChartData}/>
+        </Box>
+         */}
+
+      {Charts.map((data) => (
+        <Box
+          color={typography}
+          component={Paper}
+          elevation={2}
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          // mx="auto"
+          p={2}
+  
+          width="90%"
+          bgcolor={bgColor}
+          mt={6}
+          gap={7}
+        >
+          <Stack
+            direction="row"
+            width="90%"
+            spacing={1}
+            justifyContent="flex-start"
+            alignItems="center"
+          >
+            {data.icon}
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              {data.title}
+            </Typography>
+          </Stack>
+          <Box
+            width="100%"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            {data.chart}
+          </Box>
+        </Box>
+      ))}
     </Box>
   );
-}
+};
 
 export default Analytics;

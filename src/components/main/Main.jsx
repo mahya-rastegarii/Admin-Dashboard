@@ -1,65 +1,77 @@
-import { Outlet } from 'react-router-dom'
-import { Box, Container} from '@mui/material'
-import Navbar from '../navbar/Navbar'
-import Sidebar from '../sidebar/Sidebar'
-import React, { useState } from 'react'
-import { ModalProvider } from '../../context/modal/ModalContext'
-import { FilterProvider } from '../../context/filter/FilterContext'
+import { Box } from "@mui/material";
+import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
+import { FilterProvider } from "../../context/filter/FilterContext";
+import { ModalProvider } from "../../context/modal/ModalContext";
+import { useThemeContext } from "../../context/theme/ThemeContext";
+import Navbar from "../navbar/Navbar";
+import Sidebar from "../sidebar/Sidebar";
 // import { FilterProvider } from '../../context/filter/FilterContext'
+import "../../App.css";
 
 const Main = () => {
 
-const drawerWidth = 240;
-
-const [open, setOpen] = useState(false);
-const [darkMode, setDarkMode] = useState(false);
+  const drawerWidth = 240;
+  
 
 
+  const [open, setOpen] = useState(false);
 
-const handleDrawer = () => {
+
+
+
+  const handleDrawer = () => {
     setOpen(!open);
   };
 
+  // const theme = createTheme({
+  //     palette: {
+  //       primary: {
+  //         light: "#757ce8",
+  //         main: "#3f50b5",
+  //         dark: "#002884",
+  //         contrastText: "#fff",
+  //       },
+  //       secondary: {
+  //         light: "#ff7961",
+  //         main: "#f44336",
+  //         dark: "#ba000d",
+  //         contrastText: "#000",
+  //       },
+  //     },
+  //   });
 
-// const theme = createTheme({
-//     palette: {
-//       primary: {
-//         light: "#757ce8",
-//         main: "#3f50b5",
-//         dark: "#002884",
-//         contrastText: "#fff",
-//       },
-//       secondary: {
-//         light: "#ff7961",
-//         main: "#f44336",
-//         dark: "#ba000d",
-//         contrastText: "#000",
-//       },
-//     },
-//   });
-
+  const { theme, darkMode } = useThemeContext();
+  const bgColor = theme.palette.mode.bg;
   return (
-    <Box  sx={{ display: "flex", px:15 }}>
+    <Box
+      sx={{
+        display: "flex",
+        // p: 3,
+        overflowX: "hidden",
+        backgroundColor: bgColor,
+      }}
+    >
+      <Navbar
       
-   
-    <Navbar
-    drawerWidth={drawerWidth}
-    open={open}
-    handleDrawer={handleDrawer}
-    darkMode={darkMode}
-    setDarkMode={setDarkMode}
-  />
-  <Sidebar drawerWidth={drawerWidth} open={open} />
-  
-  <Box sx={{ my:14, mx:"auto", width:"100%" }}>
- <FilterProvider>
-  <ModalProvider>
-  <Outlet/>
-  </ModalProvider>
- </FilterProvider>
-  </Box>
-  </Box>
-  )
-}
+        drawerWidth={drawerWidth}
+        open={open}
+        handleDrawer={handleDrawer}
+      />
+      <Sidebar drawerWidth={drawerWidth} open={open}/>
 
-export default Main
+      <Box
+        sx={{ my: 14, mx: "auto", padding:3, width: "100%", overflow:{sx:"scroll",  md:"hidden"} }}
+        className={darkMode ? "dark" : "light"}
+      >
+        <FilterProvider>
+          <ModalProvider>
+            <Outlet />
+          </ModalProvider>
+        </FilterProvider>
+      </Box>
+    </Box>
+  );
+};
+
+export default Main;

@@ -1,0 +1,143 @@
+
+:root {
+  --mainTeal: #009688;
+  --mainAmber: #ffc107;
+  --mainLime: #cddc39;
+  --mainPink: #e91e63;
+  --mainCyan: #00bcd4;
+  --mainPurple: #9c27b0;
+  --lightTeal:#e0f2f1;
+  --lightAmber:#fff8e1;
+  --lightLime:#f9fbe7;
+  --lightPink:#fce4ec;
+  --lightCyan:#e0f7fa;
+  --lightPurple:#f3e5f5;
+}
+/* .dark{
+    width:"100%";
+}
+.light .fc{
+   background-Color: white;
+}
+
+.dark .fc {
+    background-color: rgb(33, 33, 33) !important;
+    padding: 12px  !important;
+    
+
+} */
+
+/* .fc .fc-toolbar{
+
+  flex-direction: column ;
+
+} */
+
+.teal .fc .fc-button-primary {
+  background-color: var(--mainTeal);
+  border-color: #00695c;
+}
+
+.teal .fc .fc-button-active {
+  background-color: #00695c !important;
+}
+
+.teal .fc .fc-button-primary:active {
+  background-color: #00796b !important;
+}
+
+.amber .fc .fc-button-primary {
+  background-color: var(--mainAmber);
+  border-color: #ff8f00;
+}
+
+.amber .fc .fc-button-active {
+  background-color: #ff8f00 !important;
+}
+
+.amber .fc .fc-button-primary:active {
+  background-color: #ffa000 !important;
+}
+
+.lime .fc .fc-button-primary {
+  background-color:var(--mainLime);
+  border-color: #9e9d24;
+}
+
+.lime .fc .fc-button-active {
+  background-color: #9e9d24 !important;
+}
+
+.lime .fc .fc-button-primary:active {
+  background-color: #afb42b !important;
+}
+
+.pink .fc .fc-button-primary {
+  background-color: var(--mainPink);
+  border-color: #ab1457;
+}
+
+.pink .fc .fc-button-active {
+  background-color: #ad1457 !important;
+}
+
+.pink .fc .fc-button-primary:active {
+  background-color: #c2185b !important;
+}
+.cyan .fc .fc-button-primary {
+  background-color: var(--mainCyan);
+  border-color: #00838f;
+}
+
+.cyan .fc .fc-button-active {
+  background-color: #00838f !important;
+}
+.cyan .fc .fc-button-primary:active {
+  background-color: #0097a7 !important;
+}
+
+.purple .fc .fc-button-primary {
+  background-color: var(--mainPurple);
+  border-color: #6a1b9a;
+}
+
+.purple .fc .fc-button-active {
+  background-color: #6a1b9a !important;
+}
+
+.purple .fc .fc-button-primary:active {
+  background-color: #7b1fa2 !important;
+}
+
+.fc .fc-button-primary {
+  color: #000 !important;
+  outline: none;
+}
+
+
+
+
+.teal .fc .fc-daygrid-day.fc-day-today {
+  background-color: var(--lightTeal);
+}
+
+.amber .fc .fc-daygrid-day.fc-day-today {
+  background-color:var(--lightAmber);
+}
+
+.lime .fc .fc-daygrid-day.fc-day-today {
+  background-color: var(--lightLime);
+}
+
+.pink .fc .fc-daygrid-day.fc-day-today {
+  background-color: var(--lightPink);
+}
+.cyan .fc .fc-daygrid-day.fc-day-today {
+  background-color: var(--lightCyan) ;
+
+}
+
+.purple .fc .fc-daygrid-day.fc-day-today {
+  background-color: var(--lightPurple);
+}
+
