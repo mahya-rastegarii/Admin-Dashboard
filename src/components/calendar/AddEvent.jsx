@@ -8,11 +8,20 @@ import PaletteBox from '../box/PaletteBox';
 import {amber, blue, cyan, deepPurple, green, lime, pink, purple, red, teal, yellow} from "@mui/material/colors"
 import { useModalContext } from '../../context/modal/ModalContext';
 import { useForm } from 'react-hook-form';
+import Form from '../form/Form';
+import { CheckBox } from '@mui/icons-material';
 
 
-const AddEvent = ({setEvent, date}) => {
+const AddEvent = ({setEvent, event, date}) => {
 
-  // const {register} = useForm()
+  const { setOpen }= useModalContext()
+  const {register, handleSubmit} = useForm()
+  //   {
+  //   defaultValues: {
+  //     start: date ,
+  //     end : date
+  //   }
+  // }
 
 
     // const themeColors = [teal[500], amber[500], lime[500], pink[500], cyan[500], purple[500]]
@@ -56,10 +65,28 @@ const AddEvent = ({setEvent, date}) => {
 
    
     // const {setOpen }= useModalContext()
+    const addEventToCalendar =(data) => {
+    
+      const { title, start, end} = data
+      const newData = 
+      {
+        id: event.length +1 ,
+         title,
+         start:  date ? date : start ,
+         end,
+        color: eventColor
+        }
+      setEvent ( prevEvent => [...prevEvent, newData])
+
+      console.log( "NewData", newData)
+
+      setOpen(false)
+    }
 
   return (
 
-  <>
+<ModalComponent title= "Add Event">
+<Form  align="flex-start"   titleButton=" Add " onSubmit={handleSubmit(addEventToCalendar)}>
       <Stack direction="row" alignItems="center" spacing={3}>
         <Typography  variant="body1">
             Text
@@ -67,7 +94,7 @@ const AddEvent = ({setEvent, date}) => {
         <OutlinedInput
             id="event-title"
             size="small"
-            
+            {...register("title")}
             // aria-describedby="outlined-weight-helper-text"
           />
       </Stack>
@@ -91,13 +118,13 @@ const AddEvent = ({setEvent, date}) => {
 
       
         {
-          date ?  <Typography  variant="body2" sx={{ paddingX:2, paddingY:1, border:"1px solid #ccc", borderRadius:1 }}> {date} </Typography> :
+          date ?  <Typography  variant="body2" sx={{ paddingX:2, paddingY:1, border:"1px solid #ccc", borderRadius:1 }} > {date} </Typography> :
 
         <OutlinedInput
             id="event-startDate"
             size="small"
             type="date"
-            // {...register("start")}
+            {...register("start")}
             // aria-describedby="outlined-weight-helper-text"
             />
 
@@ -105,6 +132,7 @@ const AddEvent = ({setEvent, date}) => {
       </Stack>
 
       <Stack direction="row" spacing={1} alignItems="center">
+        {/* <CheckBox /> */}
         <Typography  variant="body1">
             end Date
         </Typography>
@@ -114,7 +142,7 @@ const AddEvent = ({setEvent, date}) => {
             id="event-endDate"
             size="small"
             type="date"
-            // {...register("end")}
+            {...register("end")}
 
             // aria-describedby="outlined-weight-helper-text"
             />
@@ -123,14 +151,15 @@ const AddEvent = ({setEvent, date}) => {
             </Stack>
 <Box display="flex" mt={3}>
 
-    <PaletteBox themeColors={themeColors} selectedColor={eventColor} setSelectedColor= {setEventColor}/>
+    <PaletteBox themeColors={themeColors}  selectedColor={eventColor} setSelectedColor= {setEventColor}/>
 </Box>
  {/* <Stack direction="row" alignItems="center" justifyContent="flex-end" spacing={2} mt={5}>
     <Button variant="contained" color="success" onClick={ addEventToCalendar}> Add </Button> 
     <Button variant="contained" color="error" onClick={() => setOpen(false)}> Cancel</Button> 
  </Stack> */}
  
- </>
+ </Form>
+ </ModalComponent>
   )
 }
 
