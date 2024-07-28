@@ -15,8 +15,12 @@ const Main = () => {
   
 
 
+
   const [open, setOpen] = useState(false);
 
+
+
+  
 
 
 
@@ -42,7 +46,9 @@ const Main = () => {
   //   });
 
   const { theme, darkMode } = useThemeContext();
+
   const bgColor = theme.palette.mode.bg;
+  const boxBg = theme.palette.mode.boxBg;
   return (
     <Box
       sx={{
@@ -61,7 +67,8 @@ const Main = () => {
       <Sidebar drawerWidth={drawerWidth} open={open}/>
 
       <Box
-        sx={{ my: 14, mx: "auto", padding:3, width: "100%", overflow:{sx:"scroll",  md:"hidden"} }}
+        sx={{ my: 14, mx: "auto", padding:3, width: "100%", overflow:{sx:"scroll",  md:"hidden"}
+      }}
         className={darkMode ? "dark" : "light"}
       >
         <FilterProvider>

@@ -23,7 +23,7 @@ const borderColor = theme.palette.mode.borderColor;
   return (
     <Stack direction="row"  spacing={1}   sx={{ border:` 1px solid ${borderColor}`, borderRadius: 1, display:"flex", alignItems:"center", paddingX:1, backgroundColor:bgColor}}>
        {/* <IconButton aria-label="search"> */}
-        <Search sx={{ color: iconColor}}/>
+        <Search sx={{ color: typography}}/>
       {/* </IconButton> */}
              <InputBase
              value={searchInput}

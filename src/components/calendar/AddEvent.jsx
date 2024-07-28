@@ -10,12 +10,19 @@ import { useModalContext } from '../../context/modal/ModalContext';
 import { useForm } from 'react-hook-form';
 import Form from '../form/Form';
 import { CheckBox } from '@mui/icons-material';
+import { useThemeContext } from '../../context/theme/ThemeContext';
 
 
 const AddEvent = ({setEvent, event, date}) => {
 
+  const {theme }=useThemeContext()
   const { setOpen }= useModalContext()
   const {register, handleSubmit} = useForm()
+
+
+  const borderColor = theme.palette.mode.borderColor;
+  const typography = theme.palette.mode.typography;
+  // const focusColor =theme.palette.primary.light;
   //   {
   //   defaultValues: {
   //     start: date ,
@@ -87,7 +94,26 @@ const AddEvent = ({setEvent, event, date}) => {
 
 <ModalComponent title= "Add Event">
 <Form  align="flex-start"   titleButton=" Add " onSubmit={handleSubmit(addEventToCalendar)}>
+  <Stack direction="column" alignItems="flex-start" spacing={3}
+   sx={{
+    "& label " :{
+      color:typography,
+      opacity:0.6
+    },
+    
+    "& input " :{
+      color:typography,
+      
+    },
+    "& fieldset " :{
+      borderColor:borderColor
+    },
+  }}
+  >
+
+  
       <Stack direction="row" alignItems="center" spacing={3}>
+     
         <Typography  variant="body1">
             Text
         </Typography>
@@ -148,6 +174,7 @@ const AddEvent = ({setEvent, event, date}) => {
             />
 
           </Stack>
+            </Stack>
             </Stack>
 <Box display="flex" mt={3}>
 

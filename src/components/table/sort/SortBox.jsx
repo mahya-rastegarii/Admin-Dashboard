@@ -76,10 +76,17 @@ const SortBox = ({ sortDate, value, setValue }) => {
 //     </Box>
 <Box 
   sx={{
-   
-      backgroundColor:boxBg,
-      color:typography,
-  
+    // "& div , ul" :{
+    //   backgroundColor:boxBg
+    // }
+      // backgroundColor:boxBg,
+      // color:typography,
+    //   "& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper" : {
+    //     backgroundColor: boxBg ,
+  //   // } ,
+  //   "& .css-6hp17o-MuiList-root-MuiMenu-list" : {
+  //     backgroundColor: boxBg ,
+  // } 
   }}>
 
       <Select
@@ -89,14 +96,16 @@ const SortBox = ({ sortDate, value, setValue }) => {
         color: typography,
         backgroundColor: boxBg,
         border:` 1px solid ${borderColor}`,
-        " & .css-hfutr2-MuiSvgIcon-root-MuiSelect-icon , .css-bpeome-MuiSvgIcon-root-MuiSelect-icon":
+        " & svg":
         {
           color: typography,
         },
 
-       "& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper" : {
-          backgroundColor: boxBg ,
-      } 
+      //   "& ul.css-6hp17o-MuiList-root-MuiMenu-list" : {
+      //     backgroundColor: boxBg ,
+      // } 
+       
+     
       }}
       onChange={handleChange}
       displayEmpty

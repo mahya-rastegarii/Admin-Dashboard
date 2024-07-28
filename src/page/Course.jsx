@@ -347,7 +347,9 @@ const Course = () => {
       
       
      
-        <Stack direction="row"    spacing={3}>
+        <Stack direction="row"    spacing={3}
+       
+        >
         <FilterBox  setCourses={setCourses}/>
 
         <SortBox sortDate={sortCourseDate} value={courseSortValue} setValue={setCourseSortValue}/>

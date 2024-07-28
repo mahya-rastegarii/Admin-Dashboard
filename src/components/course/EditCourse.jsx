@@ -6,14 +6,19 @@ import { useModalContext } from '../../context/modal/ModalContext';
 import ModalComponent from '../modal/ModalComponent';
 import Form from '../form/Form';
 import { useForm } from 'react-hook-form';
+import { useThemeContext } from '../../context/theme/ThemeContext';
 
 // import CourseAction from './CourseAction';
 
 const EditCourse = ({courseData}) => {
 
+  const {theme }=useThemeContext()
   const {register, handleSubmit} = useForm()
   const { setOpen} = useModalContext()
 
+  const borderColor = theme.palette.mode.borderColor;
+  const typography = theme.palette.mode.typography;
+  const focusColor =theme.palette.primary.light;
 
   const {title, time, status, pic} = courseData
   const course= [ 
@@ -48,8 +53,26 @@ const EditCourse = ({courseData}) => {
 
     <ModalComponent title="Edit Course" >
     <Form align="center" Title="Add Course" titleButton="Save" onSubmit={handleSubmit(editCourseHandler)}>
-      <>
-     
+    <Stack direction="column" spacing={3}  
+        sx={{
+            
+           "& label" :{
+          color:typography,
+          opacity:0.6
+        },
+        
+        "& input , div , p , svg" :{
+          color:typography,
+          
+        },
+        "& fieldset " :{
+          borderColor:borderColor
+        },
+        
+       
+        
+
+        }}>
          <Box  component="label"
                // role={undefined}
                 sx={{position:"relative", cursor:"pointer", border:"3px dashed #ccc", marginBottom: 3,borderRadius:1, display:"flex", gap:2, justifyContent:"center", alignItems:"center"}} padding={ 0}>
@@ -82,7 +105,7 @@ const EditCourse = ({courseData}) => {
          </TextField>
          </Stack>
           
-      </>
+      </Stack>
     </Form>
   
     </ModalComponent>

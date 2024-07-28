@@ -6,12 +6,12 @@
   --mainPink: #e91e63;
   --mainCyan: #00bcd4;
   --mainPurple: #9c27b0;
-  --lightTeal:#e0f2f1;
-  --lightAmber:#fff8e1;
-  --lightLime:#f9fbe7;
-  --lightPink:#fce4ec;
-  --lightCyan:#e0f7fa;
-  --lightPurple:#f3e5f5;
+  --lightTeal:#3aa4a030;
+  --lightAmber:#fdc81a21;
+  --lightLime:#e8ff1830;
+  --lightPink:#fc4b8622;
+  --lightCyan:#23e4fd1c;
+  --lightPurple:#e762fc1d;
 }
 /* .dark{
     width:"100%";

@@ -21,6 +21,7 @@ import Form from "../form/Form";
 import ModalComponent from "../modal/ModalComponent";
 import { useThemeContext } from "../../context/theme/ThemeContext";
 // import CourseAction from './CourseAction';
+// import "../../App.css"
 
 const AddCourse = ({ courses, setCourses }) => {
   const { register, handleSubmit } = useForm();
@@ -49,9 +50,11 @@ const AddCourse = ({ courses, setCourses }) => {
   const { setOpen } = useModalContext();
   const {theme }=useThemeContext()
 
+
+  const boxBg = theme.palette.mode.boxBg;
   const borderColor = theme.palette.mode.borderColor;
   const typography = theme.palette.mode.typography;
-
+  const focusColor =theme.palette.primary.light;
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -93,8 +96,29 @@ const AddCourse = ({ courses, setCourses }) => {
         Title="Add Course"
         titleButton="Save"
         onSubmit={handleSubmit(addCourseHandler)}
+      
+      
       >
-        <>
+        <Stack direction="column" spacing={3}  
+        sx={{
+            
+           "& label" :{
+          color:typography,
+          opacity:0.6
+        },
+        
+        "& input , div , p , svg" :{
+          color:typography,
+          
+        },
+        "& fieldset " :{
+          borderColor:borderColor
+        },
+        
+       
+        
+
+        }}>
           <Box
             component="label"
             // role={undefined}
@@ -122,6 +146,7 @@ const AddCourse = ({ courses, setCourses }) => {
               <VisuallyHiddenInput type="file" />
             </>
           </Box>
+          
           {course.map((item) => (
             <Stack
 
@@ -130,47 +155,127 @@ const AddCourse = ({ courses, setCourses }) => {
               spacing={2}
               alignItems="center"
 
-              sx={{
-                color:typography,
-                "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root , .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root " :{
-                  color:"inherit"
-                }
-              }}
+              // sx={{
+              //   color:typography,
+              //   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root , .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root " :{
+              //     color: typography
+              //   },
+              //   "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline" :{
+              //     borderColor: borderColor,
+              //   },
+              //   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline" :{
+              //     borderColor: focusColor,
+                
+              //   },
+              //   "& .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused" :{
+              //     color:focusColor
+              //   }
+               
+                
+
+              // }}
             >
               {item.icon}
               <TextField
+              sx={{
+
+              //   "& p , label":{
+              //     color:typography,
+                 
+              //   },
+              //   "&  label" :{
+              //     opacity:0.5
+              //   },
+                
+              //     // "& .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root .Mui-focused" :{
+              //     //   color:focusColor
+              //     // }
+                  
+                // "& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper" :{
+                //       backgroundColor:`${boxBg} 
+                // }
+              }}
                 {...register(item.name)}
                 id="outlined-basic"
                 label={item.label}
                 type={item.type ? item.type : "text"}
                 // color="secondary"
-                sx={{}}
                 // color={typography}
+                
                 variant="outlined"
                 size="small"
                 InputProps={{
                   endAdornment:
                     item.type === "number" ? (
-                      <InputAdornment position="end">hour</InputAdornment>
+                      <InputAdornment position="end" >hour</InputAdornment>
                     ) : null,
                 }}
               />
             </Stack>
           ))}
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack width="100%" direction="row" spacing={2} alignItems="center" justifyContent="center"
+           sx={{
+
+            // "& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper" :{
+            
+            // }
+          }}
+          >
+         
             <infoOutlined />
             <TextField
+           
+            sx={{
+              // "& .css-t0v85v-MuiButtonBase-root-MuiMenuItem-root.Mui-selected" :{
+                backgroundColor:boxBg
+              // }
+            //   "& .css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input" :{
+            //     color:typography,
+            //   },
+            //   "& label , svg" :{
+            //     color:typography,
+            //     opacity:0.5
+            //   },
+            //   "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline" :{
+            //     borderColor: borderColor,
+            //   },
+            //   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root:hover" :{
+            //     borderColor: typography,
+            //   },
+            //   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline" :{
+            //     borderColor: focusColor,
+              
+            //   },
+            //   "& .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused" :{
+            //     color:focusColor
+            //   },
+          
+           
+            }}
               {...register("select")}
               id="outlined-basic"
               label="status"
               select
-              color="secondary"
+              
               size="small"
               defaultValue= {selectField[2]}
               variant="outlined"
             >
               {selectField.map((option) => (
-                <MenuItem key={option} value={option}>
+                <MenuItem key={option} value={option} 
+                sx={{
+
+                  backgroundColor:boxBg,
+                  color:typography,
+                  "&:hover" :{
+                    backgroundColor:boxBg,
+                  },
+                  // "& .css-9m7eo1-MuiButtonBase-root-MuiMenuItem-root.Mui-selected" :{
+                  //   backgroundColor:boxBg,
+                  // }
+                 
+                }}
+                >
                   {option}
                 </MenuItem>
               ))}
@@ -192,7 +297,7 @@ const AddCourse = ({ courses, setCourses }) => {
           {value}
           </Typography>
        </Stack> */}
-        </>
+        </Stack>
       </Form>
     </ModalComponent>
   );
