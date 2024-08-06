@@ -1,10 +1,12 @@
 import { Favorite, Person } from "@mui/icons-material";
 import { Box, Paper, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
-import Bars from "../components/charts/Bars";
-import Line from "../components/charts/Line";
-import Pie from "../components/charts/Pie";
+
 import { useThemeContext } from "../context/theme/ThemeContext";
+import UserCount from "../components/analytics/UserCount";
+import VisitSite from "../components/analytics/VisitSite";
+import Sales from "../components/analytics/Sales";
+import PopularCourses from "../components/analytics/PopularCourses";
 
 const Analytics = () => {
   const { theme } = useThemeContext();
@@ -46,23 +48,24 @@ const Analytics = () => {
     setValue(newValue);
   };
 
-  const Charts = [
-    {
-      chart: <Pie />,
-      icon: <Favorite />,
-      title: "popular Course from past years",
-    },
-    {
-      chart: <Bars {...barsChartData} />,
-      icon: <Favorite />,
-      title: "popular Course from past years",
-    },
-    {
-      chart: <Line {...LineChartData} />,
-      icon: <Person />,
-      title: "popular Course from past years",
-    },
-  ];
+  
+  // const Charts = [
+  //   {
+  //     chart: <Pie />,
+  //     icon: <Favorite />,
+  //     title: "popular Course from past years",
+  //   },
+  //   {
+  //     chart: <Bars {...barsChartData} />,
+  //     icon:<Person />,
+  //     title: "popular Course from past years",
+  //   },
+  //   {
+  //     chart: <Line {...LineChartData} />,
+  //     icon: <Person />,
+  //     title: "popular Course from past years",
+  //   },
+  // ];
 
   return (
     <Box
@@ -97,45 +100,32 @@ const Analytics = () => {
         </Box>
          */}
 
-      {Charts.map((data) => (
-        <Box
-          color={typography}
-          component={Paper}
-          elevation={2}
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          // mx="auto"
-          p={2}
-  
-          width="90%"
-          bgcolor={bgColor}
-          mt={6}
-          gap={7}
-        >
-          <Stack
-            direction="row"
-            width="90%"
-            spacing={1}
-            justifyContent="flex-start"
-            alignItems="center"
-          >
-            {data.icon}
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-              {data.title}
-            </Typography>
-          </Stack>
-          <Box
-            width="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            {data.chart}
-          </Box>
-        </Box>
-      ))}
+<Stack
+
+    width="90%"
+        direction={{ xs: "column", md: "row" }}
+        // mt={2}
+        spacing={{ xs: 1, sm: 2, md: 4 }}
+      >
+
+     
+         <UserCount chartWidth={800} boxWidth="60%"/>
+         <VisitSite chartWidth={450} boxWidth="40%"/>
+
+    </Stack>
+
+<Stack
+   width="90%"
+   direction={{ xs: "column", md: "column" }}
+        
+           mt={10}
+        spacing={{ xs: 1, sm: 2, md: 4 }}
+      >
+ 
+      <Sales chartWidth={1200} boxWidth="100%"/>
+      <PopularCourses  chartWidth={1200}  boxWidth="100%"/>
+
+    </Stack>
     </Box>
   );
 };

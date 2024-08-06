@@ -3,8 +3,8 @@ import React from 'react'
 
 import {BarChart} from '@mui/x-charts/BarChart'
 
-import "./chartStyle.css";
-import { useThemeContext } from '../../context/theme/ThemeContext';
+import "../chartStyle.css";
+import { useThemeContext } from '../../../context/theme/ThemeContext';
 
 
 const Bars = ({coursesData, years,widthChart, heightChart, marginChart}) => {
@@ -12,6 +12,7 @@ const Bars = ({coursesData, years,widthChart, heightChart, marginChart}) => {
 const {theme} = useThemeContext()
 
 const typography = theme.palette.mode.typography;
+const ChartColor=  theme.palette.primary.main;
   return (
     <BarChart
     sx={{ fill:typography,
@@ -19,11 +20,21 @@ const typography = theme.palette.mode.typography;
         stroke:typography
       }
     }}
-      series={coursesData}
+      series={ coursesData}
       width={widthChart}
       height={heightChart}
-      xAxis={[{ data: years, scaleType: 'band' }]}
+      xAxis={[{ 
+        // colorMap:{
+        //   color: ChartColor
+        // },
+        data: years,
+         scaleType: 'band',
+          
+          }]}
       margin={marginChart}
+      grid={{ horizontal: true }}
+      // layout ="horizontal"
+      // layout={layout ? "horizontal" : "vertical"}
     />
   )
 }

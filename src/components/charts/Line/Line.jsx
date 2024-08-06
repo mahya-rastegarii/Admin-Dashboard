@@ -3,12 +3,12 @@ import React from 'react';
 
 import { styled } from '@mui/material';
 import { LineChart, markElementClasses, lineElementClasses } from '@mui/x-charts';
-import { useThemeContext } from '../../context/theme/ThemeContext';
+import { useThemeContext } from '../../../context/theme/ThemeContext';
 
-import "./chartStyle.css";
+import "../chartStyle.css";
 
 
-const Line = ({numberOfUser, monthChart, labelChart, colorChart, widthChart, heightChart}) => {
+const Line = ({numberOfUser, monthChart, labelChart, colorChart, widthChart, heightChart, area, showMark}) => {
 
   const {theme} = useThemeContext()
 
@@ -28,8 +28,10 @@ const typography = theme.palette.mode.typography;
     series={[
       {
         data: numberOfUser,
-        label:labelChart,
-        color:colorChart
+        // label:labelChart,
+        color:colorChart,
+        showMark: showMark,
+        area: area
       },
     ]}
 
