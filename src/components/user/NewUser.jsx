@@ -3,49 +3,49 @@ import { Avatar, Box, Divider, List, ListItem, ListItemAvatar, ListItemText, Sta
 import React from 'react'
 import { useThemeContext } from '../../context/theme/ThemeContext'
 
-const NewUser = () => {
+const NewUser = ({newUser}) => {
 
   const {theme } =useThemeContext()
   const typography = theme.palette.mode.typography
 
-    const user =[
-        {
-          name:"Mahya rastegari",
-          email:"mahya@gmail.com",
-          avatar: "M",
-          numberCourse: 0,
-          data: "2024/3/1"
-        },
-        {
-          name:"Mahya rastegari",
-          email:"mahya@gmail.com",
-          avatar: "M",
-          numberCourse: 0,
-          data: "2024/3/1"
-        },
-        {
-          name:"Mahya rastegari",
-          email:"mahya@gmail.com",
-          avatar: "M",
-          numberCourse: 0,
-          data: "2024/3/1"
-        },
-        {
-          name:"Mahya rastegari",
-          email:"mahya@gmail.com",
-          avatar: "M",
-          numberCourse: 0,
-          data: "2024/3/1"
-        },
-        {
-          name:"Mahya rastegari",
-          email:"mahya@gmail.com",
-          avatar: "M",
-          numberCourse: 0,
-          data: "2024/3/1"
-        }
+    // const user =[
+    //     {
+    //       name:"Mahya rastegari",
+    //       email:"mahya@gmail.com",
+    //       avatar: "M",
+    //       numberCourse: 0,
+    //       data: "2024/3/1"
+    //     },
+    //     {
+    //       name:"Mahya rastegari",
+    //       email:"mahya@gmail.com",
+    //       avatar: "M",
+    //       numberCourse: 0,
+    //       data: "2024/3/1"
+    //     },
+    //     {
+    //       name:"Mahya rastegari",
+    //       email:"mahya@gmail.com",
+    //       avatar: "M",
+    //       numberCourse: 0,
+    //       data: "2024/3/1"
+    //     },
+    //     {
+    //       name:"Mahya rastegari",
+    //       email:"mahya@gmail.com",
+    //       avatar: "M",
+    //       numberCourse: 0,
+    //       data: "2024/3/1"
+    //     },
+    //     {
+    //       name:"Mahya rastegari",
+    //       email:"mahya@gmail.com",
+    //       avatar: "M",
+    //       numberCourse: 0,
+    //       data: "2024/3/1"
+    //     }
        
-      ]
+    //   ]
 
 
   return (
@@ -58,10 +58,10 @@ const NewUser = () => {
     <List display="flex"  sx={{ width: '100%', padding:0 }}>
   
   {
-   user.map( item => (
+   newUser.map( item => (
      <>
    
-     <ListItem key={item.name} sx={{ paddingX:2}} alignItems="center"  >
+     <ListItem key={item.id} sx={{ paddingX:2}} alignItems="center"  >
         <ListItemAvatar>
           <Avatar > {item.avatar} </Avatar>
         </ListItemAvatar>
@@ -80,7 +80,7 @@ const NewUser = () => {
             color= "black"
             
           >
-           {item.name}
+           {item.fullNameEn}
           </Typography>
           }
 
@@ -105,7 +105,7 @@ const NewUser = () => {
                 variant="body3"
                 sx={{color: typography, }}>
         {
-            item.data
+            item.date
         }
       </Typography>
 

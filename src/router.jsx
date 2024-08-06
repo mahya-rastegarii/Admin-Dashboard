@@ -1,30 +1,34 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import Analytics from "./page/Analytics";
-import Calendar from "./page/calendar/Calendar";
-import Course from "./page/Course";
-import Dashboard from "./page/Dashboard";
+
+import Courses, { courseLoader }  from "./page/Courses";
+import Dashboard, { NewDataLoader } from "./page/Dashboard";
 import Support from "./page/Support";
-import User from "./page/User";
-import Main from "./components/main/Main";
+import User, { userLoader } from "./page/User";
+import MainLayout from "./components/main/MainLayout";
+import ContainerCalendar, { eventLoader } from "./page/calendar/ContainerCalendar";
 // import CourseDetails from "./page/CourseDetails";
 
 const router = createBrowserRouter([
   {
-  element: <Main/>,
+  element: <MainLayout/>,
   children :[
     {
       path: "/",
-      element: <Dashboard />
+      element: <Dashboard />,
+      loader: NewDataLoader
     },
     {
       path: "user",
-      element: <User />
-    
+      element: <User />,
+      loader: userLoader
     },
     {
       path: "course",
-      element: <Course />,
+      element: <Courses />,
+      loader: courseLoader
+      // loader: FetchCourses
 
     },
   
@@ -35,7 +39,8 @@ const router = createBrowserRouter([
   
     {
       path: "calendar",
-      element: <Calendar />
+      element: <ContainerCalendar />,
+      loader: eventLoader
     },
     {
       path: "analytics",

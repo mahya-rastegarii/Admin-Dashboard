@@ -8,21 +8,13 @@ import Navbar from "../navbar/Navbar";
 import Sidebar from "../sidebar/Sidebar";
 // import { FilterProvider } from '../../context/filter/FilterContext'
 import "../../App.css";
+import { ChartProvider } from "../../context/chart/ChartContext";
+import { NotificationProvider } from "../../context/notification/NotificationContext";
 
-const Main = () => {
-
+const MainLayout = () => {
   const drawerWidth = 240;
-  
-
-
 
   const [open, setOpen] = useState(false);
-
-
-
-  
-
-
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -59,21 +51,29 @@ const Main = () => {
       }}
     >
       <Navbar
-      
         drawerWidth={drawerWidth}
         open={open}
         handleDrawer={handleDrawer}
       />
-      <Sidebar drawerWidth={drawerWidth} open={open}/>
+      <Sidebar drawerWidth={drawerWidth} open={open} />
 
       <Box
-        sx={{ my: 14, mx: "auto", padding:3, width: "100%", overflow:{sx:"scroll",  md:"hidden"}
-      }}
+        sx={{
+          my: 14,
+          mx: "auto",
+          padding: 3,
+          width: "100%",
+          overflow: { sx: "scroll", md: "hidden" },
+        }}
         className={darkMode ? "dark" : "light"}
       >
         <FilterProvider>
           <ModalProvider>
-            <Outlet />
+           <NotificationProvider>
+            
+              <Outlet />
+           </NotificationProvider>
+            
           </ModalProvider>
         </FilterProvider>
       </Box>
@@ -81,4 +81,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default MainLayout;

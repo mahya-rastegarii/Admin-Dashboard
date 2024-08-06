@@ -5,11 +5,10 @@ import { useForm } from 'react-hook-form'
 import ModalComponent from '../modal/ModalComponent'
 import { useModalContext } from '../../context/modal/ModalContext'
 
-const Form = ({children, align, titleButton, onSubmit}) => {
-
-    const {setOpen}= useModalContext()
+const Form = ({children, align, titleButton, onSubmit, cancelSubmit}) => {
 
 
+  
     // const onSubmit = (data) =>{
     //     console.log(data)
     // }
@@ -25,7 +24,7 @@ const Form = ({children, align, titleButton, onSubmit}) => {
           </Box>
               <Stack direction="row" alignItems="center" justifyContent="center" spacing={2} mt={5} mb={3}>
     <Button variant="contained" color="success" type="submit" > {titleButton} </Button> 
-    <Button variant="contained" color="error" onClick={() => setOpen(false)}> Cancel</Button> 
+    <Button variant="contained" color="error" onClick={cancelSubmit}> Cancel</Button> 
      </Stack>
     </form>
    

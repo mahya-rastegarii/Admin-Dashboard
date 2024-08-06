@@ -2,7 +2,7 @@ import {
   AccessTimeOutlined,
   CloudUpload,
   PersonOutline,
-  SchoolOutlined,
+  SchoolOutlined
 } from "@mui/icons-material";
 import {
   Box,
@@ -13,44 +13,49 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import JsPic from "../../assets/img/images.png";
 import { useModalContext } from "../../context/modal/ModalContext";
+import { useThemeContext } from "../../context/theme/ThemeContext";
+import { supabase } from "../../core/createClient";
 import Form from "../form/Form";
 import ModalComponent from "../modal/ModalComponent";
-import { useThemeContext } from "../../context/theme/ThemeContext";
 // import CourseAction from './CourseAction';
 // import "../../App.css"
 
-const AddCourse = ({ courses, setCourses }) => {
-  const { register, handleSubmit } = useForm();
+const AddCourse = ({ insertCourse }) => {
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const course = [
     {
       label: "CourseName",
       icon: <SchoolOutlined />,
       name: "title",
+      error: "فیلد نام دوره نمیتواند خالی باشد",
     },
     {
       label: "Teacher",
       icon: <PersonOutline />,
       name: "teacher",
+      error: "فیلد نام مدرس دوره نمیتواند خالی باشد",
     },
     {
       label: "Time",
       icon: <AccessTimeOutlined />,
       name: "time",
+       error: "فیلد زمان دوره نمیتواند خالی باشد",
       type: "number",
     },
   ];
 
-  const selectField = ["not Started", "completed", "in Progress"];
+  const selectField = [ "Presell", "Completed", "In Progress"];
 
   const { setOpen } = useModalContext();
   const {theme }=useThemeContext()
 
-
+  const [uploadImage, setUploadImage]= useState(null);
+  const [imageFile, setImageFile]= useState(null);
+  // const [pending, setPending]= useState(false)
   const boxBg = theme.palette.mode.boxBg;
   const borderColor = theme.palette.mode.borderColor;
   const typography = theme.palette.mode.typography;
@@ -69,34 +74,68 @@ const AddCourse = ({ courses, setCourses }) => {
     margin: 3,
   });
 
+  const ChangeImages = (e) => {
+   
+    const image = e.target.files[0];
+    setImageFile(image)
+    
+
+
+    setUploadImage(URL.createObjectURL(image))
+    
+   console.log( "image", image )
+  }
+
+  const uploadFile = async() =>{
+    
+    const {data}= await supabase
+    .storage
+    .from('Images')
+    .upload('Course_pic/'+ imageFile.name, imageFile)
+      console.log('data', data)
+  }
   const addCourseHandler = (data) => {
     const { title, teacher, time, select } = data;
+
+    // console.log('uploadImage', uploadImage);
+    uploadFile()
     const newCourse = {
-      id: courses.length + 1,
-      title,
-      pic: JsPic,
-      teacher,
-      student: 0,
-      status: select,
+    
+      title: title,
+      titleFa: title,
+      picture: `https://qjfoypokbphqxocozpfj.supabase.co/storage/v1/object/public/Images/Course_pic/${imageFile.name}`,
+      teacher: teacher,
+      teacherFa: teacher,
+      statusEn: select,
+      statusFa: select,
       time,
-      lastUpdate: Date(),
-      rating: 0,
     };
 
    
+    insertCourse(newCourse)
 
-    setCourses((preState) => [...preState, newCourse]);
+    // setCourses((preState) => [...preState, newCourse]);
+
+    reset()
     setOpen(false);
   };
 
+  const cancelSubmit= () => {
+    setOpen(false)
+    reset()
+  }
+
+ 
+
   return (
-    <ModalComponent title="Add Course">
+    <ModalComponent title="Add Course" closeForm={cancelSubmit}>
       <Form
         align="center"
         Title="Add Course"
         titleButton="Save"
         onSubmit={handleSubmit(addCourseHandler)}
-      
+
+        cancelSubmit={cancelSubmit}
       
       >
         <Stack direction="column" spacing={3}  
@@ -135,19 +174,26 @@ const AddCourse = ({ courses, setCourses }) => {
               alignItems: "center",
              
             }}
-            padding={6}
+            padding={ uploadImage ? 0 :6}
           >
-            <>
+         
+           
+            <img src={uploadImage} />
+            
+         
+            <Box sx={{ display: uploadImage ? "none" : "block"}}>
+            
               <CloudUpload />
-
+ 
               <Typography variant="h6" component="span">
                 Upload Image
               </Typography>
-              <VisuallyHiddenInput type="file" />
-            </>
+              <VisuallyHiddenInput type="file"  onChange={ChangeImages}/>
+            </Box>
+           
+
           </Box>
-          
-          {course.map((item) => (
+          {/* {course.map((item) => (
             <Stack
 
               key={item.label}
@@ -211,8 +257,160 @@ const AddCourse = ({ courses, setCourses }) => {
                     ) : null,
                 }}
               />
+              
             </Stack>
-          ))}
+          ))} */}
+
+
+<Stack
+
+direction="row"
+spacing={2}
+alignItems="center"
+
+// sx={{
+//   color:typography,
+//   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root , .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root " :{
+//     color: typography
+//   },
+//   "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline" :{
+//     borderColor: borderColor,
+//   },
+//   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline" :{
+//     borderColor: focusColor,
+  
+//   },
+//   "& .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused" :{
+//     color:focusColor
+//   }
+ 
+  
+
+// }}
+>
+<SchoolOutlined />
+
+<Stack direction="column">
+
+<TextField
+ sx={{}}
+  {...register("title", { required:"فیلد نام دوره نمیتواند خالی باشد"})}
+  id="outlined-basic"
+  label= "CourseName"
+  type="text"
+
+  // color={typography}
+  
+  variant="outlined"
+  size="small"
+ 
+/>
+
+{
+             
+             errors.title && errors.title.type=== "required" && (
+              <Typography sx={{color:"red !important"}}>
+               {
+                 errors.title?.message
+               }
+
+              </Typography>
+             )
+           }
+
+</Stack>
+</Stack>
+<Stack
+
+direction="row"
+spacing={2}
+alignItems="center"
+
+>
+<PersonOutline />
+
+  <Stack direction="column">
+<TextField
+sx={{
+}}
+  {...register("teacher",{ required:"فیلد نام مدرس دوره نمیتواند خالی باشد"})}
+  id="outlined-basic"
+  label= "Teacher"
+  type="text"
+  // color="secondary"
+  // color={typography}
+  
+  variant="outlined"
+  size="small"
+  // InputProps={{
+  //   endAdornment:
+  //     item.type === "number" ? (
+  //       <InputAdornment position="end" >hour</InputAdornment>
+  //     ) : null,
+  // }}
+/>
+
+ {
+             
+              errors.teacher && errors.teacher.type=== "required" && (
+               <Typography sx={{color:"red !important"}}>
+                {
+                  errors.teacher?.message
+                }
+
+               </Typography>
+              )
+            }
+
+</Stack>
+</Stack>
+<Stack
+
+direction="row"
+spacing={2}
+alignItems="center"
+
+
+>
+
+<AccessTimeOutlined />
+
+  <Stack direction="column">
+<TextField
+sx={{
+
+
+}}
+  {...register("time",{ required:"فیلد زمان دوره نمیتواند خالی باشد"})}
+  id="outlined-basic"
+  label= "Time"
+  type="number"
+  
+  
+  variant="outlined"
+  size="small"
+  InputProps={{
+    endAdornment:
+     (
+
+       <InputAdornment position="end" >hour</InputAdornment>
+     )
+  }}
+/>
+{
+             
+             errors.time && errors.time.type=== "required" && (
+              <Typography sx={{color:"red !important"}}>
+               {
+                 errors.time?.message
+               }
+
+              </Typography>
+             )
+           }
+
+</Stack>
+</Stack>
           <Stack width="100%" direction="row" spacing={2} alignItems="center" justifyContent="center"
            sx={{
 

@@ -1,30 +1,28 @@
 import {
   alpha,
-  Avatar,
   Box,
+  CircularProgress,
   Paper,
   Stack,
   styled,
-  Table,
-  TableBody,
   TableCell,
-  tableCellClasses,
-  TableContainer,
-  TableFooter,
-  TableHead,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
-  Typography,
+  tableCellClasses
 } from "@mui/material";
 import { debounce } from "lodash";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
+import { Await, defer, useLoaderData } from "react-router-dom";
 import SearchBox from "../components/search/SearchBox";
 import SortBox from "../components/table/sort/SortBox";
 import { rows } from "../components/user/UserData";
+import UserList from "../components/user/UserList";
 import { useThemeContext } from "../context/theme/ThemeContext";
+import { supabase } from "../core/createClient";
+import LoadComponent from "../components/Loading/LoadComponent";
 
 export default function User() {
+
+
+  const data = useLoaderData()
   const { theme: customTheme } = useThemeContext();
   const boxBgColor = customTheme.palette.mode.boxBg;
   const headerTableColor = alpha(customTheme.palette.primary.light, 0.2);
@@ -32,7 +30,7 @@ export default function User() {
   const typography = customTheme.palette.mode.typography;
   const btnColor = customTheme.palette.primary.main;
 
-  const [users, setUsers] = useState(rows);
+  const [users, setUsers] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [userSortValue, setUserSortValue] = useState("Newest");
@@ -64,12 +62,12 @@ export default function User() {
       align: "left",
       minWidth: 130,
     },
-    // {
-    //   id: 2,
-    //   label: "lastName",
-    //   align: "center",
-    //   minWidth: 130,
-    // },
+    {
+      id: 2,
+      label: "fullName",
+      align: "center",
+      minWidth: 130,
+    },
     {
       id: 3,
       label: "email",
@@ -101,7 +99,7 @@ export default function User() {
   // const filterData= ["Courses", "phone Number"]
   //  setSelectValue(filterData)
 
-  const rowTable = users.slice(
+  const rowTable = users?.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
@@ -149,8 +147,20 @@ export default function User() {
     }
   };
 
+  const fetchUsers = async() =>{
+    
+     let { data, error } = await supabase
+     .from('users')
+     .select('*')
+     .order('date', {ascending:false})
+
+     setUsers(data)
+    // console.log("Data", data)
+  } 
+
   useEffect(() => {
     descendingSort();
+    fetchUsers()
   }, []);
 
   return (
@@ -194,120 +204,32 @@ export default function User() {
         
       </Stack>
 
-      <TableContainer sx={{ width: "100%" }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              {headCells.map((headCell) => (
-                <StyledTableCell
-                  key={headCell.id}
-                  align={headCell.align}
-                  style={{ minWidth: headCell.minWidth }}
-                >
-                  {/* {
-                headCell.label === "name" ?  
-                <TableSortLabel  > 
-             <Typography variant="body1" component="h2">
+         <Suspense fallback={<LoadComponent/>}>
 
-                {headCell.label}
-                </Typography>
-                </TableSortLabel> :
-                
-                <Typography variant="body1" component="h2">
-                {headCell.label}
-                </Typography>
-              } */}
-
-                  {headCell.label === "name" ? (
-                    <TableSortLabel active>
-                      <Typography
-                        variant="body1"
-                        component="h2"
-                        sx={{ fontWeight: "bold" }}
-                      >
-                        {headCell.label}
-                      </Typography>
-                    </TableSortLabel>
-                  ) : (
-                    <Typography
-                      variant="body1"
-                      component="h2"
-                      sx={{ fontWeight: "bold" }}
-                    >
-                      {headCell.label}
-                    </Typography>
-                  )}
-                </StyledTableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rowTable.map((item) => (
-              <TableRow hover sx={{}} key={item.id}>
-                {/* <TableCell align="center"><Avatar>{ item.avatar}</Avatar></TableCell> */}
-                <TableCell sx={{ borderColor: borderColor }} align="center">
-                  <Stack
-                    direction="row"
-                    spacing={3}
-                    display="flex"
-                    alignItems="center "
-                  >
-                    <Avatar>{item.avatar}</Avatar>
-                    <Typography variant="body2" sx={{ color: typography }}>
-                      {item.name}
-                    </Typography>
-                  </Stack>
-                </TableCell>
-                {/* <TableCell align="center">{item.lastName}</TableCell> */}
-                <TableCell sx={{ borderColor: borderColor }} align="center">
-                  <Typography variant="body2" sx={{ color: typography }}>
-                    {item.email}
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ borderColor: borderColor }} align="center">
-                  <Typography variant="body2" sx={{ color: typography }}>
-                    {item.phone}
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ borderColor: borderColor }} align="center">
-                  <Typography variant="body2" sx={{ color: typography }}>
-                    {item.date}
-                  </Typography>
-                </TableCell>
-                {/* <TableCell align="center">
-               
-
-                <Typography variant="body2">
-                {item.numberOfCourses}  
-                </Typography> 
-                </TableCell> */}
-              </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter 
-            sx={{
-              "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
-                fill:typography
-              }
-
-            }}
-              >
-            <TableRow>
-              <TablePagination
-              sx={{ border:"none", color:typography  }}
-                rowsPerPageOptions={[5, 10, 15]}
-                // colSpan={3}
-
-                count={users.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
+          <Await resolve={data.users}>
+             {
+               (fetchUsers) => <UserList users={fetchUsers}/>
+             } 
+          </Await>
+         </Suspense>
     </Box>
   );
 }
+
+export async function userLoader (){
+   
+  return defer ({
+    users: fetchUsers()
+  })
+}
+
+const fetchUsers = async() =>{
+    
+  const {data} = await supabase
+  .from('users')
+  .select('*')
+  .order('date', {ascending:false})
+
+  return data
+ // console.log("Data", data)
+} 

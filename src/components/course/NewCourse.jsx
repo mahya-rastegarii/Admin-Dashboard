@@ -1,3 +1,5 @@
+import React from "react";
+
 import { StarRate } from "@mui/icons-material";
 import {
   Avatar,
@@ -12,11 +14,10 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React from "react";
-import jsPic from "../../assets/img/images.png";
+// import jsPic from "../../assets/img/images.png";
 import { useThemeContext } from "../../context/theme/ThemeContext";
 
-const NewCourse = () => {
+const NewCourse = ({newCourse}) => {
   const { theme } = useThemeContext();
   const typography = theme.palette.mode.typography;
   const borderColor = theme.palette.mode.borderColor;
@@ -48,41 +49,41 @@ const NewCourse = () => {
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      avatar: jsPic,
-      title: "javascript",
-      date: "2024/3/1",
-      status: "Completed",
-      rating: "4.9",
-    },
-    {
-      id: 2,
-      avatar: jsPic,
-      title: "javascript",
-      date: "2024/3/1",
-      status: "Completed",
-      rating: "5.0",
-    },
-    {
-      id: 3,
-      avatar: jsPic,
-      title: "javascript",
-      date: "2024/3/1",
-      status: "Completed",
-      rating: "4.3",
-    },
+  // const rows = [
+  //   {
+  //     id: 1,
+  //     avatar: jsPic,
+  //     title: "javascript",
+  //     date: "2024/3/1",
+  //     status: "Completed",
+  //     rating: "4.9",
+  //   },
+  //   {
+  //     id: 2,
+  //     avatar: jsPic,
+  //     title: "javascript",
+  //     date: "2024/3/1",
+  //     status: "Completed",
+  //     rating: "5.0",
+  //   },
+  //   {
+  //     id: 3,
+  //     avatar: jsPic,
+  //     title: "javascript",
+  //     date: "2024/3/1",
+  //     status: "Completed",
+  //     rating: "4.3",
+  //   },
 
-    {
-      id: 4,
-      avatar: jsPic,
-      title: "javascript",
-      date: "2024/3/1",
-      status: "Completed",
-      rating: "4.6",
-    },
-  ];
+  //   {
+  //     id: 4,
+  //     avatar: jsPic,
+  //     title: "javascript",
+  //     date: "2024/3/1",
+  //     status: "Completed",
+  //     rating: "4.6",
+  //   },
+  // ];
 
   return (
     <TableContainer>
@@ -103,8 +104,8 @@ const NewCourse = () => {
           </TableRow>
         </TableHead>
         <TableBody >
-          {rows.map((row) => (
-            <TableRow key={row.title}>
+          {newCourse.map((row) => (
+            <TableRow key={row.id}>
               <TableCell component="th" scope="row" sx={{borderColor: borderColor }}>
                 <Stack
                   direction="row"
@@ -114,7 +115,7 @@ const NewCourse = () => {
                 >
                   <Avatar
                     sx={{ width: 45 }}
-                    src={row.avatar}
+                    src={row.picture}
                     variant="square"
                   ></Avatar>
                   <Typography variant="body1" sx={{ color: typography }}>
@@ -124,11 +125,11 @@ const NewCourse = () => {
               </TableCell>
               <TableCell align="center" sx={{borderColor: borderColor }}>
                 <Typography variant="body2" sx={{ color: typography }}>
-                  {row.date}
+                {row.lastUpdate.slice(0, 10)}
                 </Typography>
               </TableCell>
               <TableCell align="center" sx={{borderColor: borderColor }}>
-                <Chip label={row.status} color="primary" variant="outlined" />
+                <Chip label={row.statusEn} color="primary" variant="outlined" />
               </TableCell>
               <TableCell align="center" sx={{borderColor: borderColor}}>
                 <Box
@@ -140,7 +141,7 @@ const NewCourse = () => {
                 >
                   <StarRate sx={{ color: "#ffc400", fontSize: 26 }} />
                   <Typography variant="body2" sx={{ color: typography }}>
-                    {row.rating}
+                    {row.star}
                   </Typography>
                 </Box>
                 {/* <Rating name="half-rating-read" defaultValue={row.rating} precision={0.5} readOnly size="small" /> */}

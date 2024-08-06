@@ -4,24 +4,28 @@ import { useThemeContext } from '../../context/theme/ThemeContext'
 import { Backdrop, Box, Button, Fade, IconButton, Modal, Stack, Typography } from '@mui/material'
 import { Close } from '@mui/icons-material'
 import Form from '../form/Form'
+import { useForm } from 'react-hook-form'
 
 
-const ModalComponent = ({children, title}) => {
+const ModalComponent = ({closeForm, children, title}) => {
 
-  const {theme } = useThemeContext()
+  const {reset }= useForm()
+
   const {open, setOpen} = useModalContext()
+  const {theme } = useThemeContext()
 
 
   const bgColor = theme.palette.mode.boxBg;
   const borderColor = theme.palette.mode.borderColor;
   const typography =theme.palette.mode.typography;
 
+ 
 
     return (
         <div>
         <Modal
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={closeForm}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
     
@@ -46,7 +50,9 @@ const ModalComponent = ({children, title}) => {
       <IconButton
         sx={{color:typography}}
        aria-label="Close"
-        onClick= {() => setOpen(false)}>
+        onClick= {closeForm}
+        
+        >
         
         <Close/>
       </IconButton>
