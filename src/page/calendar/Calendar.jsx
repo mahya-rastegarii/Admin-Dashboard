@@ -73,7 +73,7 @@ const Calendar = ({setDate, language, setRemove, setOpen, setModal, events, setD
         text: language === faLocale ? "افزودن رویداد" : "addEvent",
         click: () => {
           const date = new Date()
-          const today = date.toISOString().split('T')[0]
+          const today = date.toISOString().split('T')[0];
           setModal("addEvent");
           setDate(null);
           setDateToday(today)

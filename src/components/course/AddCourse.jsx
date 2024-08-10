@@ -1,31 +1,40 @@
 import {
   AccessTimeOutlined,
   CloudUpload,
+  Info,
+  InfoOutlined,
   PersonOutline,
-  SchoolOutlined
+  SchoolOutlined,
 } from "@mui/icons-material";
 import {
   Box,
   InputAdornment,
-  MenuItem,
   Stack,
   styled,
   TextField,
-  Typography,
-} from "@mui/material";
+  LinearProgress,
+  Typography}
+   from "@mui/material";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useModalContext } from "../../context/modal/ModalContext";
 import { useThemeContext } from "../../context/theme/ThemeContext";
 import { supabase } from "../../core/createClient";
 import Form from "../form/Form";
+import MenuContainer from "../menu/MenuContainer";
 import ModalComponent from "../modal/ModalComponent";
 // import CourseAction from './CourseAction';
 // import "../../App.css"
 
 const AddCourse = ({ insertCourse }) => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
+  const [item, setItem] = useState("Completed");
   const course = [
     {
       label: "CourseName",
@@ -43,23 +52,23 @@ const AddCourse = ({ insertCourse }) => {
       label: "Time",
       icon: <AccessTimeOutlined />,
       name: "time",
-       error: "فیلد زمان دوره نمیتواند خالی باشد",
+      error: "فیلد زمان دوره نمیتواند خالی باشد",
       type: "number",
     },
   ];
 
-  const selectField = [ "Presell", "Completed", "In Progress"];
+  const selectField = ["Presell", "Completed", "In Progress"];
 
   const { setOpen } = useModalContext();
-  const {theme }=useThemeContext()
+  const { theme } = useThemeContext();
 
-  const [uploadImage, setUploadImage]= useState(null);
-  const [imageFile, setImageFile]= useState(null);
-  // const [pending, setPending]= useState(false)
+  const [uploadImage, setUploadImage] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [loading, setLoading]= useState(false)
   const boxBg = theme.palette.mode.boxBg;
   const borderColor = theme.palette.mode.borderColor;
   const typography = theme.palette.mode.typography;
-  const focusColor =theme.palette.primary.light;
+  const focusColor = theme.palette.primary.light;
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -75,57 +84,61 @@ const AddCourse = ({ insertCourse }) => {
   });
 
   const ChangeImages = (e) => {
-   
     const image = e.target.files[0];
-    setImageFile(image)
-    
+    setImageFile(image);
 
+    setUploadImage(URL.createObjectURL(image));
+       
+    // console.log("image", image);
+  };
 
-    setUploadImage(URL.createObjectURL(image))
-    
-   console.log( "image", image )
-  }
+  const uploadFile = async () => {
+  
+    const { data } = await supabase.storage
+      .from("Images")
+      .upload("Course_pic/" + imageFile.name, imageFile);
+    console.log("data", data);
+  };
 
-  const uploadFile = async() =>{
-    
-    const {data}= await supabase
-    .storage
-    .from('Images')
-    .upload('Course_pic/'+ imageFile.name, imageFile)
-      console.log('data', data)
-  }
   const addCourseHandler = (data) => {
-    const { title, teacher, time, select } = data;
+    const { title, teacher, time } = data;
 
-    // console.log('uploadImage', uploadImage);
-    uploadFile()
-    const newCourse = {
+    const date = new Date()
+    const today = date.toISOString().split('T')[0];
     
+    // console.log('uploadImage', uploadImage);
+    uploadFile();
+    const newCourse = {
       title: title,
       titleFa: title,
       picture: `https://qjfoypokbphqxocozpfj.supabase.co/storage/v1/object/public/Images/Course_pic/${imageFile.name}`,
       teacher: teacher,
       teacherFa: teacher,
-      statusEn: select,
-      statusFa: select,
+      statusEn: item,
+      statusFa: item,
+      lastUpdate: today,
+      // imageName:imageFile.name,
+      // picFile: imageFile,
       time,
+      
+
     };
 
-   
-    insertCourse(newCourse)
-
+    insertCourse(newCourse);
+    
+    
     // setCourses((preState) => [...preState, newCourse]);
 
-    reset()
+    reset();
+    setUploadImage(null)
     setOpen(false);
   };
 
-  const cancelSubmit= () => {
-    setOpen(false)
-    reset()
-  }
-
- 
+  const cancelSubmit = () => {
+    setOpen(false);
+    setUploadImage(null)
+    reset();
+  };
 
   return (
     <ModalComponent title="Add Course" closeForm={cancelSubmit}>
@@ -134,30 +147,25 @@ const AddCourse = ({ insertCourse }) => {
         Title="Add Course"
         titleButton="Save"
         onSubmit={handleSubmit(addCourseHandler)}
-
         cancelSubmit={cancelSubmit}
-      
       >
-        <Stack direction="column" spacing={3}  
-        sx={{
-            
-           "& label" :{
-          color:typography,
-          opacity:0.6
-        },
-        
-        "& input , div , p , svg" :{
-          color:typography,
-          
-        },
-        "& fieldset " :{
-          borderColor:borderColor
-        },
-        
-       
-        
+        <Stack
+          direction="column"
+          spacing={3}
+          sx={{
+            "& label": {
+              color: typography,
+              opacity: 0.6,
+            },
 
-        }}>
+            "& input , div , p , svg": {
+              color: typography,
+            },
+            "& fieldset ": {
+              borderColor: borderColor,
+            },
+          }}
+        >
           <Box
             component="label"
             // role={undefined}
@@ -172,26 +180,22 @@ const AddCourse = ({ insertCourse }) => {
               justifyContent: "center",
               color: typography,
               alignItems: "center",
-             
             }}
-            padding={ uploadImage ? 0 :6}
+            padding={uploadImage ? 0 : 6}
           >
-         
-           
+        
             <img src={uploadImage} />
-            
-         
-            <Box sx={{ display: uploadImage ? "none" : "block"}}>
-            
+
+          
+            <Box sx={{ display: uploadImage ? "none" : "block" }}>
               <CloudUpload />
- 
+
               <Typography variant="h6" component="span">
                 Upload Image
               </Typography>
-              <VisuallyHiddenInput type="file"  onChange={ChangeImages}/>
+              <VisuallyHiddenInput type="file" onChange={ChangeImages} />
             </Box>
            
-
           </Box>
           {/* {course.map((item) => (
             <Stack
@@ -261,167 +265,120 @@ const AddCourse = ({ insertCourse }) => {
             </Stack>
           ))} */}
 
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
 
-<Stack
+            // sx={{
+            //   color:typography,
+            //   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root , .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root " :{
+            //     color: typography
+            //   },
+            //   "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline" :{
+            //     borderColor: borderColor,
+            //   },
+            //   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline" :{
+            //     borderColor: focusColor,
 
-direction="row"
-spacing={2}
-alignItems="center"
+            //   },
+            //   "& .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused" :{
+            //     color:focusColor
+            //   }
 
-// sx={{
-//   color:typography,
-//   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root , .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root " :{
-//     color: typography
-//   },
-//   "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline" :{
-//     borderColor: borderColor,
-//   },
-//   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline" :{
-//     borderColor: focusColor,
-  
-//   },
-//   "& .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused" :{
-//     color:focusColor
-//   }
- 
-  
-
-// }}
->
-<SchoolOutlined />
-
-<Stack direction="column">
-
-<TextField
- sx={{}}
-  {...register("title", { required:"فیلد نام دوره نمیتواند خالی باشد"})}
-  id="outlined-basic"
-  label= "CourseName"
-  type="text"
-
-  // color={typography}
-  
-  variant="outlined"
-  size="small"
- 
-/>
-
-{
-             
-             errors.title && errors.title.type=== "required" && (
-              <Typography sx={{color:"red !important"}}>
-               {
-                 errors.title?.message
-               }
-
-              </Typography>
-             )
-           }
-
-</Stack>
-</Stack>
-<Stack
-
-direction="row"
-spacing={2}
-alignItems="center"
-
->
-<PersonOutline />
-
-  <Stack direction="column">
-<TextField
-sx={{
-}}
-  {...register("teacher",{ required:"فیلد نام مدرس دوره نمیتواند خالی باشد"})}
-  id="outlined-basic"
-  label= "Teacher"
-  type="text"
-  // color="secondary"
-  // color={typography}
-  
-  variant="outlined"
-  size="small"
-  // InputProps={{
-  //   endAdornment:
-  //     item.type === "number" ? (
-  //       <InputAdornment position="end" >hour</InputAdornment>
-  //     ) : null,
-  // }}
-/>
-
- {
-             
-              errors.teacher && errors.teacher.type=== "required" && (
-               <Typography sx={{color:"red !important"}}>
-                {
-                  errors.teacher?.message
-                }
-
-               </Typography>
-              )
-            }
-
-</Stack>
-</Stack>
-<Stack
-
-direction="row"
-spacing={2}
-alignItems="center"
-
-
->
-
-<AccessTimeOutlined />
-
-  <Stack direction="column">
-<TextField
-sx={{
-
-
-}}
-  {...register("time",{ required:"فیلد زمان دوره نمیتواند خالی باشد"})}
-  id="outlined-basic"
-  label= "Time"
-  type="number"
-  
-  
-  variant="outlined"
-  size="small"
-  InputProps={{
-    endAdornment:
-     (
-
-       <InputAdornment position="end" >hour</InputAdornment>
-     )
-  }}
-/>
-{
-             
-             errors.time && errors.time.type=== "required" && (
-              <Typography sx={{color:"red !important"}}>
-               {
-                 errors.time?.message
-               }
-
-              </Typography>
-             )
-           }
-
-</Stack>
-</Stack>
-          <Stack width="100%" direction="row" spacing={2} alignItems="center" justifyContent="center"
-           sx={{
-
-            // "& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper" :{
-            
-            // }
-          }}
+            // }}
           >
-         
-            <infoOutlined />
-            <TextField
+            <SchoolOutlined />
+
+            <Stack direction="column">
+              <TextField
+                sx={{}}
+                {...register("title", {
+                  required: "فیلد نام دوره نمیتواند خالی باشد",
+                })}
+                id="outlined-basic"
+                label="CourseName"
+                type="text"
+                // color={typography}
+
+                variant="outlined"
+                size="small"
+              />
+
+              {errors.title && errors.title.type === "required" && (
+                <Typography sx={{ color: "red !important" }}>
+                  {errors.title?.message}
+                </Typography>
+              )}
+            </Stack>
+          </Stack>
+          <Stack direction="row" spacing={2} alignItems="center">
+            <PersonOutline />
+
+            <Stack direction="column">
+              <TextField
+                sx={{}}
+                {...register("teacher", {
+                  required: "فیلد نام مدرس دوره نمیتواند خالی باشد",
+                })}
+                id="outlined-basic"
+                label="Teacher"
+                type="text"
+                // color="secondary"
+                // color={typography}
+
+                variant="outlined"
+                size="small"
+                // InputProps={{
+                //   endAdornment:
+                //     item.type === "number" ? (
+                //       <InputAdornment position="end" >hour</InputAdornment>
+                //     ) : null,
+                // }}
+              />
+
+              {errors.teacher && errors.teacher.type === "required" && (
+                <Typography sx={{ color: "red !important" }}>
+                  {errors.teacher?.message}
+                </Typography>
+              )}
+            </Stack>
+          </Stack>
+          <Stack direction="row" spacing={2} alignItems="center">
+            <AccessTimeOutlined />
+
+            <Stack direction="column">
+              <TextField
+                sx={{}}
+                {...register("time", {
+                  required: "فیلد زمان دوره نمیتواند خالی باشد",
+                })}
+                id="outlined-basic"
+                label="Time"
+                type="number"
+                variant="outlined"
+                size="small"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">hour</InputAdornment>
+                  ),
+                }}
+              />
+              {errors.time && errors.time.type === "required" && (
+                <Typography sx={{ color: "red !important" }}>
+                  {errors.time?.message}
+                </Typography>
+              )}
+            </Stack>
+          </Stack>
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            justifyContent="center"
+          >
+            <InfoOutlined />
+            {/* <TextField
            
             sx={{
               // "& .css-t0v85v-MuiButtonBase-root-MuiMenuItem-root.Mui-selected" :{
@@ -459,8 +416,10 @@ sx={{
               defaultValue= {selectField[2]}
               variant="outlined"
             >
-              {selectField.map((option) => (
-                <MenuItem key={option} value={option} 
+           
+               
+                 {/* {selectField.map((option) => (
+                  <MenuItem key={option} value={option} 
                 sx={{
 
                   backgroundColor:boxBg,
@@ -475,9 +434,18 @@ sx={{
                 }}
                 >
                   {option}
-                </MenuItem>
+                </MenuItem> 
               ))}
-            </TextField>
+
+              
+            </TextField> */}
+            <Box sx={{ border: ` 1px solid ${borderColor}`, borderRadius: 1 }}>
+              <MenuContainer
+                menuItem={selectField}
+                selectedItem={item}
+                setSelectedItem={setItem}
+              />
+            </Box>
           </Stack>
           {/* <Button variant="contained" color="success" sx={{ marginTop: 2}}>
           Save

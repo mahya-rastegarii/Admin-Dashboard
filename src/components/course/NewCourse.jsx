@@ -125,7 +125,7 @@ const NewCourse = ({newCourse}) => {
               </TableCell>
               <TableCell align="center" sx={{borderColor: borderColor }}>
                 <Typography variant="body2" sx={{ color: typography }}>
-                {row.lastUpdate.slice(0, 10)}
+                {row.lastUpdate}
                 </Typography>
               </TableCell>
               <TableCell align="center" sx={{borderColor: borderColor }}>

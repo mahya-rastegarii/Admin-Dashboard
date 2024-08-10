@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Delete, Edit, StarRate } from "@mui/icons-material";
 import {
@@ -20,26 +20,31 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useThemeContext } from "../../context/theme/ThemeContext";
 import { useNavigation } from "react-router-dom";
-import LoadComponent from "../Loading/LoadComponent";
+import { useThemeContext } from "../../context/theme/ThemeContext";
 import LoadingBackdrop from "../Loading/LoadingBackdrop";
+import LoadComponent from "../Loading/LoadComponent";
 
-const CourseList = ({ openModalDelete, openModalEdit, courses }) => {
-
+const CourseList = ({
+  openModalDelete,
+  openModalEdit,
+  courses,
+  loading,
+  coursesValue,
+}) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  
-  
-   const navigation= useNavigation();
 
+  const [dataValue, setDataValue] = useState(courses);
 
-  const {theme: customTheme } =useThemeContext()
- 
-  const headerTableColor = alpha(customTheme.palette.primary.light, 0.2)
-  const borderColor = customTheme.palette.mode.borderColor
-  const typography = customTheme.palette.mode.typography
- 
+  const navigation = useNavigation();
+
+  const { theme: customTheme } = useThemeContext();
+
+  const headerTableColor = alpha(customTheme.palette.primary.light, 0.2);
+  const borderColor = customTheme.palette.mode.borderColor;
+  const typography = customTheme.palette.mode.typography;
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -60,11 +65,6 @@ const CourseList = ({ openModalDelete, openModalEdit, courses }) => {
       fontSize: 14,
     },
   }));
-
-  const rowTable = courses.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage
-  );
 
   const headCells = [
     {
@@ -117,23 +117,51 @@ const CourseList = ({ openModalDelete, openModalEdit, courses }) => {
     },
   ];
 
+  const rowTable = dataValue?.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
+  
+  useEffect(() => {
+    if (coursesValue){
+       setDataValue(coursesValue)}
+    else{
+
+      setDataValue(courses);
+    }
+  //  console.log("dataValue", dataValue)
+  }, [coursesValue, courses]);
+
+  
   return (
     <>
-     {
-      navigation.state !== 'idle' && <LoadingBackdrop/>
-    }
-    <TableContainer sx={{ width: "100%" }}>
-      <Table sx={{ padding: 0 }}>
-        <TableHead>
-          <TableRow>
-            {/* <StyledTableCell padding="checkbox">
+      {/* {navigation.state !== "idle" &&  */}
+
+      {
+        loading ? <LoadComponent/> :(
+
+     
+      <TableContainer sx={{ width: "100%" }}>
+        <Table sx={{ padding: 0 }}>
+          <TableHead>
+            <TableRow>
+              {/* <StyledTableCell padding="checkbox">
                 <Checkbox />
               </StyledTableCell> */}
 
-            {headCells.map((headCell) => (
-              <StyledTableCell key={headCell.id} align={headCell.align}>
-                {headCell.label === "Title" || headCell.label === "Favour" ? (
-                  <TableSortLabel active>
+              {headCells.map((headCell) => (
+                <StyledTableCell key={headCell.id} align={headCell.align}>
+                  {headCell.label === "Title" || headCell.label === "Favour" ? (
+                    <TableSortLabel active>
+                      <Typography
+                        variant="body1"
+                        component="h2"
+                        sx={{ fontWeight: "bold" }}
+                      >
+                        {headCell.label}
+                      </Typography>
+                    </TableSortLabel>
+                  ) : (
                     <Typography
                       variant="body1"
                       component="h2"
@@ -141,147 +169,141 @@ const CourseList = ({ openModalDelete, openModalEdit, courses }) => {
                     >
                       {headCell.label}
                     </Typography>
-                  </TableSortLabel>
-                ) : (
-                  <Typography
-                    variant="body1"
-                    component="h2"
-                    sx={{ fontWeight: "bold" }}
-                  >
-                    {headCell.label}
-                  </Typography>
-                )}
-                {/* <Typography variant="body1" sx={{ fontWeight:'bold'}} component="span">
+                  )}
+                  {/* <Typography variant="body1" sx={{ fontWeight:'bold'}} component="span">
                     {headCell.label}
                   </Typography> */}
-              </StyledTableCell>
-            ))}
-          </TableRow>
-        </TableHead>
+                </StyledTableCell>
+              ))}
+            </TableRow>
+          </TableHead>
 
-        <TableBody>
-          {rowTable?.map((item) => (
-            <TableRow key={item.titleEn}>
-              {/* <TableCell padding="checkbox">
+          <TableBody>
+            {rowTable.map((item) => (
+              <TableRow key={item.id}>
+                {/* <TableCell padding="checkbox">
                   <Checkbox />
                 </TableCell> */}
-              <TableCell sx={{ borderColor: borderColor }}>
-                <Stack
-                  direction="row"
-                  spacing={5}
-                  display="flex"
-                  alignItems="center "
-                >
-                  <img src={item.picture} width="20%" />
-                  {/* <Avatar
+                <TableCell sx={{ borderColor: borderColor }}>
+                  <Stack
+                    direction="row"
+                    spacing={5}
+                    display="flex"
+                    alignItems="center "
+                  >
+                    <img src={item.picture} width="20%" />
+                    {/* <Avatar
                       // sx={{ width:"35%"}}
                       src={item.pic}
                       variant="square"
                     ></Avatar> */}
-                  <Typography variant="h6" sx={{ color: typography }}>
-                    {item.title}
+                    <Typography variant="h6" sx={{ color: typography }}>
+                      {item.title}
+                    </Typography>
+                  </Stack>
+                </TableCell>
+                <TableCell sx={{ borderColor: borderColor }} align="center">
+                  <Typography variant="body2" sx={{ color: typography }}>
+                    {item.teacher}
                   </Typography>
-                </Stack>
-              </TableCell>
-              <TableCell sx={{ borderColor: borderColor }} align="center">
-                <Typography variant="body2" sx={{ color: typography }}>
-                  {item.teacher}
-                </Typography>
-              </TableCell>
-              <TableCell sx={{ borderColor: borderColor }} align="center">
-                <Typography variant="body2" sx={{ color: typography }}>
-                  {item.studentCount}
-                </Typography>
-              </TableCell>
-              <TableCell sx={{ borderColor: borderColor }} align="center">
-                <Chip
-                  label={item.statusEn}
-                  color="primary"
-                  variant="outlined"
-                />
-              </TableCell>
-              <TableCell sx={{ borderColor: borderColor }} align="center">
-                <Typography variant="body2" sx={{ color: typography }}>
-                  {item.time}
-                </Typography>
-              </TableCell>
-              <TableCell sx={{ borderColor: borderColor }} align="center">
-                <Typography variant="body2" sx={{ color: typography }}>
-                  {item.lastUpdate?.slice(0, 10)}
-                </Typography>
-              </TableCell>
-              <TableCell sx={{ borderColor: borderColor }} align="center">
-                {/* <Rating
+                </TableCell>
+                <TableCell sx={{ borderColor: borderColor }} align="center">
+                  <Typography variant="body2" sx={{ color: typography }}>
+                    {item.studentCount}
+                  </Typography>
+                </TableCell>
+                <TableCell sx={{ borderColor: borderColor }} align="center">
+                  <Chip
+                    label={item.statusEn}
+                    color="primary"
+                    variant="outlined"
+                  />
+                </TableCell>
+                <TableCell sx={{ borderColor: borderColor }} align="center">
+                  <Typography variant="body2" sx={{ color: typography }}>
+                    {item.time}
+                  </Typography>
+                </TableCell>
+                <TableCell sx={{ borderColor: borderColor }} align="center">
+                  <Typography variant="body2" sx={{ color: typography }}>
+                    {item.lastUpdate}
+                  </Typography>
+                </TableCell>
+                <TableCell sx={{ borderColor: borderColor }} align="center">
+                  {/* <Rating
                     name="half-rating-read"
                     defaultValue={item.rating}
                     precision={0.5}
                     readOnly
                     size="small"
                   /> */}
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <StarRate sx={{ color: "#ffc400", fontSize: 26 }} />
-                  <Typography variant="body2" sx={{ color: typography }}>
-                    {item.star}
-                  </Typography>
-                </Stack>
-              </TableCell>
-              <TableCell sx={{ borderColor: borderColor }} align="center">
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <IconButton
-                    aria-label="Edit"
-                    onClick={() => openModalEdit(item)}
-                    title="Edit"
-                    sx={{ color: "#1e88e5" }}
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems="center"
+                    justifyContent="center"
                   >
-                    <Edit />
-                  </IconButton>
-                  <IconButton
-                    aria-label="Delete"
-                    title="Delete"
-                    sx={{ color: "#e53935" }}
-                    onClick={() => openModalDelete(item.id)}
-                  >
-                    <Delete />
-                  </IconButton>
-                  {/* <Button
+                    <StarRate sx={{ color: "#ffc400", fontSize: 26 }} />
+                    <Typography variant="body2" sx={{ color: typography }}>
+                      {item.star}
+                    </Typography>
+                  </Stack>
+                </TableCell>
+                <TableCell sx={{ borderColor: borderColor }} align="center">
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <IconButton
+                      aria-label="Edit"
+                      onClick={() => openModalEdit(item)}
+                      title="Edit"
+                      sx={{ color: "#1e88e5" }}
+                    >
+                      <Edit />
+                    </IconButton>
+                    <IconButton
+                      aria-label="Delete"
+                      title="Delete"
+                      sx={{ color: "#e53935" }}
+                      onClick={() => openModalDelete(item.id, item.picture)}
+                    >
+                      <Delete />
+                    </IconButton>
+                    {/* <Button
                    variant="contained"
                   
                   color="secondary"
                   >
                      edit </Button> */}
-                </Stack>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter
-          sx={{
-            "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
-              fill: typography,
-            },
-          }}
-        >
-          <TableRow>
-            <TablePagination
-              sx={{ border: "none", color: typography }}
-              rowsPerPageOptions={[5, 10, 15]}
-              // colSpan={3}
+                  </Stack>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter
+            sx={{
+              "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
+                fill: typography,
+              },
+            }}
+          >
+            <TableRow>
+              <TablePagination
+                sx={{ border: "none", color: typography }}
+                rowsPerPageOptions={[5, 10, 15]}
+                // colSpan={3}
 
-              count={courses.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+                count={dataValue.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+
+)
+}
     </>
   );
 };

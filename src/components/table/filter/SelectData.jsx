@@ -1,6 +1,7 @@
 import { Box, MenuItem, Select } from "@mui/material";
 import { useThemeContext } from "../../../context/theme/ThemeContext";
 
+import MenuContainer from "../../menu/MenuContainer";
 import "../tableStyle.css";
 
 export const StatusFilter = ({ filterData, setFilterData }) => {
@@ -15,38 +16,9 @@ export const StatusFilter = ({ filterData, setFilterData }) => {
   const borderColor = theme.palette.mode.borderColor;
 
   return (
+    <MenuContainer menuItem={data} selectedItem={filterData} setSelectedItem={setFilterData} />
    
-      <Select
-        value={filterData}
-        size="small"
-        sx={{
-          " & .css-jd1zyo-MuiSelect-select-MuiInputBase-input-MuiInput-input.MuiSelect-select":
-            {
-              color: typography,
-            },
-
-          " &:before ": {
-            borderColor: borderColor,
-          },
-          " &:after ": {
-            borderColor: borderColor,
-          },
-          " & .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon , .css-1mf6u8l-MuiSvgIcon-root-MuiSelect-icon":
-            {
-              color: typography,
-            },
-        }}
-        onChange={handleChange}
-        displayEmpty
-        inputProps={{ "aria-label": "Without label" }}
-      >
-        {data.map((item, index) => (
-          <MenuItem key={index} value={item}>
-            {item}
-          </MenuItem>
-        ))}
-      </Select>
-    
+  
   );
 };
 

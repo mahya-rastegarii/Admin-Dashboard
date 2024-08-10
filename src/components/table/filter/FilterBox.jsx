@@ -1,5 +1,6 @@
 import { FilterList } from "@mui/icons-material";
 import {
+  
   Box,
   Button,
   FormControl,
@@ -14,21 +15,26 @@ import { useThemeContext } from "../../../context/theme/ThemeContext";
 import { rowCourse } from "../../course/CourseData";
 import { StatusFilter } from "./SelectData";
 import MenuComponent from "../../menu/MenuComponent";
+import MenuContainer from "../../menu/MenuContainer";
+import { supabase } from "../../../core/createClient";
+import { useNavigate } from "react-router-dom";
 
-const FilterBox = ({ setCourses }) => {
+const FilterBox = ({ setCoursesData, setLoading }) => {
   const { selectValue } = useFilterContext();
   const { theme } = useThemeContext();
   // const iconColor = theme.palette.primary.dark;
   const typography = theme.palette.mode.typography;
-  const borderColor = theme.palette.mode.borderColor;
+  const borderColor = theme.palette.mode.borderColor
   const boxBg = theme.palette.mode.boxBg;
   // const filterData = ["Status", "Student", "Time(Hour)", "Favour"];
   // const [filterBy, setFilterBy] = useState(selectValue);
   // const [boxItem, setBoxItem] = useState(selectValue);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [filterData, setFilterData] = useState("none");
+  const [filterData, setFilterData] = useState("None");
   //  const openMenu = Boolean(anchorEl)
 
+  const data = ["None", "Presell", "Completed", "In Progress"];
+  const navigate = useNavigate()
   // const handleClickItem = (index) => {
   //   setSelectedIndex(index);
   //   setAnchorEl(null);
@@ -38,14 +44,23 @@ const FilterBox = ({ setCourses }) => {
     setAnchorEl(null);
   };
 
-  const filterHandler = () => {
-    if (filterData !== "none") {
-      const data = rowCourse.filter((item) => item.status === filterData);
-      setCourses(data);
+  const filterHandler = async() => {
+
+    setLoading(true)
+    if (filterData !== "None") {
+    
+      const {data, error } = await supabase.from("course").select("*").eq('statusEn', filterData).order("lastUpdate", { ascending: false });;
+      
+      console.log("data",data)
+      setCoursesData(data)
     } else {
-      setCourses(rowCourse);
+      setCoursesData(null)
+     
     }
+
+    
     handleCloseMenu();
+    setLoading(false)
   };
 
   // const handleChange = (event) => {
@@ -54,7 +69,7 @@ const FilterBox = ({ setCourses }) => {
 
   return (
     <Box
-   
+      sx={{ border:`1px solid ${borderColor}`, borderRadius:2 }}
     >
       <IconButton
         aria-label="Filter"
@@ -62,7 +77,7 @@ const FilterBox = ({ setCourses }) => {
       >
         <FilterList sx={{ fontSize: 27, color:typography }} />
         <Typography variant="body2" component="span" sx={{ color: typography }}>
-          filter {filterData !== "none" ? "*(" + filterData + ")" : ""}
+          filter {filterData !== "None" ? "*(" + filterData + ")" : ""}
         </Typography>
       </IconButton>
       <MenuComponent anchorEl={anchorEl} handleCloseMenu={handleCloseMenu}>
@@ -100,10 +115,9 @@ const FilterBox = ({ setCourses }) => {
                   backgroundColor: boxBg
                 }
                }}>
-                <StatusFilter
-                  filterData={filterData}
-                  setFilterData={setFilterData}
-                />
+                  <Box sx={{ borderBottom:" 1px solid"}}>
+             <MenuContainer menuItem={data} selectedItem={filterData} setSelectedItem={setFilterData} />
+                  </Box>
                 {/* <OtherFilter /> */}
                 {/* <StatusFilter />  */}
               </FormControl>

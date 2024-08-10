@@ -1,4 +1,4 @@
-import { AccessTimeOutlined, SchoolOutlined } from "@mui/icons-material";
+import { AccessTimeOutlined, SchoolOutlined, Info, InfoOutlined, PersonOutline } from "@mui/icons-material";
 import {
   Box,
   InputAdornment,
@@ -14,6 +14,7 @@ import { useModalContext } from "../../context/modal/ModalContext";
 import { useThemeContext } from "../../context/theme/ThemeContext";
 import Form from "../form/Form";
 import ModalComponent from "../modal/ModalComponent";
+import MenuContainer from "../menu/MenuContainer";
 
 // import CourseAction from './CourseAction';
 
@@ -26,71 +27,68 @@ const EditCourse = ({ courseData, editCourse }) => {
   const typography = theme.palette.mode.typography;
   const focusColor = theme.palette.primary.light;
 
-  const { title, time, statusEn, picture } = courseData;
+  const { title, time, teacher, statusEn, picture } = courseData;
 
-  const [uploadImage, setUploadImage] = useState(picture);
-  const [imageFile, setImageFile] = useState();
+ 
+  const [item, setItem]= useState(statusEn)
 
-  const VisuallyHiddenInput = styled("input")({
-    clip: "rect(0 0 0 0)",
-    clipPath: "inset(50%)",
-    height: "97%",
-    overflow: "hidden",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    whiteSpace: "nowrap",
-    width: "97%",
-    margin: 3,
-  });
-  const course = [
-    {
-      label: "CourseName",
-      icon: <SchoolOutlined />,
-      value: title,
-      error: "فیلد نام نمیتواند خالی باشد",
-      name: "title",
-    },
-    {
-      label: "Time",
-      icon: <AccessTimeOutlined />,
-      value: time,
-      error: "فیلد زمان نمیتواند خالی باشد",
-      name: "time",
-      type: "number",
-    },
-  ];
+  // const VisuallyHiddenInput = styled("input")({
+  //   clip: "rect(0 0 0 0)",
+  //   clipPath: "inset(50%)",
+  //   height: "97%",
+  //   overflow: "hidden",
+  //   position: "absolute",
+  //   bottom: 0,
+  //   left: 0,
+  //   whiteSpace: "nowrap",
+  //   width: "97%",
+  //   margin: 3,
+  // });
+  // const course = [
+  //   {
+  //     label: "CourseName",
+  //     icon: <SchoolOutlined />,
+  //     value: title,
+  //     error: "فیلد نام نمیتواند خالی باشد",
+  //     name: "title",
+  //   },
+  //   {
+  //     label: "Time",
+  //     icon: <AccessTimeOutlined />,
+  //     value: time,
+  //     error: "فیلد زمان نمیتواند خالی باشد",
+  //     name: "time",
+  //     type: "number",
+  //   },
+  //   {
+  //     label: "teacher",
+  //     icon: <PersonOutline />,
+  //     value: teacher,
+  //     error: "فیلد زمان نمیتواند خالی باشد",
+  //     name: "time",
+  //     type: "number",
+  //   },
+  // ];
 
   const selectField = ["presell", "completed", "in Progress"];
 
-  const ChangeImages = (e) => {
-    const image = e.target.files[0];
-    setImageFile(image);
 
-    setUploadImage(URL.createObjectURL(image));
-
-    console.log("image", image);
-  };
-
-  // const uploadFile = async() =>{
-
-  //   const {data}= await supabase
-  //   .storage
-  //   .from('Images')
-  //   .update('Course_pic/'+ imageFile.name, imageFile)
-  //     console.log('data', data)
-  // }
+ 
 
   const editCourseHandler = (data) => {
-    let { title, time, select } = data;
-    //  uploadFile()
+    let { title, time ,teacher } = data;
+
+    const date = new Date()
+    const today = date.toISOString().split('T')[0]
+
     const newData = {
-      title: title,
+      title,
       titleFa: title,
+      teacher,
+      lastUpdate: today,
       time,
-      picture: uploadImage,
-      statusEn: select,
-      statusFa: select,
+      statusEn: item,
+      statusFa: item,
     };
 
     console.log("newData", newData);
@@ -129,26 +127,17 @@ const EditCourse = ({ courseData, editCourse }) => {
           }}
         >
           <Box
-            component="label"
             // role={undefined}
             sx={{
               position: "relative",
-              cursor: "pointer",
-              border: "3px dashed #ccc",
               marginBottom: 3,
               borderRadius: 1,
-              display: "flex",
-              gap: 2,
-              justifyContent: "center",
-              alignItems: "center",
+             
             }}
             padding={0}
           >
-            <img src={uploadImage} width="100%" />
+            <img src={picture} width="100%" />
 
-            <Box sx={{ display: "none" }}>
-              <VisuallyHiddenInput type="file" onChange={ChangeImages} />
-            </Box>
           </Box>
           {/* {course.map((item) => (
             <Stack
@@ -221,6 +210,41 @@ const EditCourse = ({ courseData, editCourse }) => {
 
             </Stack>
             </Stack>
+
+            <Stack
+             
+             direction="row"
+             spacing={2}
+             alignItems="center"
+           >
+           <PersonOutline />
+           <Stack direction="column">
+             <TextField
+               {...register("teacher", {required:"فیلد نام مدرس نمیتواند خالی باشد"})}
+               id="outlined-basic"
+               label="Teacher"
+               type="text"
+               // color="secondary"
+               variant="outlined"
+               size="small"
+               
+               defaultValue={teacher}
+             />
+
+             {
+            
+            errors.teacher && errors.teacher.type === "required" && (
+             <Typography sx={{color:"red !important"}}>
+              {
+                errors.teacher?.message
+              }
+
+             </Typography>
+            )
+          
+           }
+           </Stack>
+           </Stack>
         <Stack
              
               direction="row"
@@ -260,14 +284,15 @@ const EditCourse = ({ courseData, editCourse }) => {
             }
             </Stack>
             </Stack>
+      
           <Stack
             direction="row"
             spacing={2}
             alignItems="center"
             justifyContent="center"
           >
-            <infoOutlined />
-            <TextField
+           <InfoOutlined />
+           {/* <TextField
               {...register("select")}
               id="outlined-basic"
               label="status"
@@ -282,7 +307,13 @@ const EditCourse = ({ courseData, editCourse }) => {
                   {option}
                 </MenuItem>
               ))}
-            </TextField>
+            </TextField> */}
+
+     <Box
+   sx={{ border:` 1px solid ${borderColor}`, borderRadius:1 }}
+         >
+       <MenuContainer menuItem={selectField} selectedItem={item} setSelectedItem={setItem}/>
+       </Box>
           </Stack>
         </Stack>
       </Form>

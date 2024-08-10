@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
    alpha,
@@ -19,12 +19,13 @@ import {
 } from "@mui/material";
 import { useThemeContext } from "../../context/theme/ThemeContext";
 import { useNavigate, useNavigation } from "react-router-dom";
+import LoadComponent from "../Loading/LoadComponent";
 //   import { debounce } from "lodash";
 //   import SearchBox from "../components/search/SearchBox";
 //   import SortBox from "../components/table/sort/SortBox";
 //   import { rows } from "../components/user/UserData";
 
-const UserList = ({ users}) => {
+const UserList = ({ users, loading, usersValue}) => {
 
   const navigation = useNavigation()
   const { theme: customTheme } = useThemeContext();
@@ -38,6 +39,8 @@ const UserList = ({ users}) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  const [dataValue, setDataValue] = useState(users)
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -47,10 +50,6 @@ const UserList = ({ users}) => {
     setPage(0);
   };
 
-  const rowTable = users?.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage
-  );
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -67,7 +66,7 @@ const UserList = ({ users}) => {
   const headCells = [
     {
       id: 1,
-      label: "name",
+      label: "userName",
       align: "left",
       minWidth: 130,
     },
@@ -101,12 +100,35 @@ const UserList = ({ users}) => {
     //   align: "center",
     //   minWidth: 10,
     // },
+
   ];
+
+
+  const rowTable = dataValue?.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
+
+  useEffect(() => {
+    if (usersValue){
+       setDataValue(usersValue)}
+    else{
+
+      setDataValue(users);
+    }
+  //  console.log("dataValue", dataValue)
+  }, [usersValue, users]);
+
+ 
+
   return (
     <>
+    { /*{ navigation.state !== 'idle' && <LoadComponent }*/}
+
     {
-      navigation.state !== 'idle' && <LoadingBackdrop/>
-    }
+       loading ? <LoadComponent/> : (
+
+     
     <TableContainer sx={{ width: "100%" }}>
       <Table>
         <TableHead>
@@ -215,7 +237,7 @@ const UserList = ({ users}) => {
               rowsPerPageOptions={[5, 10, 15]}
               // colSpan={3}
 
-              count={users.length}
+              count={dataValue.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -225,6 +247,9 @@ const UserList = ({ users}) => {
         </TableFooter>
       </Table>
     </TableContainer>
+
+)
+}
     </>
   );
 };
