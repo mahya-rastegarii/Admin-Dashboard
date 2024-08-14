@@ -1,20 +1,23 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
+
 import { FilterProvider } from "../../context/filter/FilterContext";
 import { ModalProvider } from "../../context/modal/ModalContext";
 import { useThemeContext } from "../../context/theme/ThemeContext";
+import { useAppContext } from "../../context/app/app-context";
 import Navbar from "../navbar/Navbar";
 import Sidebar from "../sidebar/Sidebar";
 // import { FilterProvider } from '../../context/filter/FilterContext'
+
 import "../../App.css";
-import { ChartProvider } from "../../context/chart/ChartContext";
-import { NotificationProvider } from "../../context/notification/NotificationContext";
+
 
 const MainLayout = () => {
   const drawerWidth = 240;
 
   const [open, setOpen] = useState(false);
+ const {language} = useAppContext()
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -39,6 +42,7 @@ const MainLayout = () => {
 
   const { theme, darkMode } = useThemeContext();
 
+
   const bgColor = theme.palette.mode.bg;
   const boxBg = theme.palette.mode.boxBg;
   return (
@@ -46,6 +50,7 @@ const MainLayout = () => {
       sx={{
         display: "flex",
         // p: 3,
+        direction: language === 'fa' ? 'rtl' : 'ltr'  ,
         overflowX: "hidden",
         backgroundColor: bgColor,
       }}
@@ -69,10 +74,10 @@ const MainLayout = () => {
       >
         <FilterProvider>
           <ModalProvider>
-           <NotificationProvider>
+           
             
               <Outlet />
-           </NotificationProvider>
+          
             
           </ModalProvider>
         </FilterProvider>

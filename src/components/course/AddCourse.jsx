@@ -1,7 +1,6 @@
 import {
   AccessTimeOutlined,
   CloudUpload,
-  Info,
   InfoOutlined,
   PersonOutline,
   SchoolOutlined,
@@ -12,11 +11,12 @@ import {
   Stack,
   styled,
   TextField,
-  LinearProgress,
-  Typography}
-   from "@mui/material";
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { useAppContext } from "../../context/app/app-context";
 import { useModalContext } from "../../context/modal/ModalContext";
 import { useThemeContext } from "../../context/theme/ThemeContext";
 import { supabase } from "../../core/createClient";
@@ -27,6 +27,12 @@ import ModalComponent from "../modal/ModalComponent";
 // import "../../App.css"
 
 const AddCourse = ({ insertCourse }) => {
+  const { setOpen } = useModalContext();
+  const { theme } = useThemeContext();
+  const { language } = useAppContext();
+
+  const { t } = useTranslation();
+
   const {
     register,
     handleSubmit,
@@ -34,37 +40,40 @@ const AddCourse = ({ insertCourse }) => {
     reset,
   } = useForm();
 
-  const [item, setItem] = useState("Completed");
-  const course = [
-    {
-      label: "CourseName",
-      icon: <SchoolOutlined />,
-      name: "title",
-      error: "فیلد نام دوره نمیتواند خالی باشد",
-    },
-    {
-      label: "Teacher",
-      icon: <PersonOutline />,
-      name: "teacher",
-      error: "فیلد نام مدرس دوره نمیتواند خالی باشد",
-    },
-    {
-      label: "Time",
-      icon: <AccessTimeOutlined />,
-      name: "time",
-      error: "فیلد زمان دوره نمیتواند خالی باشد",
-      type: "number",
-    },
+  // const course = [
+  //   {
+  //     label: t("courses.modalCourse.courseNameLabel"),
+  //     icon: <SchoolOutlined />,
+  //     name: "title",
+  //     error: "فیلد نام دوره نمیتواند خالی باشد",
+  //   },
+  //   {
+  //     label: t("courses.modalCourse.teacherLabel"),
+  //     icon: <PersonOutline />,
+  //     name: "teacher",
+  //     error: "فیلد نام مدرس دوره نمیتواند خالی باشد",
+  //   },
+  //   {
+  //     label: t("courses.modalCourse.timeLabel"),
+  //     icon: <AccessTimeOutlined />,
+  //     name: "time",
+  //     error: "فیلد زمان دوره نمیتواند خالی باشد",
+  //     type: "number",
+  //   },
+  // ];
+
+  const selectField = [
+    t("filter.status.presell"),
+    t("filter.status.completed"),
+    t("filter.status.inProgress"),
   ];
-
-  const selectField = ["Presell", "Completed", "In Progress"];
-
-  const { setOpen } = useModalContext();
-  const { theme } = useThemeContext();
 
   const [uploadImage, setUploadImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-  const [loading, setLoading]= useState(false)
+  const type = language== 'fa'? "تکمیل شده" : "Completed";
+  const [item, setItem] = useState(type);
+  const [loading, setLoading] = useState(false);
+
   const boxBg = theme.palette.mode.boxBg;
   const borderColor = theme.palette.mode.borderColor;
   const typography = theme.palette.mode.typography;
@@ -88,12 +97,11 @@ const AddCourse = ({ insertCourse }) => {
     setImageFile(image);
 
     setUploadImage(URL.createObjectURL(image));
-       
+
     // console.log("image", image);
   };
 
   const uploadFile = async () => {
-  
     const { data } = await supabase.storage
       .from("Images")
       .upload("Course_pic/" + imageFile.name, imageFile);
@@ -103,9 +111,9 @@ const AddCourse = ({ insertCourse }) => {
   const addCourseHandler = (data) => {
     const { title, teacher, time } = data;
 
-    const date = new Date()
-    const today = date.toISOString().split('T')[0];
-    
+    const date = new Date();
+    const today = date.toISOString().split("T")[0];
+
     // console.log('uploadImage', uploadImage);
     uploadFile();
     const newCourse = {
@@ -120,32 +128,32 @@ const AddCourse = ({ insertCourse }) => {
       // imageName:imageFile.name,
       // picFile: imageFile,
       time,
-      
-
     };
 
     insertCourse(newCourse);
-    
-    
+
     // setCourses((preState) => [...preState, newCourse]);
 
     reset();
-    setUploadImage(null)
+    setUploadImage(null);
     setOpen(false);
   };
 
   const cancelSubmit = () => {
     setOpen(false);
-    setUploadImage(null)
+    setUploadImage(null);
     reset();
   };
 
   return (
-    <ModalComponent title="Add Course" closeForm={cancelSubmit}>
+    <ModalComponent
+      title={t("courses.addCourse.title")}
+      closeForm={cancelSubmit}
+    >
       <Form
         align="center"
-        Title="Add Course"
-        titleButton="Save"
+        Title={t("corses.addCourse.title")}
+        titleButton={t("courses.modalCourse.saveBtn")}
         onSubmit={handleSubmit(addCourseHandler)}
         cancelSubmit={cancelSubmit}
       >
@@ -156,13 +164,18 @@ const AddCourse = ({ insertCourse }) => {
             "& label": {
               color: typography,
               opacity: 0.6,
+               
+              
+          
             },
-
             "& input , div , p , svg": {
               color: typography,
             },
+            
             "& fieldset ": {
               borderColor: borderColor,
+             textAlign: language ==='fa'? "right": "left"
+            
             },
           }}
         >
@@ -183,19 +196,24 @@ const AddCourse = ({ insertCourse }) => {
             }}
             padding={uploadImage ? 0 : 6}
           >
-        
             <img src={uploadImage} />
 
-          
-            <Box sx={{ display: uploadImage ? "none" : "block" }}>
+            <Box
+            
+              sx={{
+                display: uploadImage ? "none" : "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
               <CloudUpload />
 
               <Typography variant="h6" component="span">
-                Upload Image
+                {t("courses.addCourse.uploadImageText")}
               </Typography>
               <VisuallyHiddenInput type="file" onChange={ChangeImages} />
             </Box>
-           
           </Box>
           {/* {course.map((item) => (
             <Stack
@@ -266,10 +284,11 @@ const AddCourse = ({ insertCourse }) => {
           ))} */}
 
           <Stack
+          dir='rtl'
             direction="row"
-            spacing={2}
+            gap={2}
             alignItems="center"
-
+            // sx={{direction:language === 'fa' ? "rtl": "ltr"}}
             // sx={{
             //   color:typography,
             //   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root , .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root " :{
@@ -290,14 +309,24 @@ const AddCourse = ({ insertCourse }) => {
           >
             <SchoolOutlined />
 
-            <Stack direction="column">
+          
+          <Box  dir='rtl' >
               <TextField
-                sx={{}}
+            
+            sx={{
+              "& label" :{
+                // direction:"rtl"
+                right:language ==='fa' && '20px',
+                transformOrigin: language=== 'fa' ? "top right": "top left",
+                paddingRight:language ==='fa'&& "12px"
+              }
+            }}
+                // sx={{textAlign:language ==='fa' ? "rtl":"ltr"}}
                 {...register("title", {
-                  required: "فیلد نام دوره نمیتواند خالی باشد",
+                  required: t("courses.modalCourse.errors.courseNameError"),
                 })}
                 id="outlined-basic"
-                label="CourseName"
+                label={t("courses.modalCourse.courseNameLabel")}
                 type="text"
                 // color={typography}
 
@@ -310,19 +339,26 @@ const AddCourse = ({ insertCourse }) => {
                   {errors.title?.message}
                 </Typography>
               )}
-            </Stack>
+            </Box>
           </Stack>
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack direction="row" gap={2} alignItems="center">
             <PersonOutline />
 
             <Stack direction="column">
               <TextField
-                sx={{}}
+                 sx={{
+                  "& label" :{
+                    // direction:"rtl"
+                    right:language ==='fa' && '20px',
+                    transformOrigin: language=== 'fa' ? "top right": "top left",
+                    paddingRight:language ==='fa'&& "12px"
+                  }
+                }}
                 {...register("teacher", {
-                  required: "فیلد نام مدرس دوره نمیتواند خالی باشد",
+                  required: t("courses.modalCourse.errors.teacherError"),
                 })}
                 id="outlined-basic"
-                label="Teacher"
+                label={t("courses.modalCourse.teacherLabel")}
                 type="text"
                 // color="secondary"
                 // color={typography}
@@ -344,23 +380,33 @@ const AddCourse = ({ insertCourse }) => {
               )}
             </Stack>
           </Stack>
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack direction="row" gap={2} alignItems="center">
             <AccessTimeOutlined />
 
             <Stack direction="column">
               <TextField
-                sx={{}}
+                 sx={{
+                  "& label" :{
+                    // direction:"rtl"
+                    right:language ==='fa' && '20px',
+                    transformOrigin: language=== 'fa' ? "top right": "top left",
+                    paddingRight:language ==='fa'&& "12px"
+                  }
+                }}
                 {...register("time", {
-                  required: "فیلد زمان دوره نمیتواند خالی باشد",
+                  required: t("courses.modalCourse.errors.timeError"),
                 })}
                 id="outlined-basic"
-                label="Time"
+                label={t("courses.modalCourse.timeLabel")}
                 type="number"
                 variant="outlined"
                 size="small"
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">hour</InputAdornment>
+                    <InputAdornment position="end">
+                      {" "}
+                      {t("courses.modalCourse.hour")}{" "}
+                    </InputAdornment>
                   ),
                 }}
               />
@@ -373,7 +419,7 @@ const AddCourse = ({ insertCourse }) => {
           </Stack>
           <Stack
             direction="row"
-            spacing={2}
+            gap={2}
             alignItems="center"
             justifyContent="center"
           >

@@ -5,6 +5,7 @@ import { Backdrop, Box, Button, Fade, IconButton, Modal, Stack, Typography } fro
 import { Close } from '@mui/icons-material'
 import Form from '../form/Form'
 import { useForm } from 'react-hook-form'
+import { useAppContext } from '../../context/app/app-context'
 
 
 const ModalComponent = ({closeForm, children, title}) => {
@@ -13,6 +14,7 @@ const ModalComponent = ({closeForm, children, title}) => {
 
   const {open, setOpen} = useModalContext()
   const {theme } = useThemeContext()
+  const {language }= useAppContext();
 
 
   const bgColor = theme.palette.mode.boxBg;
@@ -24,6 +26,7 @@ const ModalComponent = ({closeForm, children, title}) => {
     return (
         <div>
         <Modal
+        sx={{direction:language === 'fa'? 'rtl': 'ltr'}}
         open={open}
         onClose={closeForm}
         aria-labelledby="modal-modal-title"

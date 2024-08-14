@@ -1,8 +1,8 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Paper, Stack } from "@mui/material";
 import React, { Suspense, useEffect, useState } from "react";
-import { Await, defer, useLoaderData, useNavigate } from "react-router-dom";
 import _ from 'lodash';
+import { Await, defer, useLoaderData, useNavigate } from "react-router-dom";
 import AddCourse from "../components/course/AddCourse";
 import CourseList from "../components/course/CourseList";
 import EditCourse from "../components/course/EditCourse";
@@ -12,14 +12,25 @@ import SortBox from "../components/table/sort/SortBox";
 import { useFilterContext } from "../context/filter/FilterContext";
 import { useModalContext } from "../context/modal/ModalContext";
 import { useThemeContext } from "../context/theme/ThemeContext";
+import { useTranslation } from "react-i18next";
+import { useAppContext } from "../context/app/app-context";
+
 import { supabase } from "../core/createClient";
 import FilterBox from "../components/table/filter/FilterBox";
 import SearchBox from "../components/search/SearchBox";
+
+
 const Courses = () => {
+
   const {courses} = useLoaderData();
 
   const navigate = useNavigate();
-  const { theme: customTheme } = useThemeContext();
+
+  const { theme: customTheme } = useThemeContext()
+  const {language }= useAppContext()
+  const {t}= useTranslation()
+
+
   const boxBgColor = customTheme.palette.mode.boxBg;
   const borderColor = customTheme.palette.mode.borderColor;
   const typography = customTheme.palette.mode.typography;
@@ -32,7 +43,7 @@ const Courses = () => {
   const [loading, setLoading]= useState(false)
   // const [courseSortValue, setCourseSortValue] = useState("Newest");
   const { open, setOpen } = useModalContext();
-  const { setSelectValue } = useFilterContext();
+  // const { setSelectValue } = useFilterContext();
 
 
   const searchCourse = async(title) => {
@@ -185,11 +196,11 @@ const Courses = () => {
     // fetchCourse();
   };
 
-  useEffect(() => {
-    setSelectValue("Status");
+  // useEffect(() => {
+  //   setSelectValue("Status");
 
-    // fetchCourse();
-  }, []);
+  //   // fetchCourse();
+  // }, []);
 
   // useEffect( () => {
 
@@ -203,8 +214,8 @@ const Courses = () => {
         <EditCourse editCourse={editCourse} courseData={courseData} />
       ) : modal === "Delete Course" ? (
         <RemoveComponent
-          title=" remove Course"
-          body="Delete  Course ?"
+          title={t('courses.removeCourse.titleModal')}
+          body={t('courses.removeCourse.text')}
           clicked={deleteCourse}
         />
       ) : null}
@@ -213,10 +224,10 @@ const Courses = () => {
         direction={{ xs: "column-reverse", md: "row" }}
         alignItems={{ xs: "flex-start", md: "center" }}
         justifyContent="flex-start"
-        spacing={3}
+        gap={2}
         sx={{ padding: 2, marginBottom: 2 }}
       >
-        <Stack direction="row" spacing={3}>
+        <Stack direction="row" gap= {2}>
           <FilterBox
             setLoading={setLoading}
             setCoursesData={setCoursesValue}
@@ -231,16 +242,19 @@ const Courses = () => {
           />
         </Stack>
 
-        <Stack direction={{ xs: "column-reverse", md: "row" }} spacing={3}>
+        <Stack direction={{ xs: "column-reverse", md: "row" }} gap ={2}>
           <SearchBox handleSearch={debouncedFetchCourses} />
 
           <Button
             variant="contained"
-            startIcon={<Add />}
+            startIcon={<Add sx={{marginLeft:language=== 'fa'? 1 :0}}/>}
             onClick={openModalInsert}
             sx={{ borderRadius: 3, backgroundColor: btnColor }}
           >
-            Add
+           {
+            
+           t('courses.addBtn')
+           }
           </Button>
         </Stack>
       </Stack>

@@ -4,16 +4,22 @@ import ModalComponent from "../modal/ModalComponent";
 // import { PaletteMenu } from '../navbar/PaletteMenu';
 import PaletteBox from "../box/PaletteBox";
 
-import { useForm,  } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useModalContext } from "../../context/modal/ModalContext";
 import { useThemeContext } from "../../context/theme/ThemeContext";
-import { supabase } from "../../core/createClient";
 import Form from "../form/Form";
+import { useTranslation } from "react-i18next";
 
 const AddEvent = ({ setEvent, event, date, dateToday, insertEvent }) => {
   const { theme } = useThemeContext();
-  const { setOpen } = useModalContext();
-  const { register, handleSubmit,  formState: { errors }, reset } = useForm();
+  const { setOpen } = useModalContext()
+  const {t} =useTranslation();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
   const borderColor = theme.palette.mode.borderColor;
   const typography = theme.palette.mode.typography;
@@ -61,28 +67,26 @@ const AddEvent = ({ setEvent, event, date, dateToday, insertEvent }) => {
     const newData = {
       title,
       start: date ? date : start,
-      end : end ? end : start,
+      end: end ? end : start,
       color: eventColor,
     };
 
     insertEvent(newData);
-     
+
     reset();
     setOpen(false);
   };
 
-
-
-  const cancelSubmit= () => {
-    setOpen(false)
-    reset()
-  }
+  const cancelSubmit = () => {
+    setOpen(false);
+    reset();
+  };
 
   return (
-    <ModalComponent title="Add Event" closeForm={cancelSubmit}>
+    <ModalComponent title={t('calendar.addEvent.titleModal')} closeForm={cancelSubmit}>
       <Form
         align="flex-start"
-        titleButton=" Add "
+        titleButton= {t('calendar.addEvent.addBtn')}
         onSubmit={handleSubmit(addEventToCalendar)}
         cancelSubmit={cancelSubmit}
       >
@@ -104,30 +108,25 @@ const AddEvent = ({ setEvent, event, date, dateToday, insertEvent }) => {
             },
           }}
         >
-          <Stack direction="row" alignItems="center" spacing={3}>
-            <Typography variant="body1">Text</Typography>
-              <Stack direction="column">
-            <OutlinedInput
-              id="event-title"
-              size="small"
-              {...register("title", {required:" this Field Can't Empty..."})}
-               
-              // aria-describedby="outlined-weight-helper-text"
-            />
-            {
-            errors.title && (
-              <Typography sx={{color:"red"}}>
-                {
-                  errors.title?.message
-                }
-              </Typography>
-            )
-          }
-          </Stack>
-          </Stack>
-      
+          <Stack direction="row" alignItems="center" gap={3}>
+            <Typography variant="body1">{t('calendar.addEvent.titleText')}</Typography>
+            <Stack direction="column">
+              <OutlinedInput
+                id="event-title"
+                size="small"
+                {...register("title", {
+                  required: t('calendar.errors.titleTextError')
+                })}
 
-            
+                // aria-describedby="outlined-weight-helper-text"
+              />
+              {errors.title && (
+                <Typography sx={{ color: "red" }}>
+                  {errors.title?.message}
+                </Typography>
+              )}
+            </Stack>
+          </Stack>
 
           <Stack
             direction="column"
@@ -135,8 +134,8 @@ const AddEvent = ({ setEvent, event, date, dateToday, insertEvent }) => {
             alignItems="flex-start"
             spacing={2}
           >
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Typography variant="body1">start Date</Typography>
+            <Stack direction="row" gap={1} alignItems="center">
+              <Typography variant="body1">{t('calendar.addEvent.startDate')}</Typography>
 
               {date ? (
                 <Typography
@@ -163,25 +162,22 @@ const AddEvent = ({ setEvent, event, date, dateToday, insertEvent }) => {
               )}
             </Stack>
 
-           {
+            {dateToday && (
+              <Stack direction="row" gap={1} alignItems="center">
+                {/* <CheckBox /> */}
+                <Typography variant="body1">{t('calendar.addEvent.endDate')}</Typography>
 
-              dateToday &&  <Stack direction="row" spacing={1} alignItems="center">
-              {/* <CheckBox /> */}
-              <Typography variant="body1">end Date</Typography>
-
-              <OutlinedInput
-                id="event-endDate"
-                // defaultValue={date || ''}
-                size="small"
-                type="date"
-                {...register("end")}
-              
-                defaultValue={dateToday }
-                // aria-describedby="outlined-weight-helper-text"
-              />
-            </Stack> 
-
-           }
+                <OutlinedInput
+                  id="event-endDate"
+                  // defaultValue={date || ''}
+                  size="small"
+                  type="date"
+                  {...register("end")}
+                  defaultValue={dateToday}
+                  // aria-describedby="outlined-weight-helper-text"
+                />
+              </Stack>
+            )}
           </Stack>
         </Stack>
         <Box display="flex" mt={3}>

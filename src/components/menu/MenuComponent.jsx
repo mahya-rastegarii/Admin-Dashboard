@@ -11,6 +11,7 @@ const MenuComponent = ({ children, anchorEl, handleCloseMenu }) => {
   return (
     <Menu
       sx={{
+      
         "& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper": {
           backgroundColor: bgColor,
         

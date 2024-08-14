@@ -1,0 +1,167 @@
+
+{
+
+    "adminName" : "Mahya Rastegari",
+    "sideBar" :{
+
+        "dashboard" : "Dashboard",
+        "courses":"Courses",
+        "users": "Users",
+        "calendar": "Calendar",
+        "analytics":"Analytics"
+    },
+  "dashboard": {
+
+    "dashboardBox" : {
+        "course" : "Course",
+        "user" : "User",
+        "liked" :  "Like" 
+    },
+
+    "NewUsersTitle" : "New User",
+    "NewCourseTitle" : "New Course",
+    "ViewAllBtn" : "View All"
+  },
+
+
+  "courses" : {
+    
+    "addBtn" : "َAdd",
+    "table" : {
+        "tableHeader" : {
+            "title" : "Title",
+            "teacher" : "Teacher",
+            "student" : "Student",
+            "status" : "Status",
+            "time" : "Time (Hour)",
+            "lastUpdate" : "Last Update",
+            "star" : "Star",
+            "option" : "Option"
+        }
+    },
+
+    
+    "addCourse" : {
+      "title": "Add Course",
+      "uploadImageText": "Upload Image"
+     
+    },
+    "editCourse" : {
+      "title": "Edit Course"
+    },
+
+    "modalCourse" : {
+      "courseNameLabel": "Course Name",
+      "teacherLabel": "Teacher" ,
+      "timeLabel": "Time",
+      "hour": "hour" ,
+      "saveBtn": " Save",
+
+      "errors" : {
+        "courseNameError":" the courseName field can't be empty",
+        "teacherError":" the teacher field can't be empty",
+        "timeError":" the time field can't be empty"
+
+      }
+    },
+    
+    "removeCourse" : {
+      "titleModal" : "Remove Course",
+      "text": "Remove this Course ?"
+    }
+  },
+
+  "searchPlaceholder" : "Search...",
+  "filter" : {
+    "filterTitle" : "Filter",
+    "status" :{
+        "title": "Status",
+        "all" : "All",
+        "presell":"Presell",
+        "completed":"Completed",
+        "inProgress": "In Progress"
+    },
+
+    "filterBtn" : "Filter"
+
+  },
+
+  "sort" : {
+    "new" : "Newest",
+    "old" : "Oldest"
+  },
+  "user":{
+    "table" : {
+    "tableHeader" : {
+            "userName" : "UserName",
+            "fulName" : "FullName",
+            "email" : "Email",
+            "phoneNumber" : " Phone Number",
+            "date" : "Date"
+        }
+    }
+  },
+
+  "charts":{
+
+    "userCount":" Number Of User",
+    "visitSite": " Visit Site",
+    "sales": "Amount Of Sales",
+    "popularCourse" : "Popular Course",
+
+    "month": {
+        "jan":"Jan",
+        "feb":"Feb",
+        "mar":"Mar",
+        "apr":"Apr",
+        "may":"May",
+        "jun":"Jun",
+        "jul":"Jul",
+        "aug":"Aug",
+        "sep":"Sep",
+        "oct":"Oct",
+        "nov":"Nov",
+        "dec":"Des"
+    },
+    "days": {
+        "sun":"Sun",
+        "mon":"Mon",
+        "tues":"Tues",
+        "wed": "Wed",
+        "thurs": "Thurs",
+        "fri": "Fri",
+        "sat":"Sat"
+    }
+
+    },
+
+    "calendar": {
+      "addEvent": {
+        "titleModal": "Add Event" ,
+        "titleText": "Text",
+        "startDate": "Start Date",
+        "endDate": "End Date", 
+        "addBtn":"Add",
+         
+        "errors" : {
+          "titleTextError":" the text field can't be empty"
+        }
+  
+      },
+      "removeEvent": {
+        "titleModal":"Remove Event" ,
+        "text" : " Remove this Event ?"
+
+      }
+      
+      
+      
+    },
+    
+    "cancelBtn":"Cancel",
+
+    "removeBtn": "Remove"
+  }
+
+
+ 

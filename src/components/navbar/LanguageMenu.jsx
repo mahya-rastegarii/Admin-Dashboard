@@ -1,4 +1,4 @@
-import iranFlag from '../../assets/img/iran.svg';
+import faFlag from '../../assets/img/iran.svg';
 import enFlag from "../../assets/img/united kingdom.svg";
 
 import { ArrowDropDown } from "@mui/icons-material";
@@ -6,19 +6,23 @@ import { Avatar, Box, IconButton, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 import { useThemeContext } from '../../context/theme/ThemeContext';
 import MenuComponent from '../menu/MenuComponent';
+import { useAppContext } from '../../context/app/app-context';
 
 export const LanguageMenu = () => {
+
+  const {language, changeLanguage}= useAppContext()
   const { theme} =useThemeContext()
 const iconColor = theme.palette.mode.typography;
 const bgBox = theme.palette.mode.boxBg;
 const typography = theme.palette.mode.typography;
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(language);
   const [anchorEl, setAnchorEl] = useState(null);
   //  const openMenu = Boolean(anchorEl)
 
-  const handleClickItem = (index) => {
-    setSelectedIndex(index);
+  const handleClickItem = (lang) => {
+    setSelectedIndex(lang);
+    changeLanguage(lang);
     setAnchorEl(null);
   };
 
@@ -26,18 +30,23 @@ const typography = theme.palette.mode.typography;
     setAnchorEl(null);
   };
 
-  let language = [
+  let languageInfo = [
+    
     {
-      text: "English",
-      img: enFlag,
+      id:1,
+      text: "فارسی",
+      img: faFlag,
+      lang: 'fa'
     },
     {
-      text: "فارسی",
-      img: iranFlag,
+      id:2,
+      text: "English",
+      img: enFlag,
+      lang:'en'
     },
   ];
   return (
-    <Box sx={{ mr:"20px", ml:"7px"}}>
+    <Box sx={{ }}>
       <IconButton
         // id="basic-button"
         size="large"
@@ -51,19 +60,19 @@ const typography = theme.palette.mode.typography;
       >
         <Avatar
           alt=" united kingdom Flag "
-          src={language[selectedIndex].img}
+          src={ language === 'fa' ? faFlag : enFlag }
           sx={{ width: 24, height: 24 }}
         />
         <ArrowDropDown sx={{ position: "absolute", left: "66%", top: "35%" }} />
       </IconButton>
 
        <MenuComponent anchorEl={anchorEl}  handleCloseMenu={handleCloseMenu}>
-        {language.map((option, index) => (
+        {languageInfo.map((option) => (
           <MenuItem
             sx={{ display: "flex",  color: typography }}
             key={option.text}
-            selected={index === selectedIndex}
-            onClick={() => handleClickItem(index)}
+            selected={option.lang === selectedIndex}
+            onClick={() => handleClickItem(option.lang)}
           >
             <Avatar
               alt=" united kingdom Flag "

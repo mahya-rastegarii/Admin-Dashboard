@@ -3,10 +3,13 @@ import { useThemeContext } from '../../context/theme/ThemeContext';
 import MenuComponent from './MenuComponent';
 import { Box, IconButton, MenuItem } from '@mui/material';
 import { ArrowDropDown } from '@mui/icons-material';
+import { useAppContext } from '../../context/app/app-context';
 
 const MenuContainer  = ({menuItem, selectedItem, setSelectedItem}) => {
 
-    const { theme } = useThemeContext();
+    const { theme } = useThemeContext()
+    const {language }= useAppContext();
+
     const boxBg = theme.palette.mode.boxBg;
     const typography = theme.palette.mode.typography;
     const borderColor = theme.palette.mode.borderColor;
@@ -65,7 +68,7 @@ const MenuContainer  = ({menuItem, selectedItem, setSelectedItem}) => {
     menuItem.map((item, index) => (
    
            <MenuItem key={index}  value={item}
-           sx={{ color:typography}}
+           sx={{ color:typography, direction:language ==='fa'? "rtl": "ltr"}}
           selected={item === selectedItem}
           onClick={() => handleClickItem(item)}>
    

@@ -1,16 +1,19 @@
 
-import { ArrowForward } from '@mui/icons-material'
-import { Box, Button, Paper, Stack, Typography } from '@mui/material'
 import React from 'react'
+import { ArrowForward, ArrowBack } from '@mui/icons-material'
+import { Box, Button, Paper, Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useThemeContext } from '../../context/theme/ThemeContext'
+import { useTranslation } from 'react-i18next'
+import { useAppContext } from '../../context/app/app-context'
 
 
 
 const ContainerData = ({width, icon, title, link, children }) => {
 
   const { theme } = useThemeContext();
-
+  const {language }= useAppContext()
+  const {t }= useTranslation()
   const boxBgColor = theme.palette.mode.boxBg;
   const typography = theme.palette.mode.typography;
   const linkColor = theme.palette.primary.dark;
@@ -52,7 +55,7 @@ const ContainerData = ({width, icon, title, link, children }) => {
         <Typography
           variant="h6"
           component="span"
-          sx={{ fontWeight: "bold" }}
+          sx={{ fontWeight: "bold", paddingX:1}}
         >
           {title}
         </Typography>
@@ -61,14 +64,18 @@ const ContainerData = ({width, icon, title, link, children }) => {
      display="flex"
         alignItems="center"
         direction="row"
+       
         >
       <Button
         component={Link}
-        endIcon={<ArrowForward />}
+        endIcon={language === 'fa' ?  <ArrowBack  sx={{ marginX:1}}/> : <ArrowForward sx={{ marginX:1}}/>}
+  
         sx={{ marginX: 1, color: linkColor, fontWeight: "bold", }}
         to={link}
       >
-        View All
+       {
+       t('dashboard.ViewAllBtn')
+       }
       </Button>
       </Stack>
     </Stack>

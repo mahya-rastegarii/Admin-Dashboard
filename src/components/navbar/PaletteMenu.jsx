@@ -67,7 +67,7 @@ export const PaletteMenu = () => {
         edge="end"
         // aria-label="Palette"
         onClick={(e) => setAnchorEl(e.currentTarget)}
-        sx={{ mr: "1px", color : iconColor }}
+        sx={{  color : iconColor }}
         
       >
         <Palette />

@@ -9,10 +9,15 @@ import SortBox from "../components/table/sort/SortBox";
 import UserList from "../components/user/UserList";
 import { useThemeContext } from "../context/theme/ThemeContext";
 import { supabase } from "../core/createClient";
+import { useTranslation } from "react-i18next";
 
 export default function User() {
   const data = useLoaderData();
+
   const { theme: customTheme } = useThemeContext();
+
+
+
   const boxBgColor = customTheme.palette.mode.boxBg;
   const headerTableColor = alpha(customTheme.palette.primary.light, 0.2);
   const borderColor = customTheme.palette.mode.borderColor;
@@ -154,7 +159,7 @@ const [loading, setLoading]= useState(false)
         direction={{ xs: "column-reverse", md: "row" }}
         alignItems={{ xs: "flex-start", md: "center" }}
         justifyContent=" flex-start"
-        spacing={3}
+        gap={2}
         sx={{ padding: 2, marginBottom: 2 }}
       >
         <SortBox

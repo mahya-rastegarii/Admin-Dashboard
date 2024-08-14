@@ -26,6 +26,8 @@ import {
 } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
 import { useThemeContext } from "../../context/theme/ThemeContext";
+import { useTranslation } from "react-i18next";
+import { useAppContext } from "../../context/app/app-context";
 
 
 // const navigate = useNavigate();
@@ -35,6 +37,9 @@ import { useThemeContext } from "../../context/theme/ThemeContext";
 const Sidebar = ({ drawerWidth, open }) => {
 
   const { theme: customTheme } = useThemeContext();
+  const {language}= useAppContext();
+  
+  const {t} = useTranslation()
   const activeMenu = customTheme.palette.primary.main;
   const hover = customTheme.palette.mode.hover;
   const bgColor = customTheme.palette.mode.boxBg;
@@ -70,7 +75,7 @@ const [active, setActive] = useState(false)
     justifyContent: "flex-start",
     padding: theme.spacing(0, 1),
     backgroundColor: bgColor,
-    
+  
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   }));
@@ -80,10 +85,11 @@ const [active, setActive] = useState(false)
   })(({ theme, open }) => ({
     width: drawerWidth,
     // boxShadow: theme.shadows[3],
+
     flexShrink: 0,
     whiteSpace: "nowrap",
     boxSizing: "border-box",
-
+   direction:language === 'fa' ? 'rtl' : 'ltr',
    
     
     ...(open && {
@@ -104,30 +110,30 @@ const [active, setActive] = useState(false)
  
 
 
-  const AdminName = "Mahya Rastegari";
+  // const AdminName = "Mahya Rastegari";
   const sideBarMenu = [
     {
-      title: "Dashboard",
+      title: t('sideBar.dashboard'),
       icon: <Home />,
       path: "/",
     },
     {
-      title: "Courses",
+      title: t('sideBar.courses'),
       icon: <School />,
       path: "/course",
     },
     {
-      title: "User",
+      title: t('sideBar.users'),
       icon: <SupervisedUserCircle />,
       path: "/user",
     },
     {
-      title: "Calender",
+      title: t('sideBar.calendar'),
       icon: <CalendarMonth />,
       path: "/calendar",
     },
     {
-      title: "Analytics",
+      title: t('sideBar.analytics'),
       icon: <MultilineChart />,
       path: "/analytics",
     },
@@ -140,11 +146,17 @@ const [active, setActive] = useState(false)
 
   return (
     <>
-    <Drawer variant="permanent" open={open}>
+    <Drawer variant="permanent"
+
+
+   open={open}
+    anchor={language ==='fa' ? "right" : "left"}
+
+    >
       <DrawerHeader
     >
         <List >
-          <ListItem disablePadding sx={{display: open ? 'flex': 'none'}}>
+          <ListItem disablePadding sx={{display: open ? 'flex': 'none',}}>
             <ListItemIcon
               sx={{
                 minWidth: 0,
@@ -156,7 +168,7 @@ const [active, setActive] = useState(false)
             >
               <Avatar sx={{ width: 25, height: 25, padding: "4px", backgroundColor: avatarColor }}>M</Avatar>
             </ListItemIcon>
-            <ListItemText primary={AdminName} sx={{ opacity: open ? 1 : 0, color: typography }} />
+            <ListItemText primary={t('adminName')} sx={{ opacity: open ? 1 : 0, color: typography }} />
 
           
           </ListItem>
@@ -171,7 +183,7 @@ const [active, setActive] = useState(false)
           
               sx={{
                 minHeight: 48,
-                justifyContent: open ? "initial" : "center",
+                justifyContent: open ? "flex-start" : "center",
                 px: 2.5,
                 "&:hover": {
                   backgroundColor: hover,
@@ -184,7 +196,8 @@ const [active, setActive] = useState(false)
               // style={({isActive}) => ({ color: isActive ? active : typography})}
                 sx= {{
                   minWidth: 0,
-                  mr: open ? 3 : "auto",
+                  padding: "4px",
+                  // mr: open ? 3 : "auto",
                   justifyContent: "center",
                   color: "inherit"
                 }}
@@ -195,7 +208,7 @@ const [active, setActive] = useState(false)
               </ListItemIcon>
               <ListItemText
                 primary={menu.title}
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{ opacity: open ? 1 : 0, textAlign:"start" }}
               />
             </ListItemButton>
           </ListItem>

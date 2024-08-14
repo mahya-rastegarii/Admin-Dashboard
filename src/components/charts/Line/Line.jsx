@@ -8,7 +8,7 @@ import { useThemeContext } from '../../../context/theme/ThemeContext';
 import "../chartStyle.css";
 
 
-const Line = ({numberOfUser, monthChart, labelChart, colorChart, widthChart, heightChart, area, showMark}) => {
+const Line = ({data, monthChart, labelChart, colorChart, widthChart, heightChart, area, showMark}) => {
 
   const {theme} = useThemeContext()
 
@@ -19,6 +19,8 @@ const typography = theme.palette.mode.typography;
    
     <LineChart
     sx={{ fill:typography,
+
+       direction: "ltr" ,
       "& .MuiChartsAxis-line": {
         stroke:typography
       }
@@ -27,7 +29,7 @@ const typography = theme.palette.mode.typography;
     xAxis={[{ data: monthChart, scaleType:"point" }]}
     series={[
       {
-        data: numberOfUser,
+        data: data,
         // label:labelChart,
         color:colorChart,
         showMark: showMark,

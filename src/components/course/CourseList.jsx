@@ -21,9 +21,12 @@ import {
 } from "@mui/material";
 
 import { useNavigation } from "react-router-dom";
+import { useAppContext} from '../../context/app/app-context';
 import { useThemeContext } from "../../context/theme/ThemeContext";
 import LoadingBackdrop from "../Loading/LoadingBackdrop";
+
 import LoadComponent from "../Loading/LoadComponent";
+import { useTranslation } from "react-i18next";
 
 const CourseList = ({
   openModalDelete,
@@ -40,6 +43,10 @@ const CourseList = ({
   const navigation = useNavigation();
 
   const { theme: customTheme } = useThemeContext();
+  const {language }= useAppContext()
+
+  const {t}= useTranslation()
+
 
   const headerTableColor = alpha(customTheme.palette.primary.light, 0.2);
   const borderColor = customTheme.palette.mode.borderColor;
@@ -69,49 +76,49 @@ const CourseList = ({
   const headCells = [
     {
       id: 1,
-      label: "Title",
-      align: "start",
+      label: t('courses.table.tableHeader.title'),
+      align:language ==='fa' ? "right" : "left"
       //  minWidth: 20,
     },
     {
       id: 2,
-      label: "Teacher",
+      label: t('courses.table.tableHeader.teacher'),
       align: "center",
       //  minWidth: 20,
     },
     {
       id: 3,
-      label: "Student",
+      label: t('courses.table.tableHeader.student'),
       align: "center",
       //  minWidth: 20,
     },
     {
       id: 4,
-      label: "Status",
+      label: t('courses.table.tableHeader.status'),
       align: "center",
       //  minWidth: 20,
     },
     {
       id: 5,
-      label: "Time (Hour)",
+      label:t('courses.table.tableHeader.time'),
       align: "center",
       //  minWidth: 20,
     },
     {
       id: 5,
-      label: "Last Update",
+      label: t('courses.table.tableHeader.lastUpdate'),
       align: "center",
       //  minWidth: 20,
     },
     {
       id: 6,
-      label: "Star",
+      label: t('courses.table.tableHeader.star'),
       align: "center",
       //  minWidth: 20,
     },
     {
       id: 7,
-      label: "Option",
+      label: t('courses.table.tableHeader.option'),
       align: "center",
       //  minWidth: 20,
     },
@@ -142,7 +149,7 @@ const CourseList = ({
 
      
       <TableContainer sx={{ width: "100%" }}>
-        <Table sx={{ padding: 0 }}>
+        <Table sx={{ padding: 0, }}>
           <TableHead>
             <TableRow>
               {/* <StyledTableCell padding="checkbox">
@@ -187,7 +194,7 @@ const CourseList = ({
                 <TableCell sx={{ borderColor: borderColor }}>
                   <Stack
                     direction="row"
-                    spacing={5}
+                    gap={2}
                     display="flex"
                     alignItems="center "
                   >
@@ -280,14 +287,15 @@ const CourseList = ({
           </TableBody>
           <TableFooter
             sx={{
+             
               "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
                 fill: typography,
               },
             }}
           >
-            <TableRow>
+            <TableRow >
               <TablePagination
-                sx={{ border: "none", color: typography }}
+                sx={{ border: "none", color: typography, direction:language ==='fa' ? "rtl": "ltr" }}
                 rowsPerPageOptions={[5, 10, 15]}
                 // colSpan={3}
 

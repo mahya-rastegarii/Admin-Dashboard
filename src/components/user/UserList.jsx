@@ -20,6 +20,8 @@ import {
 import { useThemeContext } from "../../context/theme/ThemeContext";
 import { useNavigate, useNavigation } from "react-router-dom";
 import LoadComponent from "../Loading/LoadComponent";
+import { useTranslation } from "react-i18next";
+import { useAppContext } from "../../context/app/app-context";
 //   import { debounce } from "lodash";
 //   import SearchBox from "../components/search/SearchBox";
 //   import SortBox from "../components/table/sort/SortBox";
@@ -28,7 +30,12 @@ import LoadComponent from "../Loading/LoadComponent";
 const UserList = ({ users, loading, usersValue}) => {
 
   const navigation = useNavigation()
-  const { theme: customTheme } = useThemeContext();
+
+  const { theme: customTheme } = useThemeContext()
+  const {language }= useAppContext();
+
+  const {t }= useTranslation()
+  
 
   const borderColor = customTheme.palette.mode.borderColor;
   const typography = customTheme.palette.mode.typography;
@@ -66,31 +73,32 @@ const UserList = ({ users, loading, usersValue}) => {
   const headCells = [
     {
       id: 1,
-      label: "userName",
-      align: "left",
+      label: t('user.table.tableHeader.userName'),
+      align:language ==='fa'? "right": "left",
+
       minWidth: 130,
     },
     {
       id: 2,
-      label: "fullName",
+      label: t('user.table.tableHeader.fulName'),
       align: "center",
       minWidth: 130,
     },
     {
       id: 3,
-      label: "email",
+      label: t('user.table.tableHeader.email'),
       align: "center",
       minWidth: 210,
     },
     {
       id: 4,
-      label: "phone Number",
+      label: t('user.table.tableHeader.phoneNumber'),
       align: "center",
       minWidth: 120,
     },
     {
       id: 5,
-      label: "date",
+      label: t('user.table.tableHeader.date'),
       align: "center",
       minWidth: 10,
     },
@@ -183,11 +191,11 @@ const UserList = ({ users, loading, usersValue}) => {
               <TableCell sx={{ borderColor: borderColor }} align="center">
                 <Stack
                   direction="row"
-                  spacing={3}
+                  gap={3}
                   display="flex"
                   alignItems="center "
                 >
-                  <Avatar>{item.avatar}</Avatar>
+                  <Avatar> M </Avatar>
                   <Typography variant="body2" sx={{ color: typography }}>
                     {item.userName}
                   </Typography>
@@ -196,7 +204,7 @@ const UserList = ({ users, loading, usersValue}) => {
               {/* <TableCell align="center">{item.lastName}</TableCell> */}
               <TableCell sx={{ borderColor: borderColor }} align="center">
                 <Typography variant="body2" sx={{ color: typography }}>
-                  {item.fullNameEn}
+                  {language === 'fa' ? item.fullNameFa : item.fullNameEn}
                 </Typography>
               </TableCell>
               <TableCell sx={{ borderColor: borderColor }} align="center">

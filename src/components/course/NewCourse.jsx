@@ -16,34 +16,41 @@ import {
 } from "@mui/material";
 // import jsPic from "../../assets/img/images.png";
 import { useThemeContext } from "../../context/theme/ThemeContext";
+import { useTranslation } from "react-i18next";
+import { useAppContext } from "../../context/app/app-context";
 
 const NewCourse = ({newCourse}) => {
+  
   const { theme } = useThemeContext();
+  const {language } = useAppContext();
+
+  const {t}= useTranslation()
+
   const typography = theme.palette.mode.typography;
   const borderColor = theme.palette.mode.borderColor;
 
   const headCells = [
     {
       id: 1,
-      label: "Title",
-      align: "left",
+      label: t('courses.table.tableHeader.title'),
+      align:language === 'fa' ? "right" : "left",
       //  minWidth: 20,
     },
     {
       id: 2,
-      label: "Date",
+      label: t('courses.table.tableHeader.lastUpdate'),
       align: "center",
       //  minWidth: 20,
     },
     {
       id: 3,
-      label: "Status",
+      label: t('courses.table.tableHeader.status'),
       align: "center",
       //  minWidth: 20,
     },
     {
       id: 4,
-      label: "Favour",
+      label: t('courses.table.tableHeader.star'),
       align: "center",
       //  minWidth: 20,
     },
@@ -109,7 +116,7 @@ const NewCourse = ({newCourse}) => {
               <TableCell component="th" scope="row" sx={{borderColor: borderColor }}>
                 <Stack
                   direction="row"
-                  spacing={5}
+                  gap={2}
                   display="flex"
                   alignItems="center "
                 >
@@ -129,14 +136,15 @@ const NewCourse = ({newCourse}) => {
                 </Typography>
               </TableCell>
               <TableCell align="center" sx={{borderColor: borderColor }}>
-                <Chip label={row.statusEn} color="primary" variant="outlined" />
+                <Chip label={language === 'fa' ? row.statusFa : row.statusEn} color="primary" variant="outlined" />
               </TableCell>
               <TableCell align="center" sx={{borderColor: borderColor}}>
                 <Box
+                  
                   sx={{
                     display: "flex",
                     justifyContent: "center",
-                    alignItems: "center",
+                   alignItems: "center",
                   }}
                 >
                   <StarRate sx={{ color: "#ffc400", fontSize: 26 }} />

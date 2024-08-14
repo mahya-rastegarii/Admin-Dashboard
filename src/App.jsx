@@ -8,7 +8,8 @@ import router from "./router";
 
 import { RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "./context/theme/ThemeContext";
-
+import { AppProvider } from "./context/app/app-context";
+import './core/i18next';
 
 function App() {
   
@@ -18,10 +19,11 @@ function App() {
  
   return (
     <>
+          <AppProvider>
         <ThemeProvider>
-          
           <RouterProvider router={router} />
         </ThemeProvider>
+          </AppProvider>
       
     </>
   );

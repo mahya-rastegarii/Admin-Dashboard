@@ -7,7 +7,7 @@ import "../chartStyle.css";
 import { useThemeContext } from '../../../context/theme/ThemeContext';
 
 
-const Bars = ({coursesData, years,widthChart, heightChart, marginChart}) => {
+const Bars = ({chartData, xLable ,widthChart, heightChart, marginChart}) => {
 
 const {theme} = useThemeContext()
 
@@ -16,23 +16,25 @@ const ChartColor=  theme.palette.primary.main;
   return (
     <BarChart
     sx={{ fill:typography,
+       direction:"ltr",
       "& .MuiChartsAxis-line": {
         stroke:typography
       }
     }}
-      series={ coursesData}
+      series={ chartData}
       width={widthChart}
       height={heightChart}
       xAxis={[{ 
         // colorMap:{
         //   color: ChartColor
         // },
-        data: years,
+        data: xLable,
          scaleType: 'band',
           
           }]}
       margin={marginChart}
       grid={{ horizontal: true }}
+     
       // layout ="horizontal"
       // layout={layout ? "horizontal" : "vertical"}
     />

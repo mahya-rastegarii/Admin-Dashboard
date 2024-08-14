@@ -1,54 +1,53 @@
-import { Favorite, Person } from "@mui/icons-material";
-import { Box, Paper, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
 
-import { useThemeContext } from "../context/theme/ThemeContext";
+import { Box, Stack } from "@mui/material";
+
+import PopularCourses from "../components/analytics/PopularCourses";
+import Sales from "../components/analytics/Sales";
 import UserCount from "../components/analytics/UserCount";
 import VisitSite from "../components/analytics/VisitSite";
-import Sales from "../components/analytics/Sales";
-import PopularCourses from "../components/analytics/PopularCourses";
+
 
 const Analytics = () => {
-  const { theme } = useThemeContext();
+  
 
-  const bgColor = theme.palette.mode.boxBg;
-  const typography = theme.palette.mode.typography;
+  // const bgColor = theme.palette.mode.boxBg;
+  // const typography = theme.palette.mode.typography;
 
-  const numberOfUser = [20, 45, 35, 15, 60, 80];
-  const monthChart = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور"];
+  // const numberOfUser = [20, 45, 35, 15, 60, 80];
+  // const monthChart = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور"];
 
-  const LineChartData = {
-    monthChart,
-    numberOfUser,
-    labelChart: "User ",
-    colorChart: "#8884d8",
-    widthChart: 800,
-    heightChart: 550,
-  };
+  // const LineChartData = {
+  //   monthChart,
+  //   numberOfUser,
+  //   labelChart: "User ",
+  //   colorChart: "#8884d8",
+  //   widthChart: 800,
+  //   heightChart: 550,
+  // };
 
-  const coursesData = [
-    { data: [35, 44, 24, 34], label: "frontEnd" },
-    { data: [51, 6, 49, 30], label: "backEnd" },
-    { data: [15, 25, 30, 50], label: "AI" },
-    { data: [60, 50, 15, 25], label: "security" },
-  ];
+  // const coursesData = [
+  //   { data: [35, 44, 24, 34], label: "frontEnd" },
+  //   { data: [51, 6, 49, 30], label: "backEnd" },
+  //   { data: [15, 25, 30, 50], label: "AI" },
+  //   { data: [60, 50, 15, 25], label: "security" },
+  // ];
 
-  const years = ["2021", "2022", "2023", "2024"];
+  // const years = ["2021", "2022", "2023", "2024"];
 
-  const barsChartData = {
-    coursesData,
-    years,
-    widthChart: 700,
-    heightChart: 550,
-    marginChart: { top: 50, bottom: 20, left: 10, right: 10 },
-  };
+  // const barsChartData = {
+  //   coursesData,
+  //   years,
+  //   widthChart: 700,
+  //   heightChart: 550,
+  //   marginChart: { top: 50, bottom: 20, left: 10, right: 10 },
+  // };
   const [value, setValue] = useState("1");
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
 
-  
   // const Charts = [
   //   {
   //     chart: <Pie />,
@@ -100,32 +99,25 @@ const Analytics = () => {
         </Box>
          */}
 
-<Stack
-
-    width="90%"
+      <Stack
+        width="90%"
         direction={{ xs: "column", md: "row" }}
         // mt={2}
+        gap={{ xs: 1, sm: 2, md: 4 }}
+      >
+        <UserCount chartWidth={800} boxWidth="60%" />
+        <VisitSite chartWidth={450} boxWidth="40%" />
+      </Stack>
+
+      <Stack
+        width="90%"
+        direction={{ xs: "column", md: "column" }}
+        mt={10}
         spacing={{ xs: 1, sm: 2, md: 4 }}
       >
-
-     
-         <UserCount chartWidth={800} boxWidth="60%"/>
-         <VisitSite chartWidth={450} boxWidth="40%"/>
-
-    </Stack>
-
-<Stack
-   width="90%"
-   direction={{ xs: "column", md: "column" }}
-        
-           mt={10}
-        spacing={{ xs: 1, sm: 2, md: 4 }}
-      >
- 
-      <Sales chartWidth={1200} boxWidth="100%"/>
-      <PopularCourses  chartWidth={1200}  boxWidth="100%"/>
-
-    </Stack>
+        <Sales chartWidth={1200} boxWidth="100%" />
+        <PopularCourses chartWidth={1200} boxWidth="100%" />
+      </Stack>
     </Box>
   );
 };

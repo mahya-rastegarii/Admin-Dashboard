@@ -20,12 +20,17 @@ import { alpha, styled } from "@mui/material/styles";
 import { useThemeContext } from "../../context/theme/ThemeContext";
 import { LanguageMenu } from "./LanguageMenu";
 import { PaletteMenu } from "./PaletteMenu";
+import { useAppContext } from "../../context/app/app-context";
 
 const Navbar = ({ drawerWidth, handleDrawer, open }) => {
   // const [language, setLanguage] = useState("en")
 
 
   const { theme: customTheme, darkMode, setDarkMode } = useThemeContext();
+
+  const {language }= useAppContext();
+
+
   const iconColor = customTheme.palette.mode.typography;
   const bgColor = customTheme.palette.mode.boxBg;
   const avatarColor = customTheme.palette.primary.main ;
@@ -33,7 +38,7 @@ const Navbar = ({ drawerWidth, handleDrawer, open }) => {
   const badgeColor = customTheme.palette.primary.dark;
  
   // const widthNavbar = `calc(${theme.spacing(7)} + 1px)`;
-
+const arrow = language=== 'fa' ? <KeyboardDoubleArrowRight/> : <KeyboardDoubleArrowLeft  />
   const AppBar = styled(MuiAppBar, {
 
 
@@ -42,7 +47,7 @@ const Navbar = ({ drawerWidth, handleDrawer, open }) => {
   })(({ theme, open }) => ({
     zIndex: theme.zIndex.drawer + 1,
     // width: `calc(100% - ${drawerWidth}px)`,
-
+    direction: language === 'fa' ? 'rtl' : 'ltr',
     backdropFilter: "blur(3px)",
     backgroundColor: alpha(bgColor , 0.9),
     // boxShadow: "none",
@@ -56,7 +61,8 @@ const Navbar = ({ drawerWidth, handleDrawer, open }) => {
     }),
     ...(open && {
       width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: `${drawerWidth}px`,
+      marginLeft: language === 'en' ? `${drawerWidth}px` : 0,
+      marginRight: language === 'fa' ? `${drawerWidth}px` : 0,
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
@@ -74,8 +80,9 @@ const Navbar = ({ drawerWidth, handleDrawer, open }) => {
         <Box
           sx={{
             position: "absolute",
-            left: "0",
-            
+           
+            right: language === 'fa' && 0,
+            left: language === 'en' && 0,
             display: "flex",
             justifyContent: "flex-start",
           }}
@@ -93,7 +100,7 @@ const Navbar = ({ drawerWidth, handleDrawer, open }) => {
             sx={{ mx: 2, color: iconColor,  display: {xs:"none", md:"flex"}}}
           >
             {/* <MenuIcon /> */}
-            {open ? <KeyboardDoubleArrowLeft  /> : <Menu/>}
+            {open ? arrow : <Menu/>}
           </IconButton>
         
         </Box>
@@ -104,6 +111,7 @@ const Navbar = ({ drawerWidth, handleDrawer, open }) => {
             display: " flex",
             justifyContent: "center",
             alignItems: "center",
+            gap:1
           }}
         >
           {/* <IconButton
@@ -118,7 +126,7 @@ const Navbar = ({ drawerWidth, handleDrawer, open }) => {
           <IconButton
             size="large"
             aria-label="show  new notifications"
-            sx={{ mr: "2px", color: iconColor }}
+            sx={{ color: iconColor }}
             // color="inherit"
             
           >
@@ -134,10 +142,10 @@ const Navbar = ({ drawerWidth, handleDrawer, open }) => {
             edge="end"
             aria-label={darkMode ? " light Mode " : " dark Mode "}
             onClick={() => setDarkMode(!darkMode)}
-            sx={{ mr: "1px", color: iconColor }}
+            sx={{ color: iconColor }}
             
           >
-            {darkMode ? <LightMode/> : <DarkMode  />}
+            {darkMode ?  <LightMode/> : <DarkMode  />}
           </IconButton>
 
           <LanguageMenu />
@@ -145,7 +153,7 @@ const Navbar = ({ drawerWidth, handleDrawer, open }) => {
               sx={{
                 minWidth: 0,
               
-               
+                 mx:2,
                 justifyContent: "center",
                 display: open ? "none" : "flex",
               }}

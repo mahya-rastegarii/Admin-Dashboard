@@ -22,7 +22,8 @@ const ChartContainer = ({icon, title, width, children}) => {
           alignItems="center"
           // mx="auto"
           p={2}
-  
+
+        
           // width={width}
           bgcolor={bgColor}
           mt={6}
@@ -45,6 +46,7 @@ const ChartContainer = ({icon, title, width, children}) => {
             display="flex"
             justifyContent="center"
             alignItems="center"
+
           >
             {children}
           </Box>

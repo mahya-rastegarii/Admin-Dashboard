@@ -1,0 +1,158 @@
+
+
+{
+
+    "adminName" : "محیا رستگاری",
+    "sideBar" :{
+
+        "dashboard" : "داشبورد",
+        "courses":"دوره های آمورشی",
+        "users": "کاربران",
+        "calendar": "تقویم",
+        "analytics":"آنالیز"
+    },
+  "dashboard": {
+
+    "dashboardBox" : {
+        "course" : "دوره ها",
+        "user" : "کاربران",
+        "liked" :  "رضایت" 
+    },
+
+    "NewUsersTitle" : " جدیدترین کاربران",
+    "NewCourseTitle" : "جدیدترین دوره ها",
+    "ViewAllBtn" : "دیدن همه"
+  },
+
+
+  "courses" : {
+    
+    "addBtn" : "افزودن",
+    "table" : {
+        "tableHeader" : {
+            "title" : "عنوان",
+            "teacher" : "مدرس",
+            "student" : "دانشجویان",
+            "status" : "وضعیت",
+            "time" : " زمان",
+            "lastUpdate" : "آخرین به روزرسانی",
+            "star" : "امتیاز",
+            "option" : "تنظیمات"
+        }
+    },
+
+    "addCourse" : {
+      "title": " افرودن دوره ",
+      "uploadImageText": "بارگزاری تصویر"
+     
+    },
+    "editCourse" : {
+      "title": "تغییر دوره"
+    },
+
+    "modalCourse" : {
+      "courseNameLabel": "نام دوره",
+      "teacherLabel": "مدرس" ,
+      "timeLabel": "زمان",
+      "hour": "ساعت" ,
+      "saveBtn": "ذخیره",
+
+      "errors" : {
+        "courseNameError":" فیلد نام دوره نمیتواند خالی باشد",
+        "teacherError":" فیلد نام مدرس نمیتواند خالی باشد",
+        "timeError":" فیلد زمان دوره نمیتواند خالی باشد"
+
+      }
+    },
+    
+    "removeCourse" : {
+      "titleModal" : "حذف دوره",
+      "text": "آیا از حذف این دوره مطمئن هستید؟"
+    }
+  },
+
+  "searchPlaceholder" : "جستجو...",
+  "filter" : {
+    "filterTitle" : "فیلتر",
+    "status" :{
+        "title": "وضعیت",
+        "all" : "همه",
+        "presell":" پیش فروش",
+        "completed":"تکمیل شده",
+        "inProgress": " در حال برگزاری"
+    },
+
+    "filterBtn" : "فیلتر"
+
+  },
+
+  "sort" : {
+    "new" : "جدیدترین",
+    "old" : "قدیمی ترین"
+  },
+  "user":{
+    "table" : {
+    "tableHeader" : {
+            "userName" : " نام کاربری",
+            "fulName" : " نام کامل",
+            "email" : " ایمیل",
+            "phoneNumber" : " شماره تلفن",
+            "date" : "تاریخ عضویت"
+        }
+    }
+  },
+
+  "charts":{
+
+    "userCount":"تعداد کاربران",
+    "visitSite": "میزان بازدید از سایت",
+    "sales": "میزان فروش",
+    "popularCourse" : " دوره های محبوب",
+
+    "month": {
+        "jan":"ژانویه",
+        "feb":"فوریه",
+        "mar":"مارس",
+        "apr":"آوریل",
+        "may":"می",
+        "jun":"ژوئن",
+        "jul":"جولای",
+        "aug":"آگوست",
+        "sep":"سپتامبر",
+        "oct":"اکتبر",
+        "nov":"نوامبر",
+        "dec":"دسامبر"
+    },
+    "days": {
+        "sun":"یکشنبه",
+        "mon":"دوشنبه",
+        "tues":" سه شنبه",
+        "wed": " چهارشنبه",
+        "thurs": "پنجشنبه",
+        "fri": "جمعه",
+        "sat":"شنبه"
+    }
+  },
+
+  "calendar": {
+    "addEvent": {
+      "titleModal": "افزودن رویداد" ,
+      "titleText": "متن ",
+      "startDate": "تاریخ شروع",
+      "endDate": "تاریخ پایان", 
+      "addBtn":"افزودن",
+    
+ "errors" : {
+          "titleTextError":" فیلد متن رویداد نمیتواند خالی باشد"
+        }
+    },
+    "removeEvent": {
+      "titleModal":"حذف رویداد" ,
+      "text" : " آیا از حذف این رویداد مطمئن هستید؟"
+      
+    }
+  },
+  
+  "cancelBtn":"بیخیال",
+  "removeBtn": "حذف"
+}

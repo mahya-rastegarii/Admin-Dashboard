@@ -18,10 +18,16 @@ import MenuComponent from "../../menu/MenuComponent";
 import MenuContainer from "../../menu/MenuContainer";
 import { supabase } from "../../../core/createClient";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useAppContext } from "../../../context/app/app-context";
 
 const FilterBox = ({ setCoursesData, setLoading }) => {
-  const { selectValue } = useFilterContext();
+  // const { selectValue } = useFilterContext();
+
   const { theme } = useThemeContext();
+  const {language}= useAppContext();
+
+  const {t}= useTranslation();
   // const iconColor = theme.palette.primary.dark;
   const typography = theme.palette.mode.typography;
   const borderColor = theme.palette.mode.borderColor
@@ -30,10 +36,11 @@ const FilterBox = ({ setCoursesData, setLoading }) => {
   // const [filterBy, setFilterBy] = useState(selectValue);
   // const [boxItem, setBoxItem] = useState(selectValue);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [filterData, setFilterData] = useState("None");
+ const filter = language ==='fa'? "همه" : "All";
+  const [filterData, setFilterData] = useState(filter);
   //  const openMenu = Boolean(anchorEl)
 
-  const data = ["None", "Presell", "Completed", "In Progress"];
+  const data = [t('filter.status.all'), t('filter.status.presell'), t('filter.status.completed'), t('filter.status.inProgress')];
   const navigate = useNavigate()
   // const handleClickItem = (index) => {
   //   setSelectedIndex(index);
@@ -47,7 +54,7 @@ const FilterBox = ({ setCoursesData, setLoading }) => {
   const filterHandler = async() => {
 
     setLoading(true)
-    if (filterData !== "None") {
+    if (filterData !== t('filter.status.all')) {
     
       const {data, error } = await supabase.from("course").select("*").eq('statusEn', filterData).order("lastUpdate", { ascending: false });;
       
@@ -77,16 +84,16 @@ const FilterBox = ({ setCoursesData, setLoading }) => {
       >
         <FilterList sx={{ fontSize: 27, color:typography }} />
         <Typography variant="body2" component="span" sx={{ color: typography }}>
-          filter {filterData !== "None" ? "*(" + filterData + ")" : ""}
+          {t('filter.filterTitle')} {filterData !==  filter ? "*(" + filterData + ")" : ""}
         </Typography>
       </IconButton>
       <MenuComponent anchorEl={anchorEl} handleCloseMenu={handleCloseMenu}>
         {/* <Box sx={{ width: "100%", backgroundColor: bgColor, color: typography }}> */}
-          <Stack
-            direction="row"
-            sx={{ padding: 2, color: typography }}
+          <Box
+           display='flex'
+            sx={{ padding: 2, color: typography, direction:language ==='fa'? "rtl": "ltr" }}
             alignItems="center"
-            spacing={2}
+            gap={1}
           >
             {/* <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
             <Select
@@ -103,7 +110,7 @@ const FilterBox = ({ setCoursesData, setLoading }) => {
               ))}
             </Select>
           </FormControl> */}
-            <Typography>{selectValue}</Typography>
+            <Typography>{t('filter.status.title')}</Typography>
             <Box>
             
               <FormControl variant="standard"
@@ -115,14 +122,14 @@ const FilterBox = ({ setCoursesData, setLoading }) => {
                   backgroundColor: boxBg
                 }
                }}>
-                  <Box sx={{ borderBottom:" 1px solid"}}>
+                  <Box sx={{ borderBottom:" 1px solid", }}>
              <MenuContainer menuItem={data} selectedItem={filterData} setSelectedItem={setFilterData} />
                   </Box>
                 {/* <OtherFilter /> */}
                 {/* <StatusFilter />  */}
               </FormControl>
             </Box>
-          </Stack>
+          </Box>
           <Stack
             sx={{ marginX: 2 }}
             alignItems="center"
@@ -135,8 +142,11 @@ const FilterBox = ({ setCoursesData, setLoading }) => {
               color="success"
               onClick={filterHandler}
             >
-              {" "}
-              Search{" "}
+             
+             {
+             t('filter.filterBtn')
+
+             }
             </Button>
           </Stack>
         {/* </Box> */}

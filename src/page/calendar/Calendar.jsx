@@ -9,9 +9,12 @@ import interactionPlugin from "@fullcalendar/interaction";
 
 import "./calendar.css";
 import { styled } from '@mui/material';
+import { useAppContext } from '../../context/app/app-context';
 
-const Calendar = ({setDate, language, setRemove, setOpen, setModal, events, setDateToday}) => {
+const Calendar = ({setDate, setRemove, setOpen, setModal, events, setDateToday}) => {
 
+
+  const {language }= useAppContext();
     const CalendarEl = styled(FullCalendar)(({ theme }) => ({
 
     
@@ -65,12 +68,12 @@ const Calendar = ({setDate, language, setRemove, setOpen, setModal, events, setD
       //  setRemove(false)
       //  alert("Delete Event" + info)
     }}
-    locale={language}
+    locale= { language === 'fa' ? faLocale : enLocale}
     //  editable = {true}
 
     customButtons={{
       addEvent: {
-        text: language === faLocale ? "افزودن رویداد" : "addEvent",
+        text: language === 'fa' ? "افزودن رویداد" : "addEvent",
         click: () => {
           const date = new Date()
           const today = date.toISOString().split('T')[0];

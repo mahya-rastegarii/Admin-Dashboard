@@ -1,5 +1,4 @@
-import enLocale from "@fullcalendar/core/locales/en-au";
-import faLocale from "@fullcalendar/core/locales/fa";
+
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
@@ -19,8 +18,7 @@ import { supabase } from "../../core/createClient";
 
 import LoadComponent from "../../components/Loading/LoadComponent";
 import { Await, useLoaderData, defer, useNavigate } from "react-router-dom";
-import Notification from "../../components/notification/Notification";
-import { useNotificationContext } from "../../context/notification/NotificationContext";
+import { useTranslation } from "react-i18next";
 
 const ContainerCalendar = () => {
 
@@ -28,19 +26,23 @@ const ContainerCalendar = () => {
 const navigate = useNavigate()
 
   const { theme } = useThemeContext();
+
+  const {t} =useTranslation();
+
+  
   const boxBgColor = theme.palette.mode.boxBg;
   const typography = theme.palette.mode.typography;
   const themeColor = theme.palette.primary.main;
 
 
   const [event, setEvent] = useState([]);
-  const [language, setLanguage] = useState(enLocale);
+  // const [language, setLanguage] = useState(enLocale);
   const [modal, setModal] = useState("");
   const [date, setDate] = useState();
   const [dateToday, setDateToday]= useState();
 
   const { setOpen } = useModalContext();
-  const {setNotification }= useNotificationContext()
+  
   const [remove, setRemove] = useState(0);
 
   
@@ -147,8 +149,8 @@ const navigate = useNavigate()
        : modal === "removeEvent" ? (
         // <RemoveEvent setEvent={setEvent} event={event} remove={remove} />
         <RemoveComponent
-          title="Remove Event"
-          body="Remove Event?"
+          title={t('calendar.removeEvent.titleModal')}
+          body={t('calendar.removeEvent.text')}
           clicked={removeHandler}
         />
       ) : modal === "addEvent" ? (
@@ -180,7 +182,7 @@ const navigate = useNavigate()
 
     
        {
-        (loadEvents) => <Calendar setModal={setModal} setOpen={setOpen} setDate={setDate} setDateToday={setDateToday} setRemove={setRemove}  language={language} events={loadEvents}/>
+        (loadEvents) => <Calendar setModal={setModal} setOpen={setOpen} setDate={setDate} setDateToday={setDateToday} setRemove={setRemove} events={loadEvents}/>
        }
         </Await>
     </Suspense>

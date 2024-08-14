@@ -6,18 +6,23 @@ import "../tableStyle.css";
 import { ArrowDropDown } from "@mui/icons-material";
 import MenuComponent from "../../menu/MenuComponent";
 import MenuContainer from "../../menu/MenuContainer";
-
+import { useTranslation } from "react-i18next";
+import { useAppContext } from '../../../context/app/app-context';
 const SortBox = ({ sortData }) => {
   // const [value, setValue] = useState("Newest");
 
   const { theme } = useThemeContext();
+ const {language }= useAppContext()
+  const {t}= useTranslation()
+
+
   const boxBg = theme.palette.mode.boxBg;
   const typography = theme.palette.mode.typography;
   const borderColor = theme.palette.mode.borderColor;
 
-  
-  const [selectedIndex, setSelectedIndex] = useState("Newest");
-  let menuItem = ["Newest", "Oldest"]
+  const sort = language=== 'fa' ? "جدید ترین": 'Newest';
+  const [selectedIndex, setSelectedIndex] = useState(sort);
+  let menuItem = [t('sort.new'), t('sort.old')]
   const [anchorEl, setAnchorEl] = useState(null);
   // //  const openMenu = Boolean(anchorEl)
 
@@ -72,7 +77,7 @@ const SortBox = ({ sortData }) => {
     menuItem.map((item, index) => (
    
            <MenuItem key={index}  value={item}
-           sx={{ color:typography}}
+           sx={{ color:typography,  direction:language ==='fa'? "rtl": "ltr",}}
           selected={item === selectedIndex}
           onClick={() => handleClickItem(item)}
           >

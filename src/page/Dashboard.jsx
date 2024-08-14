@@ -24,6 +24,7 @@ import VisitSite from "../components/analytics/VisitSite";
 import Sales from "../components/analytics/Sales";
 import LoadComponent from "../components/Loading/LoadComponent";
 import ContainerData from "../components/dashboard/ContainerData";
+import { useTranslation } from "react-i18next";
 // import HeaderTable from "../components/dashboard/HeaderTable";
 // import { useChartContext } from "../context/chart/ChartContext";
 
@@ -32,6 +33,7 @@ const Dashboard = () => {
   const data = useLoaderData()
   // const {chartValue, setChartValue}= useChartContext();
   const { theme } = useThemeContext();
+  const {t}= useTranslation()
   // const iconColor = theme.palette.mode.typography;
   const iconColor = theme.palette.primary.dark;
   const boxBgColor = theme.palette.mode.boxBg;
@@ -59,7 +61,7 @@ const Dashboard = () => {
   const BoxContent = [
     {
       id: 1,
-      title: " course ",
+      title: t('dashboard.dashboardBox.course'),
       count: 11,
       num: 1,
 
@@ -67,14 +69,14 @@ const Dashboard = () => {
     },
     {
       id: 2,
-      title: " user",
+      title: t('dashboard.dashboardBox.user'),
       count: 64,
       num: 1,
       icon: <PeopleAlt sx={{ fontSize: 50, color: iconColor }} />,
     },
     {
       id: 3,
-      title: "enjoy ",
+      title: t('dashboard.dashboardBox.liked'),
       count: 70,
       percent: "%",
       num: 10,
@@ -104,7 +106,7 @@ const Dashboard = () => {
 
   const userComponent =  {
 
-      title: "New user",
+      title: t('dashboard.NewUsersTitle'),
       // data: <NewUser  user={newUser}/>,
       width: { xs: "100%", md: "30%" },
       icon: <People />,
@@ -113,7 +115,7 @@ const Dashboard = () => {
 
    const courseComponent =  {
 
-      title: "New Course",
+      title: t('dashboard.NewCourseTitle'),
       // data: <NewCourse  course={newCourse} />,
       width: { xs: "100%", md: "70%" },
       icon: <School />,
@@ -173,26 +175,33 @@ const Dashboard = () => {
         <Line {...chartData} />
       </Box> */}
 
-      <Stack 
+      <Box 
       width="100%"
-       direction={{ xs: "column", md: "row" }}
+      display= 'flex'
+
+       flexDirection={{ xs: "column", md: "row" }}
        mt={6}
-       spacing={3}
+
+       gap={2}
+
+       
        alignItems="center"
 
        justifyContent="center"
       >
        
-         <Sales  chartWidth={800} boxWidth="70%"/>
+         <Sales  chartWidth={800} boxWidth="60%"/>
        
-         <VisitSite chartWidth={450} boxWidth="30%"/>
+         <VisitSite chartWidth={450} boxWidth="40%"/>
         
-      </Stack>
+      </Box>
 
-      <Stack
-        direction={{ xs: "column", md: "row" }}
+      <Box
+      
+        flexDirection={{ xs: "column", md: "row" }}
+        display="flex"
         mt={3}
-        spacing={{ xs: 1, sm: 2, md: 4 }}
+        gap={2}
       >
 
 
@@ -233,7 +242,7 @@ const Dashboard = () => {
        
  
 
-      </Stack>
+      </Box>
     </Box>
   );
 };
