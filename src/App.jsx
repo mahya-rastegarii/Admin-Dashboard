@@ -4,23 +4,27 @@ import router from "./router";
 import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ThemeProvider } from "./context/theme/ThemeContext";
-import "./core/i18next";
 import { useAppContext } from "./context/app/app-context";
+import { useThemeContext } from "./context/theme/ThemeContext";
+import "./core/i18next";
 
 function App() {
+  const { language } = useAppContext();
+  const { darkMode } = useThemeContext();
 
-  const {language}= useAppContext();
-
-  const rtlDir =language ==='fa'? true : false;
+  
+  const rtlDir = language === "fa" ? true : false;
   return (
-    <>
-      <ThemeProvider>
+  
         <>
           <RouterProvider router={router} />
-          <ToastContainer rtl={rtlDir}/>
-        </>
-      </ThemeProvider>
+          <ToastContainer
+            rtl={rtlDir}
+            theme={darkMode ? "dark" : "light"}
+            position={language === "fa" ? "top-right" : "top-left"}
+          />
+
+    
     </>
   );
 }

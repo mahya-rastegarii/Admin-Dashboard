@@ -147,7 +147,7 @@ const Courses = () => {
     toast.promise(
       response,
       {
-        pending: t('promise.pendingDelelte'),
+        pending: t('promise.pendingDelete'),
         success: {
 
           render() {

@@ -104,6 +104,11 @@ const [active, setActive] = useState(false)
     "& .css-12i7wg6-MuiPaper-root-MuiDrawer-paper":{
       backgroundColor: bgColor,
       boxShadow: theme.shadows[2],
+     },
+
+     " & .css-18sg6k4-MuiPaper-root-MuiDrawer-paper": {
+      backgroundColor: bgColor,
+      boxShadow: theme.shadows[2],
      }
   }));
 

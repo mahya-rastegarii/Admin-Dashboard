@@ -4,7 +4,6 @@ import Analytics from "./page/Analytics";
 
 import Courses, { courseLoader }  from "./page/Courses";
 import Dashboard, { NewDataLoader } from "./page/Dashboard";
-import Support from "./page/Support";
 import User, { userLoader } from "./page/User";
 import MainLayout from "./components/main/MainLayout";
 import ContainerCalendar, { eventLoader } from "./page/calendar/ContainerCalendar";
@@ -46,10 +45,7 @@ const router = createBrowserRouter([
       path: "analytics",
       element: <Analytics />
     },
-    {
-      path: "support",
-      element: <Support />
-    },
+
   ]
   }
 ]);

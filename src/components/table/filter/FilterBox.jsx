@@ -12,7 +12,6 @@ import {
 import React, { useState } from "react";
 import { useFilterContext } from "../../../context/filter/FilterContext";
 import { useThemeContext } from "../../../context/theme/ThemeContext";
-import { rowCourse } from "../../course/CourseData";
 import { StatusFilter } from "./SelectData";
 import MenuComponent from "../../menu/MenuComponent";
 import MenuContainer from "../../menu/MenuContainer";
