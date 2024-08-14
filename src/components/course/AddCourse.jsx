@@ -323,7 +323,7 @@ const AddCourse = ({ insertCourse }) => {
             }}
                 // sx={{textAlign:language ==='fa' ? "rtl":"ltr"}}
                 {...register("title", {
-                  required: t("courses.modalCourse.errors.courseNameError"),
+                  required: t("courses.modalCourse.required.courseNameError"),
                 })}
                 id="outlined-basic"
                 label={t("courses.modalCourse.courseNameLabel")}
@@ -355,7 +355,7 @@ const AddCourse = ({ insertCourse }) => {
                   }
                 }}
                 {...register("teacher", {
-                  required: t("courses.modalCourse.errors.teacherError"),
+                  required: t("courses.modalCourse.required.teacherError"),
                 })}
                 id="outlined-basic"
                 label={t("courses.modalCourse.teacherLabel")}
@@ -394,7 +394,7 @@ const AddCourse = ({ insertCourse }) => {
                   }
                 }}
                 {...register("time", {
-                  required: t("courses.modalCourse.errors.timeError"),
+                  required: t("courses.modalCourse.required.timeError"),
                 })}
                 id="outlined-basic"
                 label={t("courses.modalCourse.timeLabel")}

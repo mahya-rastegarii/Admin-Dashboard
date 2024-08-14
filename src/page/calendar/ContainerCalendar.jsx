@@ -19,6 +19,7 @@ import { supabase } from "../../core/createClient";
 import LoadComponent from "../../components/Loading/LoadComponent";
 import { Await, useLoaderData, defer, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 const ContainerCalendar = () => {
 
@@ -77,18 +78,40 @@ const navigate = useNavigate()
   const removeHandler = async () => {
     // const newEventList = event.filter((item) => item.id !== remove);
     setOpen(false)
-     const response = await supabase
+     const response =  supabase
      .from("event")
     .delete()
      .eq('id', remove)
    
-     
-     if( response.status === 204) {
-      const url = new URL(window.location.href)
-      navigate(url.pathname);
+     toast.promise(
+      response,
+      {
+        pending: t('promise.pendingDelete'),
+        success: {
+
+          render() {
+           
+           const url = new URL(window.location.href)
+           navigate(url.pathname);
+
+              return t('promise.success')
+          }
+        },
+        error: {
+          render() {
+            return t('promise.error');
+          }
+        }
+      },
+
+      
+    )
+    //  if( response.status === 204) {
+    //   const url = new URL(window.location.href)
+    //   navigate(url.pathname);
      
       
-     };
+    //  };
 
 
 
@@ -116,16 +139,39 @@ const navigate = useNavigate()
 
 
       const insertEvent = async (newData) =>{
-        const { data, error } = await supabase
-        .from('event')
+        const response =  supabase.from('event')
         .insert(newData)
         .select('*')
          
-        if(data){
-          const url = new URL(window.location.href)
-      navigate(url.pathname);
+
+
+        toast.promise(
+          response,
+          {
+            pending: t('promise.pending'),
+            success: {
+    
+              render() {
+                    const url = new URL(window.location.href)
+                     navigate(url.pathname);
+    
+                  return t('promise.success')
+              }
+            },
+            error: {
+              render() {
+                return t('promise.error')
+              }
+            }
+          },
+    
         
-        }
+        )
+      //   if(data){
+      //     const url = new URL(window.location.href)
+      // navigate(url.pathname);
+        
+      //   }
 
         console.log( 'events', data)
         // setEvent( prevEvent => [...prevEvent, events])

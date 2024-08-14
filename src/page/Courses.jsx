@@ -18,6 +18,7 @@ import { useAppContext } from "../context/app/app-context";
 import { supabase } from "../core/createClient";
 import FilterBox from "../components/table/filter/FilterBox";
 import SearchBox from "../components/search/SearchBox";
+import { toast } from "react-toastify";
 
 
 const Courses = () => {
@@ -138,17 +139,41 @@ const Courses = () => {
 
     console.log("response", data);
   };
-  const deleteCourse = async () => {
+  const deleteCourse = async() => {
     // const newListCourses = courses.filter((item) => item.id !== CourseId)
     setOpen(false);
-    const response = await supabase.from("course").delete().eq("id", CourseId);
+    const response =  supabase.from("course").delete().eq("id", CourseId);
     deleteImageCourse();
-    if (response.status === 204) {
-      const url = new URL(window.location.href);
-      navigate(url.pathname);
-      setCourseId(null);
-      setCourseData(null);
-    }
+    toast.promise(
+      response,
+      {
+        pending: t('promise.pendingDelelte'),
+        success: {
+
+          render() {
+            const url = new URL(window.location.href);
+              navigate(url.pathname);
+              setCourseId(null);
+              setCourseData(null);
+
+              return t('promise.success');
+          }
+        },
+        error: {
+          render() {
+            return t('promise.error')
+          }
+        }
+      },
+
+
+    )
+    // if (response.status === 204) {
+    //   const url = new URL(window.location.href);
+    //   navigate(url.pathname);
+    //   setCourseId(null);
+    //   setCourseData(null);
+    // }
 
     console.log("remove", response);
 
@@ -161,16 +186,36 @@ const Courses = () => {
   //  console.log("response", result)
   // }
 
-  const insertCourse = async (newCourse) => {
-    const { data: courses, error } = await supabase
-      .from("course")
+  const insertCourse =  async(newCourse) => {
+    const response =  supabase.from("course")
       .insert(newCourse)
       .select("*");
 
-    if (courses) {
-      const url = new URL(window.location.href);
-      navigate(url.pathname);
-    }
+      toast.promise(
+        response,
+        {
+          pending: t('promise.pending'),
+          success: {
+  
+            render() {
+              const url = new URL(window.location.href);
+                navigate(url.pathname);
+                return t('promise.success')
+            }
+          },
+          error: {
+            render() {
+              return t('promise.error')
+            }
+          }
+        },
+  
+      
+      )
+    // if (courses) {
+    //   const url = new URL(window.location.href);
+    //   navigate(url.pathname);
+    // }
 
     console.log("Courses", courses);
     // setEvent( prevEvent => [...prevEvent, events])
@@ -179,18 +224,42 @@ const Courses = () => {
 
   const editCourse = async (newData) => {
     setOpen(false);
-    const response = await supabase
+    const response =  supabase
       .from("course")
       .update(newData)
       .eq("id", CourseId)
       .select("*");
 
-    if (response.status === 200) {
-      const url = new URL(window.location.href);
-      navigate(url.pathname);
-      setCourseId(null);
-      setCourseData(null);
-    }
+      
+      toast.promise(
+        response,
+        {
+          pending: t('promise.pending'),
+          success: {
+  
+            render() {
+              const url = new URL(window.location.href);
+                navigate(url.pathname);
+                setCourseId(null);
+                setCourseData(null);
+                return t('promise.success')
+            }
+          },
+          error: {
+            render() {
+              return t('promise.error')
+            }
+          }
+        },
+  
+       
+      )
+    // if (response.status === 200) {
+    //   const url = new URL(window.location.href);
+    //   navigate(url.pathname);
+    //   setCourseId(null);
+    //   setCourseData(null);
+    // }
 
     console.log("courses Edit", response);
     // fetchCourse();

@@ -211,7 +211,7 @@ sx={{
   }
 }}
                 {...register("title", {
-                  required: t("courses.modalCourse.errors.courseNameError"),
+                  required: t("courses.modalCourse.required.courseNameError"),
                 })}
                 id="outlined-basic"
                 label={t("courses.modalCourse.courseNameLabel")}
@@ -243,7 +243,7 @@ sx={{
                 }
               }}
                 {...register("teacher", {
-                  required: t("courses.modalCourse.errors.teacherError"),
+                  required: t("courses.modalCourse.required.teacherError"),
                 })}
                 id="outlined-basic"
                 label={t("courses.modalCourse.teacherLabel")}
@@ -274,7 +274,7 @@ sx={{
                 }
               }}
                 {...register("time", {
-                  required: t("courses.modalCourse.errors.timeError"),
+                  required: t("courses.modalCourse.required.timeError"),
                 })}
                 id="outlined-basic"
                 label={t("courses.modalCourse.timeLabel")}

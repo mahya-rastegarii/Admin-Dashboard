@@ -1,30 +1,26 @@
-import { Box, createTheme } from "@mui/material";
-import { useState } from "react";
-
-import Navbar from "./components/navbar/Navbar";
-import Sidebar from "./components/sidebar/Sidebar";
 // import Dashboard from "./page/Dashboard";
 import router from "./router";
 
 import { RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { ThemeProvider } from "./context/theme/ThemeContext";
-import { AppProvider } from "./context/app/app-context";
-import './core/i18next';
+import "./core/i18next";
+import { useAppContext } from "./context/app/app-context";
 
 function App() {
-  
 
-  
+  const {language}= useAppContext();
 
- 
+  const rtlDir =language ==='fa'? true : false;
   return (
     <>
-          <AppProvider>
-        <ThemeProvider>
+      <ThemeProvider>
+        <>
           <RouterProvider router={router} />
-        </ThemeProvider>
-          </AppProvider>
-      
+          <ToastContainer rtl={rtlDir}/>
+        </>
+      </ThemeProvider>
     </>
   );
 }

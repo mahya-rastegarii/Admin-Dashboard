@@ -115,7 +115,7 @@ const AddEvent = ({ setEvent, event, date, dateToday, insertEvent }) => {
                 id="event-title"
                 size="small"
                 {...register("title", {
-                  required: t('calendar.errors.titleTextError')
+                  required: t('calendar.addEvent.required.titleTextError')
                 })}
 
                 // aria-describedby="outlined-weight-helper-text"
