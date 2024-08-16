@@ -6,12 +6,13 @@ import PaletteBox from "../box/PaletteBox";
 
 import { useForm } from "react-hook-form";
 import { useModalContext } from "../../context/modal/ModalContext";
-import { useThemeContext } from "../../context/theme/ThemeContext";
+
 import Form from "../form/Form";
 import { useTranslation } from "react-i18next";
+import { useAppContext } from "../../context/app/app-context";
 
 const AddEvent = ({ setEvent, event, date, dateToday, insertEvent }) => {
-  const { theme } = useThemeContext();
+  const { themeColor, mode } = useAppContext();
   const { setOpen } = useModalContext()
   const {t} =useTranslation();
   const {
@@ -21,8 +22,8 @@ const AddEvent = ({ setEvent, event, date, dateToday, insertEvent }) => {
     reset,
   } = useForm();
 
-  const borderColor = theme.palette.mode.borderColor;
-  const typography = theme.palette.mode.typography;
+  const borderColor = mode.palette.borderColor;
+  const typography = mode.palette.typography;
   // const focusColor =theme.palette.primary.light;
   //   {
   //   defaultValues: {
@@ -67,7 +68,7 @@ const AddEvent = ({ setEvent, event, date, dateToday, insertEvent }) => {
     const newData = {
       title,
       start: date ? date : start,
-      end: end ? end : start,
+      end: end ? end : date,
       color: eventColor,
     };
 

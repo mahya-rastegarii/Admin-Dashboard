@@ -1,6 +1,5 @@
 import React from 'react'
-import { useModalContext } from '../../context/modal/ModalContext'
-import { useThemeContext } from '../../context/theme/ThemeContext'
+import { useModalContext } from '../../context/modal/ModalContext';
 import { Backdrop, Box, Button, Fade, IconButton, Modal, Stack, Typography } from '@mui/material'
 import { Close } from '@mui/icons-material'
 import Form from '../form/Form'
@@ -13,13 +12,13 @@ const ModalComponent = ({closeForm, children, title}) => {
   const {reset }= useForm()
 
   const {open, setOpen} = useModalContext()
-  const {theme } = useThemeContext()
-  const {language }= useAppContext();
+
+  const {language, themeColor, mode }= useAppContext();
 
 
-  const bgColor = theme.palette.mode.boxBg;
-  const borderColor = theme.palette.mode.borderColor;
-  const typography =theme.palette.mode.typography;
+  const bgColor = mode.palette.boxBg;
+  const borderColor = mode.palette.borderColor;
+  const typography = mode.palette.typography;
 
  
 

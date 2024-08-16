@@ -7,44 +7,29 @@ import LoadComponent from "../components/Loading/LoadComponent";
 import SearchBox from "../components/search/SearchBox";
 import SortBox from "../components/table/sort/SortBox";
 import UserList from "../components/user/UserList";
-import { useThemeContext } from "../context/theme/ThemeContext";
-import { supabase } from "../core/createClient";
+
 import { useTranslation } from "react-i18next";
+import { useAppContext } from "../context/app/app-context";
+import { supabase } from "../core/createClient";
 
 export default function User() {
   const data = useLoaderData();
 
-  const { theme: customTheme } = useThemeContext();
+  const { themeColor, mode } = useAppContext();
+  const { t } = useTranslation();
 
-
-
-  const boxBgColor = customTheme.palette.mode.boxBg;
-  const headerTableColor = alpha(customTheme.palette.primary.light, 0.2);
-  const borderColor = customTheme.palette.mode.borderColor;
-  const typography = customTheme.palette.mode.typography;
-  const btnColor = customTheme.palette.primary.main;
+  const boxBgColor = mode.palette.boxBg;
+  const headerTableColor = alpha(themeColor.palette.primary.light, 0.2);
+  const borderColor = mode.palette.borderColor;
+  const typography = mode.palette.typography;
+  const btnColor = themeColor.palette.primary.main;
 
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [usersValue, setUsersValue] = useState(null);
-  const [userSortValue, setUserSortValue] = useState("Newest");
-const [loading, setLoading]= useState(false)
-  // const {setSelectValue}= useFilterContext()
-
-  // const filterData= ["Courses", "phone Number"]
-  //  setSelectValue(filterData)
-
-  // useEffect(() => {
-  //   setSelectValue(filterData)
-  // }, [])
-  // const searchUser = (name) => {
-  //   const newList = users.filter((item) =>
-  //     item.name.toLowerCase().includes(name.toLowerCase())
-  //   );
-
-  //   setUsers(newList);
-  // };
+  
+  const [loading, setLoading] = useState(false);
 
   // const debouncedFetchUser = debounce((value) => {
   //   if (value.length > 1) {
@@ -54,10 +39,11 @@ const [loading, setLoading]= useState(false)
 
   const searchUser = async (name) => {
     const lowerName = name.toLowerCase();
-    setLoading(true)
-    const { data, error } = await supabase.from("users")
-    .select("*")
-    .ilike("userName", `%${lowerName}%`);
+    setLoading(true);
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .ilike("userName", `%${lowerName}%`);
 
     setUsersValue(data);
     setLoading(false);
@@ -87,8 +73,7 @@ const [loading, setLoading]= useState(false)
   // };
 
   const descendingSort = async () => {
-
-    setLoading(true)
+    setLoading(true);
     const { data, error } = await supabase
       .from("users")
       .select("*")
@@ -99,12 +84,10 @@ const [loading, setLoading]= useState(false)
   };
 
   const sortUserDate = (item) => {
-    if (item === "Newest") {
+    if ( item === "Newest" || item ==="جدید ترین") {
       setUsersValue(null);
-      console.log("Newest");
     } else {
       descendingSort();
-      console.log("Oldest");
     }
   };
 
@@ -116,45 +99,8 @@ const [loading, setLoading]= useState(false)
   //   }
   // };
 
-  // const fetchUsers = async() =>{
-
-  //    let { data, error } = await supabase
-  //    .from('users')
-  //    .select('*')
-  //    .order('date', {ascending:false})
-
-  //    setUsers(data)
-  //   // console.log("Data", data)
-  // }
-
-  // useEffect (() => {
-  //   descendingSort();
-  //   fetchUsers()
-  // }, []);
-
   return (
     <Box component={Paper} elevation={2} sx={{ backgroundColor: boxBgColor }}>
-      {/* <Stack direction="row" spacing={1} sx={{ padding: 2}} >
-      <IconButton aria-label="Sort">
-      <FilterList  sx={{ fontSize:27}} />
-        <Typography variant="body2" component="span" color="#000">
-          filter
-        </Typography>
-  
-      </IconButton>
-       
-      <IconButton aria-label="Sort">
-      <Sort  sx={{ fontSize:27}} />
-        <Typography variant="body2" component="span" color="#000">
-          sort
-        </Typography>
-  
-      </IconButton>
-      
-    <SearchBox/>
-      </Stack> */}
-      {/* <HeaderTable direction="row" HandleSearch={debouncedFetch}/> */}
-
       <Stack
         direction={{ xs: "column-reverse", md: "row" }}
         alignItems={{ xs: "flex-start", md: "center" }}
@@ -168,13 +114,20 @@ const [loading, setLoading]= useState(false)
           // setSelectedIndex={setUserSortValue}
         />
 
-        <SearchBox handleSearch={debouncedFetchUser} />
+        <SearchBox
+          handleSearch={debouncedFetchUser}
+          placeholderText={t("search.searchPlaceholderUser")}
+        />
       </Stack>
 
       <Suspense fallback={<LoadComponent />}>
         <Await resolve={data.users}>
           {(fetchUsers) => (
-            <UserList users={fetchUsers}  usersValue={usersValue} loading={loading} />
+            <UserList
+              users={fetchUsers}
+              usersValue={usersValue}
+              loading={loading}
+            />
           )}
         </Await>
       </Suspense>

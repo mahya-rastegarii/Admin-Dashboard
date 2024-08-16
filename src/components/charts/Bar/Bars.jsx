@@ -4,15 +4,15 @@ import React from 'react'
 import {BarChart} from '@mui/x-charts/BarChart'
 
 import "../chartStyle.css";
-import { useThemeContext } from '../../../context/theme/ThemeContext';
+import { useAppContext } from '../../../context/app/app-context';
 
 
 const Bars = ({chartData, xLable ,widthChart, heightChart, marginChart}) => {
 
-const {theme} = useThemeContext()
+const {themeColor, mode} = useAppContext()
 
-const typography = theme.palette.mode.typography;
-const ChartColor=  theme.palette.primary.main;
+const typography = mode.palette.typography;
+const ChartColor=  themeColor.palette.primary.main;
   return (
     <BarChart
     sx={{ fill:typography,

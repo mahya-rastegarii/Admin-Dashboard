@@ -1,7 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Paper, Stack } from "@mui/material";
-import React, { Suspense, useEffect, useState } from "react";
-import _ from 'lodash';
+import _ from "lodash";
+import React, { Suspense, useState } from "react";
 import { Await, defer, useLoaderData, useNavigate } from "react-router-dom";
 import AddCourse from "../components/course/AddCourse";
 import CourseList from "../components/course/CourseList";
@@ -9,63 +9,54 @@ import EditCourse from "../components/course/EditCourse";
 import LoadComponent from "../components/Loading/LoadComponent";
 import RemoveComponent from "../components/remove/RemoveComponent";
 import SortBox from "../components/table/sort/SortBox";
-import { useFilterContext } from "../context/filter/FilterContext";
+
 import { useModalContext } from "../context/modal/ModalContext";
-import { useThemeContext } from "../context/theme/ThemeContext";
+
 import { useTranslation } from "react-i18next";
 import { useAppContext } from "../context/app/app-context";
 
-import { supabase } from "../core/createClient";
-import FilterBox from "../components/table/filter/FilterBox";
-import SearchBox from "../components/search/SearchBox";
 import { toast } from "react-toastify";
-
+import SearchBox from "../components/search/SearchBox";
+import FilterBox from "../components/table/filter/FilterBox";
+import { supabase } from "../core/createClient";
 
 const Courses = () => {
-
-  const {courses} = useLoaderData();
+  const { courses } = useLoaderData();
 
   const navigate = useNavigate();
 
-  const { theme: customTheme } = useThemeContext()
-  const {language }= useAppContext()
-  const {t}= useTranslation()
+  const { language, themeColor, mode } = useAppContext();
+  const { t } = useTranslation();
 
-
-  const boxBgColor = customTheme.palette.mode.boxBg;
-  const borderColor = customTheme.palette.mode.borderColor;
-  const typography = customTheme.palette.mode.typography;
-  const btnColor = customTheme.palette.primary.main;
+  const boxBgColor = mode.palette.boxBg;
+  const borderColor = mode.palette.borderColor;
+  const typography = mode.palette.typography;
+  const btnColor = themeColor.palette.primary.main;
 
   const [coursesValue, setCoursesValue] = useState(null);
   const [CourseId, setCourseId] = useState(null);
   const [courseData, setCourseData] = useState(null);
   const [modal, setModal] = useState("Add Course");
-  const [loading, setLoading]= useState(false)
-  // const [courseSortValue, setCourseSortValue] = useState("Newest");
+  const [loading, setLoading] = useState(false);
+
   const { open, setOpen } = useModalContext();
-  // const { setSelectValue } = useFilterContext();
 
-
-  const searchCourse = async(title) => {
-    setLoading(true)
+  const searchCourse = async (title) => {
+    setLoading(true);
     const lowerTitle = title.toLowerCase();
-    const {data, error}= await supabase.from("course")
-    .select('*')
-    .ilike('title', `%${lowerTitle}%`)
+    const { data, error } = await supabase
+      .from("course")
+      .select("*")
+      .ilike("title", `%${lowerTitle}%`);
 
     setCoursesValue(data);
-    setLoading(false)
+    setLoading(false);
   };
 
   const debouncedFetchCourses = _.debounce((value) => {
     if (value.length >= 2) {
-    
       searchCourse(value);
-    
-    } else if (!value)
-
-       setCoursesValue(null);
+    } else if (!value) setCoursesValue(null);
   }, 500);
 
   // const ascendingSort = () => {
@@ -87,31 +78,27 @@ const Courses = () => {
   // };
 
   const descendingSort = async () => {
-    setLoading(true)
-   
-      const { data, error } = await supabase
-        .from("course")
-        .select("*")
-        .order("lastUpdate", { ascending: true });
-    
-        setCoursesValue(data)
-        setLoading(false);
-      
+    setLoading(true);
+
+    const { data, error } = await supabase
+      .from("course")
+      .select("*")
+      .order("lastUpdate", { ascending: true });
+
+    setCoursesValue(data);
+    setLoading(false);
   };
 
   const sortCourseData = (item) => {
-    if ( item === "Newest") {
-      setCoursesValue(null)
-      console.log('Newest')
+    if (item === "Newest" || item === "جدید ترین") {
+      setCoursesValue(null);
+      // console.log('Newest')
     } else {
-      descendingSort()
-      
-      console.log('Oldest')
-      
+      descendingSort();
+
+      // console.log('Oldest')
     }
   };
-
-
 
   const openModalEdit = (item) => {
     setModal("Edit Course");
@@ -139,35 +126,29 @@ const Courses = () => {
 
     console.log("response", data);
   };
-  const deleteCourse = async() => {
+  const deleteCourse = async () => {
     // const newListCourses = courses.filter((item) => item.id !== CourseId)
     setOpen(false);
-    const response =  supabase.from("course").delete().eq("id", CourseId);
+    const response = supabase.from("course").delete().eq("id", CourseId);
     deleteImageCourse();
-    toast.promise(
-      response,
-      {
-        pending: t('promise.pendingDelete'),
-        success: {
+    toast.promise(response, {
+      pending: t("promise.pendingDelete"),
+      success: {
+        render() {
+          const url = new URL(window.location.href);
+          navigate(url.pathname);
+          setCourseId(null);
+          setCourseData(null);
 
-          render() {
-            const url = new URL(window.location.href);
-              navigate(url.pathname);
-              setCourseId(null);
-              setCourseData(null);
-
-              return t('promise.success');
-          }
+          return t("promise.success");
         },
-        error: {
-          render() {
-            return t('promise.error')
-          }
-        }
       },
-
-
-    )
+      error: {
+        render() {
+          return t("promise.error");
+        },
+      },
+    });
     // if (response.status === 204) {
     //   const url = new URL(window.location.href);
     //   navigate(url.pathname);
@@ -186,32 +167,24 @@ const Courses = () => {
   //  console.log("response", result)
   // }
 
-  const insertCourse =  async(newCourse) => {
-    const response =  supabase.from("course")
-      .insert(newCourse)
-      .select("*");
+  const insertCourse = async (newCourse) => {
+    const response = supabase.from("course").insert(newCourse).select("*");
 
-      toast.promise(
-        response,
-        {
-          pending: t('promise.pending'),
-          success: {
-  
-            render() {
-              const url = new URL(window.location.href);
-                navigate(url.pathname);
-                return t('promise.success')
-            }
-          },
-          error: {
-            render() {
-              return t('promise.error')
-            }
-          }
+    toast.promise(response, {
+      pending: t("promise.pending"),
+      success: {
+        render() {
+          const url = new URL(window.location.href);
+          navigate(url.pathname);
+          return t("promise.success");
         },
-  
-      
-      )
+      },
+      error: {
+        render() {
+          return t("promise.error");
+        },
+      },
+    });
     // if (courses) {
     //   const url = new URL(window.location.href);
     //   navigate(url.pathname);
@@ -224,36 +197,29 @@ const Courses = () => {
 
   const editCourse = async (newData) => {
     setOpen(false);
-    const response =  supabase
+    const response = supabase
       .from("course")
       .update(newData)
       .eq("id", CourseId)
       .select("*");
 
-      
-      toast.promise(
-        response,
-        {
-          pending: t('promise.pending'),
-          success: {
-  
-            render() {
-              const url = new URL(window.location.href);
-                navigate(url.pathname);
-                setCourseId(null);
-                setCourseData(null);
-                return t('promise.success')
-            }
-          },
-          error: {
-            render() {
-              return t('promise.error')
-            }
-          }
+    toast.promise(response, {
+      pending: t("promise.pending"),
+      success: {
+        render() {
+          const url = new URL(window.location.href);
+          navigate(url.pathname);
+          setCourseId(null);
+          setCourseData(null);
+          return t("promise.success");
         },
-  
-       
-      )
+      },
+      error: {
+        render() {
+          return t("promise.error");
+        },
+      },
+    });
     // if (response.status === 200) {
     //   const url = new URL(window.location.href);
     //   navigate(url.pathname);
@@ -283,8 +249,8 @@ const Courses = () => {
         <EditCourse editCourse={editCourse} courseData={courseData} />
       ) : modal === "Delete Course" ? (
         <RemoveComponent
-          title={t('courses.removeCourse.titleModal')}
-          body={t('courses.removeCourse.text')}
+          title={t("courses.removeCourse.titleModal")}
+          body={t("courses.removeCourse.text")}
           clicked={deleteCourse}
         />
       ) : null}
@@ -296,34 +262,33 @@ const Courses = () => {
         gap={2}
         sx={{ padding: 2, marginBottom: 2 }}
       >
-        <Stack direction="row" gap= {2}>
+        <Stack direction="row" gap={2}>
           <FilterBox
             setLoading={setLoading}
             setCoursesData={setCoursesValue}
-          //  setCourses={setCourses}
-
-           />
+            //  setCourses={setCourses}
+          />
 
           <SortBox
             sortData={sortCourseData}
-          // selectedIndex={courseSortValue}
-          // setSelectedIndex= {setCourseSortValue}
+            // selectedIndex={courseSortValue}
+            // setSelectedIndex= {setCourseSortValue}
           />
         </Stack>
 
-        <Stack direction={{ xs: "column-reverse", md: "row" }} gap ={2}>
-          <SearchBox handleSearch={debouncedFetchCourses} />
+        <Stack direction={{ xs: "column-reverse", md: "row" }} gap={2}>
+          <SearchBox
+            handleSearch={debouncedFetchCourses}
+            placeholderText={t("search.searchPlaceholderCourse")}
+          />
 
           <Button
             variant="contained"
-            startIcon={<Add sx={{marginLeft:language=== 'fa'? 1 :0}}/>}
+            startIcon={<Add sx={{ marginLeft: language === "fa" ? 1 : 0 }} />}
             onClick={openModalInsert}
             sx={{ borderRadius: 3, backgroundColor: btnColor }}
           >
-           {
-            
-           t('courses.addBtn')
-           }
+            {t("courses.addBtn")}
           </Button>
         </Stack>
       </Stack>
@@ -358,7 +323,7 @@ const fetchCourse = async () => {
     .select("*")
     .order("lastUpdate", { ascending: false });
 
-   return data;
+  return data;
 };
 
 export default Courses;

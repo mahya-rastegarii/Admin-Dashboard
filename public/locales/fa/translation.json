@@ -34,7 +34,7 @@
             "teacher" : "مدرس",
             "student" : "دانشجویان",
             "status" : "وضعیت",
-            "time" : " زمان",
+            "time" : " زمان (ساعت)",
             "lastUpdate" : "آخرین به روزرسانی",
             "star" : "امتیاز",
             "option" : "تنظیمات"
@@ -71,15 +71,21 @@
     }
   },
 
-  "searchPlaceholder" : "جستجو...",
+  
+  "search" : {
+    
+    "searchPlaceholderUser" : "جستجوی نام کاربری...",
+    "searchPlaceholderCourse" : "جستجوی عنوان دوره..."
+
+  },
   "filter" : {
     "filterTitle" : "فیلتر",
     "status" :{
         "title": "وضعیت",
         "all" : "همه",
-        "presell":" پیش فروش",
+        "presell":"پیش فروش",
         "completed":"تکمیل شده",
-        "inProgress": " در حال برگزاری"
+        "inProgress": "در حال برگزاری"
     },
 
     "filterBtn" : "فیلتر"
@@ -87,7 +93,7 @@
   },
 
   "sort" : {
-    "new" : "جدیدترین",
+    "new" : "جدید ترین",
     "old" : "قدیمی ترین"
   },
   "user":{

@@ -3,16 +3,16 @@ import React from 'react';
 
 import { styled } from '@mui/material';
 import { LineChart, markElementClasses, lineElementClasses } from '@mui/x-charts';
-import { useThemeContext } from '../../../context/theme/ThemeContext';
+import { useAppContext } from '../../../context/app/app-context';
 
 import "../chartStyle.css";
 
 
 const Line = ({data, monthChart, labelChart, colorChart, widthChart, heightChart, area, showMark}) => {
 
-  const {theme} = useThemeContext()
+  const {themeColor, mode} = useAppContext()
 
-const typography = theme.palette.mode.typography;
+const typography = mode.palette.typography;
 
  
   return (

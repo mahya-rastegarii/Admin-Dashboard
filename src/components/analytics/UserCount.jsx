@@ -6,8 +6,8 @@ import Line from "../charts/Line/Line";
 import ChartContainer from "./ChartContainer";
 
 const UserCount = ({ chartWidth, boxWidth }) => {
-  const {t} = useTranslation();
-  const numberOfUser = [20, 45, 35, 15, 60, 80, 73, 30, 55, 67, 89, 42];
+  const { t } = useTranslation();
+  const numberOfUser = [30, 35, 40, 55, 60, 65, 60, 55, 50, 45, 40, 50];
   const monthChart = [
     t("charts.month.jan"),
     t("charts.month.feb"),
@@ -26,7 +26,7 @@ const UserCount = ({ chartWidth, boxWidth }) => {
 
   const LineChartData = {
     monthChart,
-   data: numberOfUser,
+    data: numberOfUser,
     labelChart: "User ",
     colorChart: "#8884d8",
     widthChart: chartWidth,

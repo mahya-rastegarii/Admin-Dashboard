@@ -4,17 +4,17 @@ import enFlag from "../../assets/img/united kingdom.svg";
 import { ArrowDropDown } from "@mui/icons-material";
 import { Avatar, Box, IconButton, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
-import { useThemeContext } from '../../context/theme/ThemeContext';
+
 import MenuComponent from '../menu/MenuComponent';
 import { useAppContext } from '../../context/app/app-context';
 
 export const LanguageMenu = () => {
 
-  const {language, changeLanguage}= useAppContext()
-  const { theme} =useThemeContext()
-const iconColor = theme.palette.mode.typography;
-const bgBox = theme.palette.mode.boxBg;
-const typography = theme.palette.mode.typography;
+  const {themeColor, language, changeLanguage, mode }= useAppContext()
+
+const iconColor = mode.palette.typography;
+const bgBox = mode.palette.boxBg;
+const typography = mode.palette.typography;
 
   const [selectedIndex, setSelectedIndex] = useState(language);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -46,7 +46,7 @@ const typography = theme.palette.mode.typography;
     },
   ];
   return (
-    <Box sx={{ }}>
+    <Box sx={{ml:language ==='en' && 2  }}>
       <IconButton
         // id="basic-button"
         size="large"
@@ -77,7 +77,7 @@ const typography = theme.palette.mode.typography;
             <Avatar
               alt=" united kingdom Flag "
               src={option.img}
-              sx={{ width: 24, height: 24, mr: "5px" }}
+              sx={{ width: 24, height: 24, mr: language=== 'en' && "5px", ml:language ==='fa' && "5px" }}
             />
             {option.text}
           </MenuItem>

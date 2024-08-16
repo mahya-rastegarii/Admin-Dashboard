@@ -18,18 +18,16 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/app/app-context";
 import { useModalContext } from "../../context/modal/ModalContext";
-import { useThemeContext } from "../../context/theme/ThemeContext";
 import { supabase } from "../../core/createClient";
 import Form from "../form/Form";
 import MenuContainer from "../menu/MenuContainer";
 import ModalComponent from "../modal/ModalComponent";
-// import CourseAction from './CourseAction';
-// import "../../App.css"
+
 
 const AddCourse = ({ insertCourse }) => {
+
   const { setOpen } = useModalContext();
-  const { theme } = useThemeContext();
-  const { language } = useAppContext();
+  const { language, mode, themeColor } = useAppContext();
 
   const { t } = useTranslation();
 
@@ -74,10 +72,10 @@ const AddCourse = ({ insertCourse }) => {
   const [item, setItem] = useState(type);
   const [loading, setLoading] = useState(false);
 
-  const boxBg = theme.palette.mode.boxBg;
-  const borderColor = theme.palette.mode.borderColor;
-  const typography = theme.palette.mode.typography;
-  const focusColor = theme.palette.primary.light;
+  const boxBg = mode.palette.boxBg;
+  const borderColor = mode.palette.borderColor;
+  const typography = mode.palette.typography;
+  const focusColor = themeColor.palette.primary.light;
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -98,7 +96,6 @@ const AddCourse = ({ insertCourse }) => {
 
     setUploadImage(URL.createObjectURL(image));
 
-    // console.log("image", image);
   };
 
   const uploadFile = async () => {
@@ -116,14 +113,18 @@ const AddCourse = ({ insertCourse }) => {
 
     // console.log('uploadImage', uploadImage);
     uploadFile();
+
+    const typeFA = item === 'Presell' ? 'پیش فروش' :  item ==='Completed' ? 'تکمیل شده' : item ==="In Progress" ? 'در حال برگزاری' : null
+    const typeEn = item === "پیش فروش" ? 'Presell' : item ==="تکمیل شده" ? "Completed" : item ==='در حال برگزاری' ? "In Progress" : null
+    const statusFA = language ==='fa'? item : typeFA
+    const statusEN = language ==='en'? item : typeEn
     const newCourse = {
-      title: title,
-      titleFa: title,
+      title,
       picture: `https://qjfoypokbphqxocozpfj.supabase.co/storage/v1/object/public/Images/Course_pic/${imageFile.name}`,
       teacher: teacher,
       teacherFa: teacher,
-      statusEn: item,
-      statusFa: item,
+      statusEn: statusEN,
+      statusFa: statusFA,
       lastUpdate: today,
       // imageName:imageFile.name,
       // picFile: imageFile,
@@ -284,7 +285,7 @@ const AddCourse = ({ insertCourse }) => {
           ))} */}
 
           <Stack
-          dir='rtl'
+        
             direction="row"
             gap={2}
             alignItems="center"
@@ -315,13 +316,13 @@ const AddCourse = ({ insertCourse }) => {
             
             sx={{
               "& label" :{
-                // direction:"rtl"
+               
                 right:language ==='fa' && '20px',
                 transformOrigin: language=== 'fa' ? "top right": "top left",
                 paddingRight:language ==='fa'&& "12px"
               }
             }}
-                // sx={{textAlign:language ==='fa' ? "rtl":"ltr"}}
+              
                 {...register("title", {
                   required: t("courses.modalCourse.required.courseNameError"),
                 })}
@@ -348,7 +349,7 @@ const AddCourse = ({ insertCourse }) => {
               <TextField
                  sx={{
                   "& label" :{
-                    // direction:"rtl"
+                   
                     right:language ==='fa' && '20px',
                     transformOrigin: language=== 'fa' ? "top right": "top left",
                     paddingRight:language ==='fa'&& "12px"
@@ -387,7 +388,7 @@ const AddCourse = ({ insertCourse }) => {
               <TextField
                  sx={{
                   "& label" :{
-                    // direction:"rtl"
+                   
                     right:language ==='fa' && '20px',
                     transformOrigin: language=== 'fa' ? "top right": "top left",
                     paddingRight:language ==='fa'&& "12px"
@@ -493,22 +494,7 @@ const AddCourse = ({ insertCourse }) => {
               />
             </Box>
           </Stack>
-          {/* <Button variant="contained" color="success" sx={{ marginTop: 2}}>
-          Save
-        </Button> */}
-          {/* <Stack width="60%" direction="row"  spacing={2} alignItems="center">
-        <PersonOutline/>
-       <Slider
-          value={typeof value === 'number' ? value : 0}
-                min={0}
-                step={10}
-            onChange={handleSliderChange}
-            aria-labelledby="input-slider"
-          />
-          <Typography>
-          {value}
-          </Typography>
-       </Stack> */}
+         
         </Stack>
       </Form>
     </ModalComponent>

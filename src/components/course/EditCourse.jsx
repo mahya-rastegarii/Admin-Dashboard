@@ -16,7 +16,6 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/app/app-context";
 import { useModalContext } from "../../context/modal/ModalContext";
-import { useThemeContext } from "../../context/theme/ThemeContext";
 import Form from "../form/Form";
 import MenuContainer from "../menu/MenuContainer";
 import ModalComponent from "../modal/ModalComponent";
@@ -24,8 +23,8 @@ import ModalComponent from "../modal/ModalComponent";
 // import CourseAction from './CourseAction';
 
 const EditCourse = ({ courseData, editCourse }) => {
-  const { theme } = useThemeContext();
-  const { language } = useAppContext();
+  
+  const { language,  themeColor, mode } = useAppContext();
 
   const { t } = useTranslation();
 
@@ -36,9 +35,9 @@ const EditCourse = ({ courseData, editCourse }) => {
   } = useForm();
   const { setOpen } = useModalContext();
 
-  const borderColor = theme.palette.mode.borderColor;
-  const typography = theme.palette.mode.typography;
-  const focusColor = theme.palette.primary.light;
+  const borderColor = mode.palette.borderColor;
+  const typography = mode.palette.typography;
+  const focusColor = themeColor.palette.primary.light;
 
   const { title, time, teacher, statusFa, statusEn, picture } = courseData;
 
@@ -95,14 +94,17 @@ const EditCourse = ({ courseData, editCourse }) => {
     const date = new Date();
     const today = date.toISOString().split("T")[0];
 
+    const typeFA = item ==='Presell' ? 'پیش فروش' : item ==='Completed' ? 'تکمیل شده' : item ==="In Progress" ? 'در حال برگزاری' : null
+    const typeEn = item ==="پیش فروش" ? 'Presell' : item ==="تکمیل شده" ? "Completed" : item ==='در حال برگزاری' ? "In Progress" : null
+    const statusFA = language ==='fa'? item : typeFA
+    const statusEN = language ==='en'? item : typeEn
     const newData = {
       title,
-      titleFa: title,
       teacher,
       lastUpdate: today,
       time,
-      statusEn: item,
-      statusFa: item,
+      statusEn: statusEN,
+      statusFa: statusFA,
     };
 
     console.log("newData", newData);

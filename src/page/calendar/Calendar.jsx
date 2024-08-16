@@ -32,7 +32,7 @@ const Calendar = ({setDate, setRemove, setOpen, setModal, events, setDateToday})
    
 
     <CalendarEl
-    // className={classes.root}
+   
    
     plugins={[dayGridPlugin, interactionPlugin]}
     initialView="dayGridMonth"
@@ -56,17 +56,7 @@ const Calendar = ({setDate, setRemove, setOpen, setModal, events, setDateToday})
       setOpen(true);
       setRemove(itemId);
 
-      // if(remove){
-
-      //   const newEventList = event.filter((item) => item.id !== info.event.id )
-
-      //   setEvent(newEventList)
-
-      // }
-
-      //  setOpen(false)
-      //  setRemove(false)
-      //  alert("Delete Event" + info)
+      
     }}
     locale= { language === 'fa' ? faLocale : enLocale}
     //  editable = {true}

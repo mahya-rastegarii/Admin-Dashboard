@@ -22,8 +22,7 @@ import {
 
 import { useNavigation } from "react-router-dom";
 import { useAppContext} from '../../context/app/app-context';
-import { useThemeContext } from "../../context/theme/ThemeContext";
-import LoadingBackdrop from "../Loading/LoadingBackdrop";
+
 
 import LoadComponent from "../Loading/LoadComponent";
 import { useTranslation } from "react-i18next";
@@ -42,15 +41,14 @@ const CourseList = ({
 
   const navigation = useNavigation();
 
-  const { theme: customTheme } = useThemeContext();
-  const {language }= useAppContext()
+  const {language, mode, themeColor }= useAppContext()
 
   const {t}= useTranslation()
 
 
-  const headerTableColor = alpha(customTheme.palette.primary.light, 0.2);
-  const borderColor = customTheme.palette.mode.borderColor;
-  const typography = customTheme.palette.mode.typography;
+  const headerTableColor = alpha(themeColor.palette.primary.light, 0.2);
+  const borderColor = mode.palette.borderColor;
+  const typography = mode.palette.typography;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -221,7 +219,7 @@ const CourseList = ({
                 </TableCell>
                 <TableCell sx={{ borderColor: borderColor }} align="center">
                   <Chip
-                    label={item.statusEn}
+                    label={language ==='fa' ? item.statusFa : item.statusEn}
                     color="primary"
                     variant="outlined"
                   />
@@ -295,7 +293,7 @@ const CourseList = ({
           >
             <TableRow >
               <TablePagination
-                sx={{ border: "none", color: typography, direction:language ==='fa' ? "rtl": "ltr" }}
+                sx={{ border: "none", color: typography, direction: 'ltr'  }}
                 rowsPerPageOptions={[5, 10, 15]}
                 // colSpan={3}
 

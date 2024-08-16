@@ -12,10 +12,17 @@ const appReducer = (state, action) =>{
 
         return {
             ...state,
-            darkMode: action.payload,
+            darkMode:action.payload,
         }
        } 
+       case 'CHANGE_THEME':{
+
+        return {
+            ...state,
+            theme: action.payload,
+        }
+       }
     }
 }
 
-export default appReducer
+export default appReducer;

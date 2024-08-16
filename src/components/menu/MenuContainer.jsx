@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useThemeContext } from '../../context/theme/ThemeContext';
+
 import MenuComponent from './MenuComponent';
 import { Box, IconButton, MenuItem } from '@mui/material';
 import { ArrowDropDown } from '@mui/icons-material';
@@ -7,16 +7,16 @@ import { useAppContext } from '../../context/app/app-context';
 
 const MenuContainer  = ({menuItem, selectedItem, setSelectedItem}) => {
 
-    const { theme } = useThemeContext()
-    const {language }= useAppContext();
+    
+    const {language, mode,  themeColor }= useAppContext();
 
-    const boxBg = theme.palette.mode.boxBg;
-    const typography = theme.palette.mode.typography;
-    const borderColor = theme.palette.mode.borderColor;
+    const boxBg = mode.palette.boxBg;
+    const typography = mode.palette.typography;
+    const borderColor = mode.palette.borderColor;
   
-    // const [selectedIndex, setSelectedIndex] = useState(0);
+    
     const [anchorEl, setAnchorEl] = useState(null);
-    // //  const openMenu = Boolean(anchorEl)
+  
   
     const handleClickItem = (item) => {
       setSelectedItem(item);

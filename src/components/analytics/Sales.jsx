@@ -11,7 +11,7 @@ const Sales = ({ chartWidth, boxWidth }) => {
   const {t} = useTranslation();
   //  const {chartValue}= useChartContext()
 
-  const sale = [30, 55, 60, 42, 85, 50, 44, 56, 76, 40, 35, 55];
+  const sale = [50, 50, 55, 65, 75, 75, 73, 69, 70, 68, 60, 60];
 
   const monthChart = [
     t("charts.month.jan"),

@@ -1,8 +1,7 @@
+import React, { useEffect, useState } from "react";
 import { Box, IconButton, Menu, MenuItem, Select } from "@mui/material";
-import React, { useState } from "react";
-import { useThemeContext } from "../../../context/theme/ThemeContext";
 
-import "../tableStyle.css";
+
 import { ArrowDropDown } from "@mui/icons-material";
 import MenuComponent from "../../menu/MenuComponent";
 import MenuContainer from "../../menu/MenuContainer";
@@ -11,23 +10,24 @@ import { useAppContext } from '../../../context/app/app-context';
 const SortBox = ({ sortData }) => {
   // const [value, setValue] = useState("Newest");
 
-  const { theme } = useThemeContext();
- const {language }= useAppContext()
+  
+ const {language, mode, themeColor }= useAppContext()
   const {t}= useTranslation()
 
 
-  const boxBg = theme.palette.mode.boxBg;
-  const typography = theme.palette.mode.typography;
-  const borderColor = theme.palette.mode.borderColor;
+  const boxBg = mode.palette.boxBg;
+  const typography = mode.palette.typography;
+  const borderColor = mode.palette.borderColor;
 
-  const sort = language=== 'fa' ? "جدید ترین": 'Newest';
-  const [selectedIndex, setSelectedIndex] = useState(sort);
-  let menuItem = [t('sort.new'), t('sort.old')]
+  const [selected, setSelected] = useState();
+
   const [anchorEl, setAnchorEl] = useState(null);
+
+  let menuItem = [t('sort.new'), t('sort.old')]
   // //  const openMenu = Boolean(anchorEl)
 
   const handleClickItem = (item) => {
-    setSelectedIndex(item);
+    setSelected(item);
     sortData(item)
     setAnchorEl(null);
 
@@ -37,7 +37,10 @@ const SortBox = ({ sortData }) => {
     setAnchorEl(null);
   };
 
-  
+ useEffect(() => {
+  const sort = language=== 'fa' ? "جدید ترین": 'Newest';
+   setSelected(sort)
+ }, [language])
   
   return (
   
@@ -64,7 +67,7 @@ const SortBox = ({ sortData }) => {
     sx={{ display:"flex", justifyContent:"center", alignItems:"center",  borderColor:borderColor, fontSize: 16}}
     >
   {
-   selectedIndex
+   selected
   }
     <ArrowDropDown  />
 </Box>
@@ -78,7 +81,7 @@ const SortBox = ({ sortData }) => {
    
            <MenuItem key={index}  value={item}
            sx={{ color:typography,  direction:language ==='fa'? "rtl": "ltr",}}
-          selected={item === selectedIndex}
+          selected={item === selected}
           onClick={() => handleClickItem(item)}
           >
    

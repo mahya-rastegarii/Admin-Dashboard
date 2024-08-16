@@ -3,7 +3,7 @@ import React from 'react'
 import { ArrowForward, ArrowBack } from '@mui/icons-material'
 import { Box, Button, Paper, Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { useThemeContext } from '../../context/theme/ThemeContext'
+
 import { useTranslation } from 'react-i18next'
 import { useAppContext } from '../../context/app/app-context'
 
@@ -11,12 +11,11 @@ import { useAppContext } from '../../context/app/app-context'
 
 const ContainerData = ({width, icon, title, link, children }) => {
 
-  const { theme } = useThemeContext();
-  const {language }= useAppContext()
+  const {language, themeColor, mode }= useAppContext()
   const {t }= useTranslation()
-  const boxBgColor = theme.palette.mode.boxBg;
-  const typography = theme.palette.mode.typography;
-  const linkColor = theme.palette.primary.dark;
+  const boxBgColor = mode.palette.boxBg;
+  const typography = mode.palette.typography;
+  const linkColor = themeColor.palette.primary.main;
   return (
     
     <Box

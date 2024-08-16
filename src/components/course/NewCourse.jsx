@@ -14,20 +14,20 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-// import jsPic from "../../assets/img/images.png";
-import { useThemeContext } from "../../context/theme/ThemeContext";
+
+
 import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/app/app-context";
 
 const NewCourse = ({newCourse}) => {
   
-  const { theme } = useThemeContext();
-  const {language } = useAppContext();
+ 
+  const {language, themeColor, mode } = useAppContext();
 
   const {t}= useTranslation()
 
-  const typography = theme.palette.mode.typography;
-  const borderColor = theme.palette.mode.borderColor;
+  const typography = mode.palette.typography;
+  const borderColor = mode.palette.borderColor;
 
   const headCells = [
     {

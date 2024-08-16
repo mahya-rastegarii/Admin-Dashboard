@@ -1,13 +1,13 @@
-import { pieArcLabelClasses, PieChart } from "@mui/x-charts";
 import React from "react";
-import { useThemeContext } from "../../../context/theme/ThemeContext";
+import { pieArcLabelClasses, PieChart } from "@mui/x-charts";
 
+import { useAppContext } from "../../../context/app/app-context";
 import "../chartStyle.css";
 
 const Pie = ({ data, size }) => {
-  const { theme } = useThemeContext();
+  const { themeColor, mode } = useAppContext();
 
-  const typography = theme.palette.mode.typography;
+  const typography = mode.palette.typography;
 
   return (
     //   <PieChart

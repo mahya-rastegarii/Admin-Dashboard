@@ -1,12 +1,13 @@
 import { Menu } from "@mui/material";
 import React from "react";
-import { useThemeContext } from "../../context/theme/ThemeContext";
+
+import { useAppContext } from "../../context/app/app-context";
 
 const MenuComponent = ({ children, anchorEl, handleCloseMenu }) => {
-  const { theme } = useThemeContext();
+  const { themeColor, mode } = useAppContext();
 
-  const bgColor = theme.palette.mode.boxBg;
-  // const borderColor = theme.palette.mode.borderColor;
+  const bgColor = mode.palette.boxBg;
+ 
 
   return (
     <Menu

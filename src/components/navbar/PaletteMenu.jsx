@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { ArrowDropDown, Palette } from "@mui/icons-material";
 import { Box, Grid, IconButton, Menu, MenuItem } from "@mui/material";
-import {amber, blue, cyan, deepPurple, green, lime, pink, purple, red, teal, yellow} from "@mui/material/colors";
+// import {amber, blue, cyan, deepPurple, green, lime, pink, purple, red, teal, yellow} from "@mui/material/colors";
 import PaletteBox from '../box/PaletteBox'
-import { useThemeContext } from "../../context/theme/ThemeContext";
 import MenuComponent from "../menu/MenuComponent";
+import { useAppContext } from "../../context/app/app-context";
 export const PaletteMenu = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -20,41 +20,47 @@ export const PaletteMenu = () => {
   };
 
   // const [themePage, setThemePage] = useState(teal[500]);
-  const {setColor, theme, color}= useThemeContext()
-  const iconColor = theme.palette.mode.typography;
+  const {changeTheme, theme, themeColor, mode }= useAppContext()
+  const iconColor = mode.palette.typography;
   // const themeColors = [teal, amber, lime, pink, cyan, purple ]
-  const themeColors = [
+  const Colors = [
 
     {
       id:1,
-      color: teal,
+      color: 'teal',
+      hexColor: '#009688'
       
     },
     {
       id:2,
-       color:amber,
+       color:'amber',
+       hexColor: '#ffc107'
 
     },
       {
         id:3,
-        color:lime,
+        color:'lime' ,
+        hexColor: '#d4e157'
 
       },
       {
         id:4,
-         color:pink,
+         color: 'pink',
+         hexColor: '#e91e63'
 
       },
         {
           id: 5,
-          color: cyan,
+          color: 'cyan',
+          hexColor: '#00bcd4'
 
         },
         
         
         {
           id: 6,
-          color:purple,
+          color:'purple',
+          hexColor: '#9c27b0'
         }
 
         ]
@@ -81,7 +87,7 @@ export const PaletteMenu = () => {
    
      <Box display="grid" gap={1}
       gridTemplateColumns="repeat(3, 1fr)">
-     <PaletteBox themeColors={themeColors} value={500}  selectedColor={theme} color={color} setSelectedColor={setColor}  />
+     <PaletteBox themeColors={Colors}   selectedColor={themeColor} color={theme} setSelectedColor={changeTheme}  />
       </Box>
     {/* </Grid> */}
       </MenuComponent>

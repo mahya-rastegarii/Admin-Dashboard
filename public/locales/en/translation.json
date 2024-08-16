@@ -26,7 +26,7 @@
 
   "courses" : {
     
-    "addBtn" : "َAdd",
+    "addBtn" : "Add",
     "table" : {
         "tableHeader" : {
             "title" : "Title",
@@ -70,8 +70,13 @@
       "text": "Remove this Course ?"
     }
   },
+ 
+  "search" : {
+    
+    "searchPlaceholderUser" : "Search UserName...",
+    "searchPlaceholderCourse" : "Search Title..."
 
-  "searchPlaceholder" : "Search...",
+  },
   "filter" : {
     "filterTitle" : "Filter",
     "status" :{

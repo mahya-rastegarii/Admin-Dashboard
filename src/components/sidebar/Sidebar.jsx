@@ -25,7 +25,7 @@ import {
   SupervisedUserCircle
 } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
-import { useThemeContext } from "../../context/theme/ThemeContext";
+
 import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/app/app-context";
 
@@ -36,16 +36,16 @@ import { useAppContext } from "../../context/app/app-context";
 // };
 const Sidebar = ({ drawerWidth, open }) => {
 
-  const { theme: customTheme } = useThemeContext();
-  const {language}= useAppContext();
+  
+  const {language, darkMode, themeColor, mode}= useAppContext();
   
   const {t} = useTranslation()
-  const activeMenu = customTheme.palette.primary.main;
-  const hover = customTheme.palette.mode.hover;
-  const bgColor = customTheme.palette.mode.boxBg;
-  const typography = customTheme.palette.mode.typography;
-  const avatarColor = customTheme.palette.primary.main ;
-  const iconColor =customTheme.palette.primary.main;
+  const activeMenu = themeColor.palette.primary.main;
+  const hover = darkMode == true ? alpha(themeColor.palette.primary.light, 0.1) : alpha(themeColor.palette.primary.light, 0.7);
+  const bgColor = mode.palette.boxBg;
+  const typography = mode.palette.typography;
+  const avatarColor = themeColor.palette.primary.main ;
+  const iconColor =themeColor.palette.primary.main;
 
 const [active, setActive] = useState(false)
   const openedMixin = (theme) => ({

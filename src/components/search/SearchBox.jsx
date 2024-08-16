@@ -2,21 +2,22 @@
 import { Search } from '@mui/icons-material'
 import { alpha, InputBase, Paper, Stack } from '@mui/material'
 import React, { useState } from 'react'
-import { useThemeContext } from '../../context/theme/ThemeContext'
+
 import { useTranslation } from 'react-i18next'
+import { useAppContext } from '../../context/app/app-context'
 
-const SearchBox = ({handleSearch}) => {
+const SearchBox = ({handleSearch, placeholderText}) => {
 
- const { theme } =useThemeContext()
+ const { themeColor, mode } =useAppContext()
 
  const {t} = useTranslation();
 
-//  const bgColor = theme.palette.mode.bg
 
-const bgColor = theme.palette.mode.boxBg;
-const borderColor = theme.palette.mode.borderColor;
- const iconColor = theme.palette.primary.dark;
- const typography = theme.palette.mode.typography;
+
+const bgColor = mode.palette.boxBg;
+const borderColor = mode.palette.borderColor;
+ const iconColor = themeColor.palette.primary.dark;
+ const typography = mode.palette.typography;
 
   const [searchInput, setSearchInput]= useState('')
 
@@ -31,7 +32,7 @@ const borderColor = theme.palette.mode.borderColor;
       {/* </IconButton> */}
              <InputBase
              value={searchInput}
-        placeholder= {t('searchPlaceholder')}
+        placeholder= {placeholderText}
         
         sx={{color: typography}}
         onChange={(event) => setSearchInput(event.target.value)}

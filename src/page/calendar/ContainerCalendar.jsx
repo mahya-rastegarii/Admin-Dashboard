@@ -10,7 +10,7 @@ import { useModalContext } from "../../context/modal/ModalContext";
 // import RemoveEvent from "../components/course/RemoveEvent";
 
 import RemoveComponent from "../../components/remove/RemoveComponent";
-import { useThemeContext } from "../../context/theme/ThemeContext";
+
 import Calendar from "./Calendar";
 
 import "./calendar.css";
@@ -20,20 +20,21 @@ import LoadComponent from "../../components/Loading/LoadComponent";
 import { Await, useLoaderData, defer, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+import { useAppContext } from "../../context/app/app-context";
 
 const ContainerCalendar = () => {
 
   const data = useLoaderData();
 const navigate = useNavigate()
 
-  const { theme } = useThemeContext();
+  const { mode, themeColor: customColor,  } = useAppContext();
 
   const {t} =useTranslation();
 
   
-  const boxBgColor = theme.palette.mode.boxBg;
-  const typography = theme.palette.mode.typography;
-  const themeColor = theme.palette.primary.main;
+  const boxBgColor = mode.palette.boxBg;
+  const typography = mode.palette.typography;
+  const themeColor = customColor.palette.primary.main;
 
 
   const [event, setEvent] = useState([]);
@@ -46,32 +47,8 @@ const navigate = useNavigate()
   
   const [remove, setRemove] = useState(0);
 
-  
 
-  // const addEventToCalendar = () => {
 
-  // let testText =  prompt('Enter a title');
-  // let testStartDate =  prompt('Enter a Start Date in YYYY-MM-DD format');
-  // let testEndDate =  prompt('Enter a End Date in YYYY-MM-DD format');
-  // let testColor = prompt("Enter BackgroundColor")
-  // let newItem=  { title:testText, start: testStartDate, end:testEndDate, color: testColor}
-  // // setEvent({...event}, newItem )
-
-  // setEvent( prevEvent => [...prevEvent, newItem])
-
-  //  }
-
-  //  const makeStyle = makeStyles( {
-  //   root : {
-  //    '& .fc.fc-button-primary ': {
-
-  //       backgroundColor: "#fafafa"
-  //      }
-  //     }
-
-  //  })
-
-  // const classes = makeStyle()
 
   
 
@@ -121,7 +98,7 @@ const navigate = useNavigate()
 
  
 
-  // console.log("colorTheme", themeColor);
+  
   const classNameTheme =
     themeColor == "#009688"
       ? "teal"
@@ -179,11 +156,7 @@ const navigate = useNavigate()
        
       };
 
-      // useEffect(() => {
-      //   // setModal("backdrop")
-      //   fetchEvent();
-      //   // setOpen(false)
-      // }, [])
+    
 
   return (
 <>

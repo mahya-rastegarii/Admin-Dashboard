@@ -1,13 +1,14 @@
-import { Box, Paper, Stack, Typography } from '@mui/material'
 import React from 'react'
-import { useThemeContext } from '../../context/theme/ThemeContext';
+import { Box, Paper, Stack, Typography } from '@mui/material'
+
+import { useAppContext } from '../../context/app/app-context';
 
 const ChartContainer = ({icon, title, width, children}) => {
 
-    const { theme } = useThemeContext();
+    const { themeColor, mode } = useAppContext();
 
-    const bgColor = theme.palette.mode.boxBg;
-    const typography = theme.palette.mode.typography;
+    const bgColor = mode.palette.boxBg;
+    const typography = mode.palette.typography;
 
 
 
@@ -23,7 +24,13 @@ const ChartContainer = ({icon, title, width, children}) => {
           // mx="auto"
           p={2}
 
-        
+        sx={
+          {
+            '& .css-1k2u9zb-MuiChartsAxis-root .MuiChartsAxis-line': {
+              stroke: typography
+            }
+          }
+        }
           // width={width}
           bgcolor={bgColor}
           mt={6}

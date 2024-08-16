@@ -1,12 +1,12 @@
 import React from 'react'
 import { Box, Paper, Stack, Typography } from '@mui/material'
-import {useThemeContext} from "../../context/theme/ThemeContext"
+import { useAppContext } from '../../context/app/app-context';
 const DashboardBox = ({item, children}) => {
 
- const {theme } =useThemeContext();
+ const {themeColor, mode } =useAppContext();
 
- const boxBgColor = theme.palette.mode.boxBg
- const typography = theme.palette.mode.typography
+ const boxBgColor = mode.palette.boxBg
+ const typography = mode.palette.typography
  
   return (
    

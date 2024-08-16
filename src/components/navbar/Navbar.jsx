@@ -17,7 +17,7 @@ import {
   Toolbar,
 } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
-import { useThemeContext } from "../../context/theme/ThemeContext";
+
 import { LanguageMenu } from "./LanguageMenu";
 import { PaletteMenu } from "./PaletteMenu";
 import { useAppContext } from "../../context/app/app-context";
@@ -26,16 +26,16 @@ const Navbar = ({ drawerWidth, handleDrawer, open }) => {
   // const [language, setLanguage] = useState("en")
 
 
-  const { theme: customTheme, darkMode, setDarkMode } = useThemeContext();
+  
 
-  const {language }= useAppContext();
+  const {language, themeColor, mode, darkMode, darkTheme }= useAppContext();
 
 
-  const iconColor = customTheme.palette.mode.typography;
-  const bgColor = customTheme.palette.mode.boxBg;
-  const avatarColor = customTheme.palette.primary.main ;
+  const iconColor = mode.palette.typography;
+  const bgColor = mode.palette.boxBg;
+  const avatarColor = themeColor.palette.primary.main ;
 
-  const badgeColor = customTheme.palette.primary.dark;
+  const badgeColor = themeColor.palette.primary.dark;
  
   // const widthNavbar = `calc(${theme.spacing(7)} + 1px)`;
 const arrow = language=== 'fa' ? <KeyboardDoubleArrowRight/> : <KeyboardDoubleArrowLeft  />
@@ -130,7 +130,7 @@ const arrow = language=== 'fa' ? <KeyboardDoubleArrowRight/> : <KeyboardDoubleAr
             // color="inherit"
             
           >
-            <Badge badgeContent={17} color="error">
+            <Badge badgeContent={17}  color="error">
               <Notifications  />
             </Badge>
           </IconButton>
@@ -140,12 +140,12 @@ const arrow = language=== 'fa' ? <KeyboardDoubleArrowRight/> : <KeyboardDoubleAr
           <IconButton
             size="large"
             edge="end"
-            aria-label={darkMode ? " light Mode " : " dark Mode "}
-            onClick={() => setDarkMode(!darkMode)}
+            aria-label={darkMode == true ? " light Mode " : " dark Mode "}
+            onClick={() => darkTheme(!darkMode)}
             sx={{ color: iconColor }}
             
           >
-            {darkMode ?  <LightMode/> : <DarkMode  />}
+            {darkMode == true ?  <LightMode/> : <DarkMode  />}
           </IconButton>
 
           <LanguageMenu />
