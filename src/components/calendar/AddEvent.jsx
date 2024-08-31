@@ -86,7 +86,7 @@ const AddEvent = ({ setEvent, event, date, dateToday, insertEvent }) => {
   return (
     <ModalComponent title={t('calendar.addEvent.titleModal')} closeForm={cancelSubmit}>
       <Form
-        align="flex-start"
+        align={{xs:"center", md:"flex-start"}}
         titleButton= {t('calendar.addEvent.addBtn')}
         onSubmit={handleSubmit(addEventToCalendar)}
         cancelSubmit={cancelSubmit}
@@ -109,8 +109,8 @@ const AddEvent = ({ setEvent, event, date, dateToday, insertEvent }) => {
             },
           }}
         >
-          <Stack direction="row" alignItems="center" gap={3}>
-            <Typography variant="body1">{t('calendar.addEvent.titleText')}</Typography>
+          <Stack direction={{ xs: "column", md:"row"}} alignItems={{ sm:"flex-start", md:"center"}} gap={{xs:1, md:3}}>
+            <Typography variant="body1">{t('calendar.addEvent.titleText')} :</Typography>
             <Stack direction="column">
               <OutlinedInput
                 id="event-title"
@@ -135,8 +135,8 @@ const AddEvent = ({ setEvent, event, date, dateToday, insertEvent }) => {
             alignItems="flex-start"
             spacing={2}
           >
-            <Stack direction="row" gap={1} alignItems="center">
-              <Typography variant="body1">{t('calendar.addEvent.startDate')}</Typography>
+            <Stack direction={{ xs: "column", md:"row"}} alignItems={{ sm:"flex-start", md:"center"}} gap={{xs:1, md:3}}>
+              <Typography variant="body1">{t('calendar.addEvent.startDate')} :</Typography>
 
               {date ? (
                 <Typography
@@ -164,9 +164,9 @@ const AddEvent = ({ setEvent, event, date, dateToday, insertEvent }) => {
             </Stack>
 
             {dateToday && (
-              <Stack direction="row" gap={1} alignItems="center">
+              <Stack direction={{ xs: "column", md:"row"}} alignItems={{ sm:"flex-start", md:"center"}} gap={{xs:1, md:3}}>
                 {/* <CheckBox /> */}
-                <Typography variant="body1">{t('calendar.addEvent.endDate')}</Typography>
+                <Typography variant="body1">{t('calendar.addEvent.endDate')} :</Typography>
 
                 <OutlinedInput
                   id="event-endDate"
@@ -181,7 +181,7 @@ const AddEvent = ({ setEvent, event, date, dateToday, insertEvent }) => {
             )}
           </Stack>
         </Stack>
-        <Box display="flex" mt={3}>
+        <Box   display={{xs:"grid", md:"flex"}} justifyContent='center' alignItems="center"   gridTemplateColumns="repeat(3, 1fr)" mt={3}>
           <PaletteBox
             themeColors={themeColors}
             selectedColor={eventColor}

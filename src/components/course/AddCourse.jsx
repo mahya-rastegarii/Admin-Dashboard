@@ -121,8 +121,7 @@ const AddCourse = ({ insertCourse }) => {
     const newCourse = {
       title,
       picture: `https://qjfoypokbphqxocozpfj.supabase.co/storage/v1/object/public/Images/Course_pic/${imageFile.name}`,
-      teacher: teacher,
-      teacherFa: teacher,
+      teacher,
       statusEn: statusEN,
       statusFa: statusFA,
       lastUpdate: today,
@@ -195,7 +194,7 @@ const AddCourse = ({ insertCourse }) => {
               color: typography,
               alignItems: "center",
             }}
-            padding={uploadImage ? 0 : 6}
+            padding={uploadImage ? 0 : {xs:5, sm:6}}
           >
             <img src={uploadImage} />
 

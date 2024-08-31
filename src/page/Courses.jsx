@@ -176,6 +176,7 @@ const Courses = () => {
         render() {
           const url = new URL(window.location.href);
           navigate(url.pathname);
+         
           return t("promise.success");
         },
       },
@@ -202,7 +203,7 @@ const Courses = () => {
       .update(newData)
       .eq("id", CourseId)
       .select("*");
-
+    
     toast.promise(response, {
       pending: t("promise.pending"),
       success: {
@@ -211,12 +212,14 @@ const Courses = () => {
           navigate(url.pathname);
           setCourseId(null);
           setCourseData(null);
-          return t("promise.success");
+         
+          return t("promise.success")
         },
       },
       error: {
         render() {
-          return t("promise.error");
+          
+          return t("promise.error")
         },
       },
     });
@@ -227,8 +230,6 @@ const Courses = () => {
     //   setCourseData(null);
     // }
 
-    console.log("courses Edit", response);
-    // fetchCourse();
   };
 
   // useEffect(() => {
@@ -242,7 +243,7 @@ const Courses = () => {
   // }, [])
 
   return (
-    <Box component={Paper} elevation={2} sx={{ backgroundColor: boxBgColor }}>
+    <Box component={Paper} elevation={2} sx={{ backgroundColor: boxBgColor, marginX:{xs: 2, md: 4}, overflow:'hidden'}}>
       {modal === "Add Course" ? (
         <AddCourse insertCourse={insertCourse} />
       ) : modal === "Edit Course" ? (

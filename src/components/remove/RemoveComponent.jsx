@@ -19,7 +19,7 @@ const RemoveComponent = ({title, body, clicked, }) => {
    
     <ModalComponent title={title} closeForm={() => setOpen(false) }>
         
-        <Typography variant="body1"> {body}</Typography>
+        <Typography variant="body1" align="center" mt={2}> {body}</Typography>
         <Stack direction="row" alignItems="center" justifyContent="center" gap={2} mt={5} mb={3}>
     <Button variant="contained" color="success"
     onClick={clicked}

@@ -7,7 +7,7 @@ import appReducer from "./app-reducer";
 
 const AppContext = createContext();
 const initialState = {
-  language: localStorage.getItem("language") || "fa",
+  language: localStorage.getItem("language") || "en",
   darkMode: localStorage.getItem("darkMode") || false,
   theme: localStorage.getItem("theme") || "teal",
 };
@@ -46,11 +46,11 @@ const AppProvider = ({ children }) => {
 
   const mode = createTheme({
     palette: {
-      bg: state.darkMode == true ? alpha("#000", 0.9) : "#fff",
-      typography: state.darkMode == true  ? alpha("#fff", 0.9) : alpha("#000", 0.8),
-      boxBg: state.darkMode == true ? "#212121" : "#fff",
-      borderColor: state.darkMode == true ? alpha("#fff", 0.1) : alpha("#000", 0.1),
-      shadow: state.darkMode == true ? "#242424" : "#ccc",
+      bg: state.darkMode   ? alpha("#000", 0.9) : "#fff",
+      typography: state.darkMode   ? alpha("#fff", 0.9) : alpha("#000", 0.8),
+      boxBg: state.darkMode  ? "#212121" : "#fff",
+      borderColor: state.darkMode  ? alpha("#fff", 0.1) : alpha("#000", 0.1),
+      shadow: state.darkMode  ? "#242424" : "#ccc",
     },
   });
 

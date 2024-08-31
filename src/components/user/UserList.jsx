@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {
   alpha,
   Avatar,
+  Box,
   Stack,
   styled,
   Table,
@@ -94,7 +95,7 @@ const UserList = ({ users, loading, usersValue }) => {
       id: 5,
       label: t("user.table.tableHeader.date"),
       align: "center",
-      minWidth: 10,
+      minWidth: 130,
     },
     // {
     //   id: 6,
@@ -125,8 +126,9 @@ const UserList = ({ users, loading, usersValue }) => {
       {loading ? (
         <LoadComponent />
       ) : (
-        <TableContainer sx={{ width: "100%" }}>
-          <Table>
+        <Box>
+        <TableContainer >
+          <Table >
             <TableHead>
               <TableRow>
                 {headCells.map((headCell) => (
@@ -220,29 +222,36 @@ const UserList = ({ users, loading, usersValue }) => {
                 </TableRow>
               ))}
             </TableBody>
-            <TableFooter
+            {/* <TableFooter
               sx={{
                 "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
                   fill: typography,
                 },
               }}
-            >
-              <TableRow>
-                <TablePagination
-                  sx={{ border: "none", color: typography, direction: "ltr" }}
+            > */}
+              {/* <TableRow> */}
+              
+              {/* </TableRow> */}
+            {/* </TableFooter> */}
+          </Table>
+        </TableContainer>
+        <TablePagination
+                  sx={{ border: "none", color: typography, direction: "ltr",display:'flex',
+                    justifyContent:{ xs: 'center', md:'flex-start'},
+                    "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
+                      fill: typography,
+                    },
+                   }}
                   rowsPerPageOptions={[5, 10, 15]}
                   // colSpan={3}
-
+                  component="div"
                   count={dataValue.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
                 />
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
+        </Box>
       )}
     </>
   );

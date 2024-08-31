@@ -16,7 +16,7 @@ function App() {
       <RouterProvider router={router} />
       <ToastContainer
         rtl={language === "fa" ? true : false}
-        theme={darkMode == true ? "dark" : "light"}
+        theme={darkMode  ? "dark" : "light"}
         position={language === "fa" ? "top-right" : "top-left"}
       />
     </>

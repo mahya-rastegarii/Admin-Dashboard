@@ -41,7 +41,7 @@ const Sidebar = ({ drawerWidth, open }) => {
   
   const {t} = useTranslation()
   const activeMenu = themeColor.palette.primary.main;
-  const hover = darkMode == true ? alpha(themeColor.palette.primary.light, 0.1) : alpha(themeColor.palette.primary.light, 0.7);
+  const hover = darkMode  ? alpha(themeColor.palette.primary.light, 0.1) : alpha(themeColor.palette.primary.light, 0.7);
   const bgColor = mode.palette.boxBg;
   const typography = mode.palette.typography;
   const avatarColor = themeColor.palette.primary.main ;

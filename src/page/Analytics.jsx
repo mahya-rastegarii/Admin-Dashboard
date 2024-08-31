@@ -36,8 +36,8 @@ const Analytics = () => {
       
         gap={{ xs: 1, sm: 2, md: 4 }}
       >
-        <UserCount chartWidth={800} boxWidth="60%" />
-        <VisitSite chartWidth={450} boxWidth="40%" />
+        <UserCount chartWidth={800} boxWidth={{xs:"100%", md:"60%"}} />
+        <VisitSite chartWidth={450} boxWidth={{xs:'100%', md:"40%"}} />
       </Stack>
 
       <Stack

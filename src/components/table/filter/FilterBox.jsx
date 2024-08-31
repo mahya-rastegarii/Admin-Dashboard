@@ -77,6 +77,11 @@ const FilterBox = ({ setCoursesData, setLoading }) => {
       <IconButton
         aria-label="Filter"
         onClick={(e) => setAnchorEl(e.currentTarget)}
+        sx={{
+          "&:hover": {
+            backgroundColor : boxBg,
+          }
+        }}
       >
         <FilterList sx={{ fontSize: 27, color: typography }} />
         <Typography variant="body2" component="span" sx={{ color: typography }}>

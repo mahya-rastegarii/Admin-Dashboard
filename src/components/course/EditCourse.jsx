@@ -11,7 +11,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/app/app-context";
@@ -23,8 +23,7 @@ import ModalComponent from "../modal/ModalComponent";
 // import CourseAction from './CourseAction';
 
 const EditCourse = ({ courseData, editCourse }) => {
-  
-  const { language,  themeColor, mode } = useAppContext();
+  const { language, themeColor, mode } = useAppContext();
 
   const { t } = useTranslation();
 
@@ -32,16 +31,23 @@ const EditCourse = ({ courseData, editCourse }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      title: courseData?.title,
+      teacher: courseData?.teacher,
+      time: courseData?.time,
+    },
+  });
+
   const { setOpen } = useModalContext();
 
   const borderColor = mode.palette.borderColor;
   const typography = mode.palette.typography;
   const focusColor = themeColor.palette.primary.light;
 
-  const { title, time, teacher, statusFa, statusEn, picture } = courseData;
 
-  const status = language === "fa" ? statusFa : statusEn;
+
+  const status = language === "fa" ? courseData?.statusFa : courseData?.statusEn;
   const [item, setItem] = useState(status);
 
   // const VisuallyHiddenInput = styled("input")({
@@ -94,20 +100,34 @@ const EditCourse = ({ courseData, editCourse }) => {
     const date = new Date();
     const today = date.toISOString().split("T")[0];
 
-    const typeFA = item ==='Presell' ? 'پیش فروش' : item ==='Completed' ? 'تکمیل شده' : item ==="In Progress" ? 'در حال برگزاری' : null
-    const typeEn = item ==="پیش فروش" ? 'Presell' : item ==="تکمیل شده" ? "Completed" : item ==='در حال برگزاری' ? "In Progress" : null
-    const statusFA = language ==='fa'? item : typeFA
-    const statusEN = language ==='en'? item : typeEn
+    const typeFA =
+      item === "Presell"
+        ? "پیش فروش"
+        : item === "Completed"
+        ? "تکمیل شده"
+        : item === "In Progress"
+        ? "در حال برگزاری"
+        : null;
+    const typeEn =
+      item === "پیش فروش"
+        ? "Presell"
+        : item === "تکمیل شده"
+        ? "Completed"
+        : item === "در حال برگزاری"
+        ? "In Progress"
+        : null;
+    const statusFA = language === "fa" ? item : typeFA;
+    const statusEN = language === "en" ? item : typeEn;
     const newData = {
-      title,
-      teacher,
+      title: title,
+      teacher: teacher,
       lastUpdate: today,
-      time,
+      time: time,
       statusEn: statusEN,
       statusFa: statusFA,
     };
 
-    console.log("newData", newData);
+    // console.log("newData", newData);
     editCourse(newData);
   };
 
@@ -115,6 +135,10 @@ const EditCourse = ({ courseData, editCourse }) => {
     setOpen(false);
     reset();
   };
+
+  // useEffect(() => {
+  //   console.log('CourseData', courseData)
+  // }, [])
 
   return (
     <ModalComponent
@@ -142,10 +166,7 @@ const EditCourse = ({ courseData, editCourse }) => {
             },
             "& fieldset ": {
               borderColor: borderColor,
-               textAlign: language ==='fa'? "right": "left"
-
-
-
+              textAlign: language === "fa" ? "right" : "left",
             },
           }}
         >
@@ -158,7 +179,7 @@ const EditCourse = ({ courseData, editCourse }) => {
             }}
             padding={0}
           >
-            <img src={picture} width="100%" />
+            <img src={courseData?.picture} width="100%" />
           </Box>
           {/* {course.map((item) => (
             <Stack
@@ -203,15 +224,15 @@ const EditCourse = ({ courseData, editCourse }) => {
             <SchoolOutlined />
             <Stack direction="column">
               <TextField
-
-sx={{
-  "& label" :{
-    // direction:"rtl"
-    right:language ==='fa' && '20px',
-    transformOrigin: language=== 'fa' ? "top right": "top left",
-    paddingRight:language ==='fa'&& "12px"
-  }
-}}
+                sx={{
+                  "& label": {
+                    // direction:"rtl"
+                    right: language === "fa" && "20px",
+                    transformOrigin:
+                      language === "fa" ? "top right" : "top left",
+                    paddingRight: language === "fa" && "12px",
+                  },
+                }}
                 {...register("title", {
                   required: t("courses.modalCourse.required.courseNameError"),
                 })}
@@ -221,7 +242,7 @@ sx={{
                 // color="secondary"
                 variant="outlined"
                 size="small"
-                defaultValue={title}
+                // defaultValue={title}
               />
 
               {errors.title && errors.title.type === "required" && (
@@ -236,14 +257,15 @@ sx={{
             <PersonOutline />
             <Stack direction="column">
               <TextField
-               sx={{
-                "& label" :{
-                  // direction:"rtl"
-                  right:language ==='fa' && '20px',
-                  transformOrigin: language=== 'fa' ? "top right": "top left",
-                  paddingRight:language ==='fa'&& "12px"
-                }
-              }}
+                sx={{
+                  "& label": {
+                    // direction:"rtl"
+                    right: language === "fa" && "20px",
+                    transformOrigin:
+                      language === "fa" ? "top right" : "top left",
+                    paddingRight: language === "fa" && "12px",
+                  },
+                }}
                 {...register("teacher", {
                   required: t("courses.modalCourse.required.teacherError"),
                 })}
@@ -253,7 +275,7 @@ sx={{
                 // color="secondary"
                 variant="outlined"
                 size="small"
-                defaultValue={teacher}
+                // defaultValue={teacher}
               />
 
               {errors.teacher && errors.teacher.type === "required" && (
@@ -267,14 +289,15 @@ sx={{
             <AccessTimeOutlined />
             <Stack direction="column">
               <TextField
-               sx={{
-                "& label" :{
-                  // direction:"rtl"
-                  right:language ==='fa' && '20px',
-                  transformOrigin: language=== 'fa' ? "top right": "top left",
-                  paddingRight:language ==='fa'&& "12px"
-                }
-              }}
+                sx={{
+                  "& label": {
+                    // direction:"rtl"
+                    right: language === "fa" && "20px",
+                    transformOrigin:
+                      language === "fa" ? "top right" : "top left",
+                    paddingRight: language === "fa" && "12px",
+                  },
+                }}
                 {...register("time", {
                   required: t("courses.modalCourse.required.timeError"),
                 })}
@@ -291,7 +314,7 @@ sx={{
                     </InputAdornment>
                   ),
                 }}
-                defaultValue={time}
+                // defaultValue={time}
               />
 
               {errors.time && errors.time.type === "required" && (

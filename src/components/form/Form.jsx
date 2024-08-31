@@ -11,8 +11,8 @@ const Form = ({ children, align, titleButton, onSubmit, cancelSubmit }) => {
   return (
     <form onSubmit={onSubmit}>
       <Box
-        px={5}
-        pt={5}
+        px={{xs: 2, md:5}}
+        pt={{xs: 2, md:5}}
         pb={2}
         display="flex"
         flexDirection="column"
@@ -27,8 +27,8 @@ const Form = ({ children, align, titleButton, onSubmit, cancelSubmit }) => {
         alignItems="center"
         justifyContent="center"
         gap={2}
-        mt={5}
-        mb={3}
+        mt={{xs: 2, md:5}}
+        mb={{xs: 1, md:3}}
       >
         <Button variant="contained" color="success" type="submit">
           {" "}

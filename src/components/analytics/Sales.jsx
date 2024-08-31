@@ -32,7 +32,7 @@ const Sales = ({ chartWidth, boxWidth }) => {
     monthChart,
     data: sale,
     // labelChart: "Sales ",
-    colorChart: "#8884d8",
+    colorChart: "#00bcd4",
     widthChart: chartWidth,
     heightChart: 400,
     area: true,

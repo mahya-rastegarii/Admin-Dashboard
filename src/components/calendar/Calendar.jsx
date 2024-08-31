@@ -8,7 +8,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
 import "./calendar.css";
-import { styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import { useAppContext } from '../../context/app/app-context';
 
 const Calendar = ({setDate, setRemove, setOpen, setModal, events, setDateToday}) => {
@@ -21,6 +21,9 @@ const Calendar = ({setDate, setRemove, setOpen, setModal, events, setDateToday})
         ".fc.fc-button-primary": {
           backgroundColor: theme.palette.grey[200],
         },
+        // ".fc.fc-toolbar-title": {
+        //   display: "inline"
+        // }
         // ".fc .fc-view-harness":{
         //   overflow:"scroll",
         // },
@@ -30,23 +33,24 @@ const Calendar = ({setDate, setRemove, setOpen, setModal, events, setDateToday})
       }));
   return (
    
-
+ 
     <CalendarEl
    
-   
+ 
     plugins={[dayGridPlugin, interactionPlugin]}
     initialView="dayGridMonth"
     selectable={true}
 
     
-    headerToolbar={{
+    headerToolbar={
+     {
+       start: "dayGridMonth,dayGridWeek,dayGridDay",
+      center: "prev title next",
+      end: "today addEvent"
+    }
+     }
     
-     
-      start:  "dayGridMonth,dayGridWeek,dayGridDay",
-      center: "title",
-      end: "addEvent today prev,next",
-
-    } }
+    
     // eventClick=  {(info) =>  deleteEvent(info.event.title)}
     eventClick={(info) => {
       const itemId = Number(info.event.id);
@@ -89,6 +93,7 @@ const Calendar = ({setDate, setRemove, setOpen, setModal, events, setDateToday})
     eventColor="green"
     events={events}
   />
+  
   )
 }
 

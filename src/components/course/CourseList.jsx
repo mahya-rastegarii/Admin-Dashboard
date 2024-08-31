@@ -5,6 +5,7 @@ import {
   alpha,
   Chip,
   IconButton,
+  Box,
   Stack,
   styled,
   Table,
@@ -21,11 +22,10 @@ import {
 } from "@mui/material";
 
 import { useNavigation } from "react-router-dom";
-import { useAppContext} from '../../context/app/app-context';
+import { useAppContext } from "../../context/app/app-context";
 
-
-import LoadComponent from "../Loading/LoadComponent";
 import { useTranslation } from "react-i18next";
+import LoadComponent from "../Loading/LoadComponent";
 
 const CourseList = ({
   openModalDelete,
@@ -41,10 +41,9 @@ const CourseList = ({
 
   const navigation = useNavigation();
 
-  const {language, mode, themeColor }= useAppContext()
+  const { language, mode, themeColor } = useAppContext();
 
-  const {t}= useTranslation()
-
+  const { t } = useTranslation();
 
   const headerTableColor = alpha(themeColor.palette.primary.light, 0.2);
   const borderColor = mode.palette.borderColor;
@@ -74,51 +73,51 @@ const CourseList = ({
   const headCells = [
     {
       id: 1,
-      label: t('courses.table.tableHeader.title'),
-      align:language ==='fa' ? "right" : "left"
-      //  minWidth: 20,
+      label: t("courses.table.tableHeader.title"),
+      align: language === "fa" ? "right" : "left",
+       minWidth: 330,
     },
     {
       id: 2,
-      label: t('courses.table.tableHeader.teacher'),
+      label: t("courses.table.tableHeader.teacher"),
       align: "center",
-      //  minWidth: 20,
+       minWidth: 160,
     },
     {
       id: 3,
-      label: t('courses.table.tableHeader.student'),
+      label: t("courses.table.tableHeader.student"),
       align: "center",
-      //  minWidth: 20,
+       minWidth: 40,
     },
     {
       id: 4,
-      label: t('courses.table.tableHeader.status'),
+      label: t("courses.table.tableHeader.status"),
       align: "center",
-      //  minWidth: 20,
+       minWidth: 60,
     },
     {
       id: 5,
-      label:t('courses.table.tableHeader.time'),
+      label: t("courses.table.tableHeader.time"),
       align: "center",
-      //  minWidth: 20,
+       minWidth: 130,
     },
     {
       id: 5,
-      label: t('courses.table.tableHeader.lastUpdate'),
+      label: t("courses.table.tableHeader.lastUpdate"),
       align: "center",
-      //  minWidth: 20,
+       minWidth: 130,
     },
     {
       id: 6,
-      label: t('courses.table.tableHeader.star'),
+      label: t("courses.table.tableHeader.star"),
       align: "center",
-      //  minWidth: 20,
+       minWidth: 40,
     },
     {
       id: 7,
-      label: t('courses.table.tableHeader.option'),
+      label: t("courses.table.tableHeader.option"),
       align: "center",
-      //  minWidth: 20,
+       minWidth: 40,
     },
   ];
 
@@ -126,38 +125,36 @@ const CourseList = ({
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
-  
-  useEffect(() => {
-    if (coursesValue){
-       setDataValue(coursesValue)}
-    else{
 
+  useEffect(() => {
+    if (coursesValue) {
+      setDataValue(coursesValue);
+    } else {
       setDataValue(courses);
     }
-  //  console.log("dataValue", dataValue)
+    //  console.log("dataValue", dataValue)
   }, [coursesValue, courses]);
 
-  
   return (
     <>
       {/* {navigation.state !== "idle" &&  */}
 
-      {
-        loading ? <LoadComponent/> :(
-
-     
-      <TableContainer sx={{ width: "100%" }}>
-        <Table sx={{ padding: 0, }}>
-          <TableHead>
-            <TableRow>
-              {/* <StyledTableCell padding="checkbox">
+      {loading ? (
+        <LoadComponent />
+      ) : (
+        <Box sx={{ width:"100%", overflow:'hidden'}}>
+        <TableContainer >
+          <Table sx={{ padding: 0 }}>
+            <TableHead>
+              <TableRow>
+                {/* <StyledTableCell padding="checkbox">
                 <Checkbox />
               </StyledTableCell> */}
 
-              {headCells.map((headCell) => (
-                <StyledTableCell key={headCell.id} align={headCell.align}>
-                  {headCell.label === "Title" || headCell.label === "Favour" ? (
-                    <TableSortLabel active>
+                {headCells.map((headCell) => (
+                  <StyledTableCell key={headCell.id} align={headCell.align}   style={{ minWidth: headCell.minWidth }}>
+                   
+                   
                       <Typography
                         variant="body1"
                         component="h2"
@@ -165,151 +162,150 @@ const CourseList = ({
                       >
                         {headCell.label}
                       </Typography>
-                    </TableSortLabel>
-                  ) : (
-                    <Typography
-                      variant="body1"
-                      component="h2"
-                      sx={{ fontWeight: "bold" }}
-                    >
-                      {headCell.label}
-                    </Typography>
-                  )}
-                  {/* <Typography variant="body1" sx={{ fontWeight:'bold'}} component="span">
+                 
+                    {/* <Typography variant="body1" sx={{ fontWeight:'bold'}} component="span">
                     {headCell.label}
                   </Typography> */}
-                </StyledTableCell>
-              ))}
-            </TableRow>
-          </TableHead>
+                  </StyledTableCell>
+                ))}
+              </TableRow>
+            </TableHead>
 
-          <TableBody>
-            {rowTable.map((item) => (
-              <TableRow key={item.id}>
-                {/* <TableCell padding="checkbox">
+            <TableBody>
+              {rowTable.map((item) => (
+                <TableRow key={item.id}>
+                  {/* <TableCell padding="checkbox">
                   <Checkbox />
                 </TableCell> */}
-                <TableCell sx={{ borderColor: borderColor }}>
-                  <Stack
-                    direction="row"
-                    gap={2}
-                    display="flex"
-                    alignItems="center "
-                  >
-                    <img src={item.picture} width="20%" />
-                    {/* <Avatar
+                  <TableCell sx={{ borderColor: borderColor }}>
+                    <Stack
+                      direction="row"
+                      gap={2}
+                      display="flex"
+                      alignItems="center "
+                    >
+                      <img
+                        src={item.picture}
+                        width={120}
+                      />
+                      {/* <Avatar
                       // sx={{ width:"35%"}}
                       src={item.pic}
                       variant="square"
                     ></Avatar> */}
-                    <Typography variant="h6" sx={{ color: typography }}>
-                      {item.title}
+                      <Typography variant={{xs:"body1", md:"h6"}} sx={{ color: typography, fontWeight:"bold" }}>
+                        {item.title}
+                      </Typography>
+                    </Stack>
+                  </TableCell>
+                  <TableCell sx={{ borderColor: borderColor }} align="center">
+                    <Typography variant="body2" sx={{ color: typography }}>
+                      {item.teacher}
                     </Typography>
-                  </Stack>
-                </TableCell>
-                <TableCell sx={{ borderColor: borderColor }} align="center">
-                  <Typography variant="body2" sx={{ color: typography }}>
-                    {item.teacher}
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ borderColor: borderColor }} align="center">
-                  <Typography variant="body2" sx={{ color: typography }}>
-                    {item.studentCount}
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ borderColor: borderColor }} align="center">
-                  <Chip
-                    label={language ==='fa' ? item.statusFa : item.statusEn}
-                    color="primary"
-                    variant="outlined"
-                  />
-                </TableCell>
-                <TableCell sx={{ borderColor: borderColor }} align="center">
-                  <Typography variant="body2" sx={{ color: typography }}>
-                    {item.time}
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ borderColor: borderColor }} align="center">
-                  <Typography variant="body2" sx={{ color: typography }}>
-                    {item.lastUpdate}
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ borderColor: borderColor }} align="center">
-                  {/* <Rating
+                  </TableCell>
+                  <TableCell sx={{ borderColor: borderColor }} align="center">
+                    <Typography variant="body2" sx={{ color: typography }}>
+                      {item.studentCount}
+                    </Typography>
+                  </TableCell>
+                  <TableCell sx={{ borderColor: borderColor }} align="center">
+                    <Chip
+                      label={language === "fa" ? item.statusFa : item.statusEn}
+                      color="primary"
+                      variant="outlined"
+                    />
+                  </TableCell>
+                  <TableCell sx={{ borderColor: borderColor }} align="center">
+                    <Typography variant="body2" sx={{ color: typography }}>
+                      {item.time}
+                    </Typography>
+                  </TableCell>
+                  <TableCell sx={{ borderColor: borderColor }} align="center">
+                    <Typography variant="body2" sx={{ color: typography }}>
+                      {item.lastUpdate}
+                    </Typography>
+                  </TableCell>
+                  <TableCell sx={{ borderColor: borderColor }} align="center">
+                    {/* <Rating
                     name="half-rating-read"
                     defaultValue={item.rating}
                     precision={0.5}
                     readOnly
                     size="small"
                   /> */}
-                  <Stack
-                    direction="row"
-                    spacing={1}
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <StarRate sx={{ color: "#ffc400", fontSize: 26 }} />
-                    <Typography variant="body2" sx={{ color: typography }}>
-                      {item.star}
-                    </Typography>
-                  </Stack>
-                </TableCell>
-                <TableCell sx={{ borderColor: borderColor }} align="center">
-                  <Stack direction="row" spacing={1} alignItems="center">
-                    <IconButton
-                      aria-label="Edit"
-                      onClick={() => openModalEdit(item)}
-                      title="Edit"
-                      sx={{ color: "#1e88e5" }}
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      alignItems="center"
+                      justifyContent="center"
                     >
-                      <Edit />
-                    </IconButton>
-                    <IconButton
-                      aria-label="Delete"
-                      title="Delete"
-                      sx={{ color: "#e53935" }}
-                      onClick={() => openModalDelete(item.id, item.picture)}
-                    >
-                      <Delete />
-                    </IconButton>
-                    {/* <Button
+                      <StarRate sx={{ color: "#ffc400", fontSize: 26 }} />
+                      <Typography variant="body2" sx={{ color: typography }}>
+                        {item.star}
+                      </Typography>
+                    </Stack>
+                  </TableCell>
+                  <TableCell sx={{ borderColor: borderColor }} align="center">
+                    <Stack direction="row" spacing={1} alignItems="center">
+                      <IconButton
+                        aria-label="Edit"
+                        onClick={() => openModalEdit(item)}
+                        title="Edit"
+                        sx={{ color: "#1e88e5" }}
+                      >
+                        <Edit />
+                      </IconButton>
+                      <IconButton
+                        aria-label="Delete"
+                        title="Delete"
+                        sx={{ color: "#e53935" }}
+                        onClick={() => openModalDelete(item.id, item.picture)}
+                      >
+                        <Delete />
+                      </IconButton>
+                      {/* <Button
                    variant="contained"
                   
                   color="secondary"
                   >
                      edit </Button> */}
-                  </Stack>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter
-            sx={{
-             
-              "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
-                fill: typography,
-              },
-            }}
-          >
-            <TableRow >
-              <TablePagination
-                sx={{ border: "none", color: typography, direction: 'ltr'  }}
-                rowsPerPageOptions={[5, 10, 15]}
-                // colSpan={3}
-
-                count={dataValue.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
-
-)
-}
+                    </Stack>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+            {/* <TableFooter
+              sx={{
+                "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
+                  fill: typography,
+                },
+              }}
+            > */}
+              {/* <TableRow> */}
+              
+              {/* </TableRow> */}
+            {/* </TableFooter> */}
+          </Table>
+        </TableContainer>
+        <TablePagination
+                  sx={{ border: "none", color: typography, direction: "ltr", display:'flex', 
+                    justifyContent:{ xs: 'center', md:'flex-start'},
+                      "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
+                        fill: typography,
+                      },
+                  
+                   }}
+                  rowsPerPageOptions={[5, 10, 15]}
+                  // colSpan={3}
+                 conponent='div'
+                  count={dataValue.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+        </Box>
+      )}
     </>
   );
 };

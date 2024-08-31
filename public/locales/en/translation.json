@@ -164,7 +164,7 @@
     },
 
     "promise" :{
-      "pending": "pending ...",
+      "pending": "Please wait...",
       "pendingDelete": "deleting ...",
       "success" : "successful",
       "error": "please try again"
@@ -172,7 +172,16 @@
     
     "cancelBtn":"Cancel",
 
-    "removeBtn": "Remove"
+    "removeBtn": "Remove",
+
+    "notFound": {
+       "text": " Page Not Found",
+       "btn": " Go To Dashboard"
+    },
+
+    "unhandledException": {
+      "text": " Server IS Not Responding"
+    }
   }
 
 

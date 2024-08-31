@@ -1,5 +1,5 @@
 import { Favorite, People, PeopleAlt, School } from "@mui/icons-material";
-import { Box, styled } from "@mui/material";
+import { Box, Stack, styled } from "@mui/material";
 import {
   LineChart,
   lineElementClasses,
@@ -8,7 +8,6 @@ import {
 import React, { Suspense, useState } from "react";
 import { Await, defer, useLoaderData } from "react-router-dom";
 import DashboardBox from "../components/box/DashboardBox";
-import Counter from "../components/Counter";
 import { supabase } from "../core/createClient";
 // import Line from "../components/charts/Line";
 import NewCourse from "../components/course/NewCourse";
@@ -34,41 +33,41 @@ const Dashboard = () => {
 
   const [newUser, setNewUser] = useState();
   const [newCourse, setNewCourse] = useState();
-  const CustomChart = styled(LineChart)(() => ({
-    [`& .${lineElementClasses.root}`]: {
-      stroke: "#8884d8",
-      strokeWidth: 2,
-    },
-    [`& .${markElementClasses.root}`]: {
-      stroke: "#8884d8",
-      scale: "0.6",
-      fill: "#fff",
-      strokeWidth: 0,
-    },
-  }));
+
+  
+  // const CustomChart = styled(LineChart)(() => ({
+  //   [`& .${lineElementClasses.root}`]: {
+  //     stroke: "#8884d8",
+  //     strokeWidth: 2,
+  //   },
+  //   [`& .${markElementClasses.root}`]: {
+  //     stroke: "#8884d8",
+  //     scale: "0.6",
+  //     fill: "#fff",
+  //     strokeWidth: 0,
+  //   },
+  // }));
 
   const BoxContent = [
     {
       id: 1,
       title: t("dashboard.dashboardBox.course"),
-      count: 12,
-      num: 1,
-
+      count: 50,
+      before: "+",
       icon: <School sx={{ fontSize: 50, color: typography }} />,
     },
     {
       id: 2,
       title: t("dashboard.dashboardBox.user"),
-      count: 64,
-      num: 1,
+      count: 600,
+      before: "+",
       icon: <PeopleAlt sx={{ fontSize: 50, color: typography }} />,
     },
     {
       id: 3,
       title: t("dashboard.dashboardBox.liked"),
       count: 70,
-      percent: "%",
-      num: 10,
+      after: "%",
       icon: <Favorite sx={{ fontSize: 50, color: typography }} />,
     },
   ];
@@ -90,13 +89,14 @@ const Dashboard = () => {
   };
 
   return (
-    <Box>
+    <Box px={{xs: 2, md: 4}}>
       <Box
         mx="auto"
         display="flex"
-        // width="100%"
+        width="100%"
         flexDirection={{ xs: "column", md: "row" }}
         gap={4}
+        // px={4}
         // gridTemplateColumns="repeat(3, 1fr)"
         maxWidth="md"
         alignItems="center"
@@ -104,7 +104,9 @@ const Dashboard = () => {
       >
         {BoxContent.map((item) => (
           <DashboardBox item={item} key={item.id}>
-            <Counter count={item.count} number={item.num} />
+            {
+              item.count
+            }
           </DashboardBox>
         ))}
       </Box>
@@ -125,19 +127,19 @@ const Dashboard = () => {
         <Line {...chartData} />
       </Box> */}
 
-      <Box
+      <Stack
         width="100%"
-        display="flex"
-        flexDirection={{ xs: "column", md: "row" }}
+    
+        direction={{ xs: "column", md: "row" }}
         mt={6}
         gap={2}
         alignItems="center"
         justifyContent="center"
       >
-        <Sales chartWidth={800} boxWidth="60%" />
+        <Sales chartWidth={800} boxWidth={{xs:"100%", md:"60%"}} />
 
-        <VisitSite chartWidth={450} boxWidth="40%" />
-      </Box>
+        <VisitSite chartWidth={450} boxWidth={{xs:'100%', md:"40%"}} />
+      </Stack>
 
       <Box
         flexDirection={{ xs: "column", md: "row" }}

@@ -58,6 +58,9 @@ const SortBox = ({ sortData }) => {
       
       "&:hover":{
         backgroundColor:boxBg
+      },
+      "&:active":{
+        backgroundColor:boxBg
       }
     }}
    

@@ -7,11 +7,14 @@ import Dashboard, { NewDataLoader } from "./page/Dashboard";
 import User, { userLoader } from "./page/User";
 import MainLayout from "./components/main/MainLayout";
 import ContainerCalendar, { eventLoader } from "./page/calendar/ContainerCalendar";
+import NotFound from "./page/NotFound";
+import UnhandledException from "./page/UnhandledException";
 // import CourseDetails from "./page/CourseDetails";
 
 const router = createBrowserRouter([
   {
   element: <MainLayout/>,
+  errorElement: <UnhandledException/>,
   children :[
     {
       path: "/",
@@ -31,10 +34,7 @@ const router = createBrowserRouter([
 
     },
   
-    //   {
-    //     path: "course/:name",
-    //   element: <CourseDetails/>
-    // },
+   
   
     {
       path: "calendar",
@@ -45,6 +45,12 @@ const router = createBrowserRouter([
       path: "analytics",
       element: <Analytics />
     },
+
+    {
+      path: "*",
+
+      element: <NotFound/>
+    }
 
   ]
   }

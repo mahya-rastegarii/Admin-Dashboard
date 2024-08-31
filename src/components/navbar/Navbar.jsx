@@ -140,12 +140,12 @@ const arrow = language=== 'fa' ? <KeyboardDoubleArrowRight/> : <KeyboardDoubleAr
           <IconButton
             size="large"
             edge="end"
-            aria-label={darkMode == true ? " light Mode " : " dark Mode "}
+            aria-label={!darkMode  ? " dark Mode " :  " light Mode "}
             onClick={() => darkTheme(!darkMode)}
             sx={{ color: iconColor }}
             
           >
-            {darkMode == true ?  <LightMode/> : <DarkMode  />}
+            {!darkMode  ?   <DarkMode/> : <LightMode />}
           </IconButton>
 
           <LanguageMenu />

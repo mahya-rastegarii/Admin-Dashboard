@@ -39,14 +39,14 @@ const ModalComponent = ({closeForm, children, title}) => {
         }}
       >
            <Fade in={open}>
-       <Box  width={400} sx={{ backgroundColor:bgColor,color:typography, border:`1px solid ${borderColor}`, position:"absolute", top:"50%", left:"50%", padding:1,  borderRadius:1, boxShadow:24,  transform: 'translate(-50%, -50%)',
+       <Box  width={{xs:300, sm:350,  md:400}} sx={{ backgroundColor:bgColor,color:typography, border:`1px solid ${borderColor}`, position:"absolute", top:"50%", left:"50%", padding:1,  borderRadius:1, boxShadow:24,  transform: 'translate(-50%, -50%)',
         "& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper" :{
             backgroundColor:bgColor,
             }
        }} >
        <Stack direction="row"   justifyContent=" space-between" alignItems="center"  >
     
-       <Typography variant="h6" sx={{ fontWeight:"bold", ml:1}}> 
+       <Typography variant={{xs:"body1", md:"h6"}} sx={{ fontWeight:"bold", ml:1}}> 
         {title}
       </Typography>
       <IconButton
@@ -59,7 +59,7 @@ const ModalComponent = ({closeForm, children, title}) => {
         <Close/>
       </IconButton>
     </Stack>
-
+     
    {
      children
    }

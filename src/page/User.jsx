@@ -100,7 +100,7 @@ export default function User() {
   // };
 
   return (
-    <Box component={Paper} elevation={2} sx={{ backgroundColor: boxBgColor }}>
+    <Box component={Paper} elevation={2} sx={{ backgroundColor: boxBgColor, marginX:{xs: 2, md: 4}, overflow:"hidden" }}>
       <Stack
         direction={{ xs: "column-reverse", md: "row" }}
         alignItems={{ xs: "flex-start", md: "center" }}

@@ -28,7 +28,7 @@ const UserCount = ({ chartWidth, boxWidth }) => {
     monthChart,
     data: numberOfUser,
     labelChart: "User ",
-    colorChart: "#8884d8",
+    colorChart: "#9c27b0",
     widthChart: chartWidth,
     heightChart: 400,
     area: false,
