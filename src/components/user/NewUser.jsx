@@ -17,12 +17,13 @@ const NewUser = ({ newUser }) => {
   const { language, mode, themeColor } = useAppContext();
 
   const typography = mode.palette.typography;
+  const borderColor = mode.palette.borderColor;
 
   return (
     <Box
-      // width="100%"
+    
       sx={{ width: "100%", overflow: { sx: "scroll", md: "hidden" } }}
-      //  overflow= "scroll"
+  
     >
       <List display="flex" sx={{ width: "100%", padding: 0 }}>
         {newUser.map((item) => (
@@ -40,7 +41,7 @@ const NewUser = ({ newUser }) => {
               <Stack
                 width="100%"
                 direction={{ sx: "column", sm: "row" }}
-                gap={3}
+                gap={1}
               >
                 <ListItemText
                   primary={
@@ -76,7 +77,7 @@ const NewUser = ({ newUser }) => {
               </Stack>
             </ListItem>
 
-            <Divider />
+            <Divider sx={{backgroundColor: borderColor}}/>
           </Box>
         ))}
       </List>

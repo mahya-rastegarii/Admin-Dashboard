@@ -1,23 +1,71 @@
 import { Box, MenuItem } from "@mui/material";
-import React, { useState } from "react";
+import React  from "react";
 
-const PaletteBox = ({ themeColors, selectedColor, setSelectedColor, color }) => {
+const PaletteBox = ({component,  selectedColor, setSelectedColor }) => {
   
 
   const handleClickItem = (theme) => {
-    setSelectedColor(theme);
+    if(component === "menu"){
+
+      setSelectedColor(theme.color)
+    }
+  else if(component === "event") {
+
+    setSelectedColor(theme.hexColor)
+  }
     console.log("theme", theme);
   }
 
+  const Colors = [
+
+    {
+      id:1,
+      color: 'teal',
+      hexColor: '#009688'
+      
+    },
+    {
+      id:2,
+       color:'amber',
+       hexColor: '#ffc107'
+
+    },
+      {
+        id:3,
+        color:'lime' ,
+        hexColor: '#d4e157'
+
+      },
+      {
+        id:4,
+         color: 'pink',
+         hexColor: '#e91e63'
+
+      },
+        {
+          id: 5,
+          color: 'cyan',
+          hexColor: '#00bcd4'
+
+        },
+        
+        
+        {
+          id: 6,
+          color:'purple',
+          hexColor: '#9c27b0'
+        }
+
+        ]
   return (
     <>
-      {themeColors.map((theme) => (
+      {Colors.map((theme) => (
         <MenuItem
-          // sx={}
+         
 
           key={theme.id}
-          selected={ color ? theme.color == color : theme.color === selectedColor}
-          onClick={() => handleClickItem(theme.color)}
+          selected={component === "menu" ?  theme.color == selectedColor : component ==="event" ? theme.hexColor === selectedColor : null}
+          onClick={() => handleClickItem(theme)}
         >
           <Box
 
@@ -25,7 +73,7 @@ const PaletteBox = ({ themeColors, selectedColor, setSelectedColor, color }) => 
               width: 25,
               height: 25,
               borderRadius: 2,
-              bgcolor: theme.hexColor ? theme.hexColor : theme.color,
+              bgcolor: theme.hexColor,
             }}
           />
         </MenuItem>

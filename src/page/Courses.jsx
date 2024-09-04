@@ -29,9 +29,9 @@ const Courses = () => {
   const { t } = useTranslation();
 
   const boxBgColor = mode.palette.boxBg;
-  const borderColor = mode.palette.borderColor;
-  const typography = mode.palette.typography;
+
   const btnColor = themeColor.palette.primary.main;
+  const btnHoverColor = themeColor.palette.primary.dark;
 
   const [coursesValue, setCoursesValue] = useState(null);
   const [CourseId, setCourseId] = useState(null);
@@ -59,23 +59,8 @@ const Courses = () => {
     } else if (!value) setCoursesValue(null);
   }, 500);
 
-  // const ascendingSort = () => {
-  //   const sortCourse = coursesData.sort((a, b) => {
-  //     const date1 = new Date(a.lastUpdate);
-  //     const date2 = new Date(b.lastUpdate);
-  //     return date1 - date2;
-  //   });
-  //   setCoursesData(sortCourse);
-  // };
 
-  // const descendingSort = () => {
-  //   const sortCourse = coursesData.sort((a, b) => {
-  //     const date1 = new Date(a.lastUpdate);
-  //     const date2 = new Date(b.lastUpdate);
-  //     return date2 - date1;
-  //   });
-  //   setCoursesData(sortCourse);
-  // };
+
 
   const descendingSort = async () => {
     setLoading(true);
@@ -92,11 +77,10 @@ const Courses = () => {
   const sortCourseData = (item) => {
     if (item === "Newest" || item === "جدید ترین") {
       setCoursesValue(null);
-      // console.log('Newest')
+     
     } else {
       descendingSort();
 
-      // console.log('Oldest')
     }
   };
 
@@ -127,7 +111,7 @@ const Courses = () => {
     console.log("response", data);
   };
   const deleteCourse = async () => {
-    // const newListCourses = courses.filter((item) => item.id !== CourseId)
+    
     setOpen(false);
     const response = supabase.from("course").delete().eq("id", CourseId);
     deleteImageCourse();
@@ -149,23 +133,12 @@ const Courses = () => {
         },
       },
     });
-    // if (response.status === 204) {
-    //   const url = new URL(window.location.href);
-    //   navigate(url.pathname);
-    //   setCourseId(null);
-    //   setCourseData(null);
-    // }
+    
 
-    console.log("remove", response);
-
-    //  fetchCourse()
+  
   };
 
-  // const fetchRequest = async() =>{
-  //   const response = await httpService.get("/course");
-  //  const result = response.data;
-  //  console.log("response", result)
-  // }
+ 
 
   const insertCourse = async (newCourse) => {
     const response = supabase.from("course").insert(newCourse).select("*");
@@ -186,14 +159,9 @@ const Courses = () => {
         },
       },
     });
-    // if (courses) {
-    //   const url = new URL(window.location.href);
-    //   navigate(url.pathname);
-    // }
+   
 
-    console.log("Courses", courses);
-    // setEvent( prevEvent => [...prevEvent, events])
-    // fetchCourse()
+   
   };
 
   const editCourse = async (newData) => {
@@ -223,24 +191,11 @@ const Courses = () => {
         },
       },
     });
-    // if (response.status === 200) {
-    //   const url = new URL(window.location.href);
-    //   navigate(url.pathname);
-    //   setCourseId(null);
-    //   setCourseData(null);
-    // }
+    
 
   };
 
-  // useEffect(() => {
-  //   setSelectValue("Status");
-
-  //   // fetchCourse();
-  // }, []);
-
-  // useEffect( () => {
-
-  // }, [])
+ 
 
   return (
     <Box component={Paper} elevation={2} sx={{ backgroundColor: boxBgColor, marginX:{xs: 2, md: 4}, overflow:'hidden'}}>
@@ -267,13 +222,12 @@ const Courses = () => {
           <FilterBox
             setLoading={setLoading}
             setCoursesData={setCoursesValue}
-            //  setCourses={setCourses}
+            
           />
 
           <SortBox
             sortData={sortCourseData}
-            // selectedIndex={courseSortValue}
-            // setSelectedIndex= {setCourseSortValue}
+           
           />
         </Stack>
 
@@ -287,7 +241,12 @@ const Courses = () => {
             variant="contained"
             startIcon={<Add sx={{ marginLeft: language === "fa" ? 1 : 0 }} />}
             onClick={openModalInsert}
-            sx={{ borderRadius: 3, backgroundColor: btnColor }}
+            sx={{ borderRadius: 3, backgroundColor: btnColor,
+
+              "&:hover" :{
+                backgroundColor:btnHoverColor
+              }
+             }}
           >
             {t("courses.addBtn")}
           </Button>
@@ -302,7 +261,7 @@ const Courses = () => {
               openModalEdit={openModalEdit}
               courses={loadCourses}
               loading={loading}
-              // setCoursesData={setCoursesData}
+             
               coursesValue={coursesValue}
             />
           )}

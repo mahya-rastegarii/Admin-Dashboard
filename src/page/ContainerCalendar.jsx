@@ -1,22 +1,20 @@
-import { Box, Paper } from "@mui/material";
+import { alpha, Box, Paper } from "@mui/material";
 import React, { Suspense, useState } from "react";
-import AddEvent from "../../components/calendar/AddEvent";
-import { useModalContext } from "../../context/modal/ModalContext";
-// import {makeStyles} from '@mui/styles'
-// import RemoveEvent from "../components/course/RemoveEvent";
+import AddEvent from "../components/calendar/AddEvent";
+import { useModalContext } from "../context/modal/ModalContext";
 
-import RemoveComponent from "../../components/remove/RemoveComponent";
+import RemoveComponent from "../components/remove/RemoveComponent";
 
-import Calendar from "../../components/calendar/Calendar";
+import Calendar from "../components/calendar/Calendar";
 
-import "../../components/calendar/calendar.css";
-import { supabase } from "../../core/createClient";
+// import "../components/calendar/calendar.css";
+import { supabase } from "../core/createClient";
 
 import { useTranslation } from "react-i18next";
 import { Await, defer, useLoaderData, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import LoadComponent from "../../components/Loading/LoadComponent";
-import { useAppContext } from "../../context/app/app-context";
+import LoadComponent from "../components/Loading/LoadComponent";
+import { useAppContext } from "../context/app/app-context";
 
 const ContainerCalendar = () => {
   const data = useLoaderData();
@@ -30,9 +28,10 @@ const ContainerCalendar = () => {
   const typography = mode.palette.typography;
   const themeColorMain = customColor.palette.primary.main;
   const themeColorDark = customColor.palette.primary.dark;
-
+  const themeColorLight = alpha(themeColorMain, 0.2);
+  const borderColor =alpha(themeColorDark, 0.6);
   const [event, setEvent] = useState([]);
-  // const [language, setLanguage] = useState(enLocale);
+ 
   const [modal, setModal] = useState("");
   const [date, setDate] = useState();
   const [dateToday, setDateToday] = useState();
@@ -42,7 +41,7 @@ const ContainerCalendar = () => {
   const [remove, setRemove] = useState(0);
 
   const removeHandler = async () => {
-    // const newEventList = event.filter((item) => item.id !== remove);
+   
     setOpen(false);
     const response = supabase.from("event").delete().eq("id", remove);
 
@@ -62,30 +61,23 @@ const ContainerCalendar = () => {
         },
       },
     });
-    //  if( response.status === 204) {
-    //   const url = new URL(window.location.href)
-    //   navigate(url.pathname);
-
-    //  };
-
-    //  setRemove(false)
+   
   };
- 
 
-  const classNameTheme =
-   themeColorMain == "#009688"
-      ? "teal"
-      : themeColorMain == "#ffc107"
-      ? "amber"
-      : themeColorMain == "#cddc39"
-      ? "lime"
-      : themeColorMain == "#e91e63"
-      ? "pink"
-      : themeColorMain == "#00bcd4"
-      ? "cyan"
-      : themeColorMain == "#9c27b0"
-      ? "purple"
-      : "";
+  // const classNameTheme =
+  //   themeColorMain == "#009688"
+  //     ? "teal"
+  //     : themeColorMain == "#ffc107"
+  //     ? "amber"
+  //     : themeColorMain == "#cddc39"
+  //     ? "lime"
+  //     : themeColorMain == "#e91e63"
+  //     ? "pink"
+  //     : themeColorMain == "#00bcd4"
+  //     ? "cyan"
+  //     : themeColorMain == "#9c27b0"
+  //     ? "purple"
+  //     : "";
 
   const insertEvent = async (newData) => {
     const response = supabase.from("event").insert(newData).select("*");
@@ -106,23 +98,14 @@ const ContainerCalendar = () => {
         },
       },
     });
-    //   if(data){
-    //     const url = new URL(window.location.href)
-    // navigate(url.pathname);
+  
 
-    //   }
-
-    console.log("events", data);
-    // setEvent( prevEvent => [...prevEvent, events])
-    // fetchEvent()
+   
   };
 
   return (
     <>
-      {modal === "backdrop" ? (
-        <LoadingBackdrop />
-      ) : modal === "removeEvent" ? (
-        // <RemoveEvent setEvent={setEvent} event={event} remove={remove} />
+      {modal === "removeEvent" ? (
         <RemoveComponent
           title={t("calendar.removeEvent.titleModal")}
           body={t("calendar.removeEvent.text")}
@@ -141,31 +124,56 @@ const ContainerCalendar = () => {
         component={Paper}
         elevation={3}
         // p={3}
-        sx={{ backgroundColor: boxBgColor, borderRadius: 2, color: typography, marginX:{xs: 2, md: 4}}}
+        sx={{
+          backgroundColor: boxBgColor,
+          borderRadius: 2,
+          color: typography,
+          marginX: { xs: 2, md: 4 },
+        }}
       >
         <Box
-          className={classNameTheme}
+          // className={classNameTheme}
           sx={{
-            "& .fc .fc-toolbar": {
-              flexDirection: { xs: "column", md: "row" },
-              gap:{xs:3, md:0},
-              margin:4,
+            
+            "& .fc .fc-button-primary" :{
+              backgroundColor: themeColorMain,
+              borderColor:borderColor,
+              color: '#fff !important',
+              outline: 'none',
             },
 
-            "& .fc .fc-view-harness" :{
-              overflow: {xs:"scroll" , md:"hidden"},
+            "& .fc .fc-button-active" :{
+              backgroundColor: `${themeColorDark} !important`,
+              borderColor: themeColorDark,
+            },
+            "& .fc .fc-button-primary:active" :{
+            backgroundColor: `${themeColorDark} !important`,
+            
+            },
+            "& .fc .fc-daygrid-day.fc-day-today" :{
+
+              backgroundColor: themeColorLight,
+            },
+            "& .fc .fc-toolbar": {
+              flexDirection: { xs: "column", md: "row" },
+              gap: { xs: 3, md: 0 },
+              margin: 4,
+            },
+
+            "& .fc .fc-view-harness": {
+              overflow: { xs: "scroll", md: "hidden" },
               // height: {xs:"400px !important", sm:"600px !important", md:"1190px !important"},
             },
 
-            "& .fc .fc-view-harness-active > .fc-view":{
-              width:{xs:"600px", sm:"100%"},
+            "& .fc .fc-view-harness-active > .fc-view": {
+              width: { xs: "600px", sm: "100%" },
               // height:"400px",
               // overflow: "scroll",
             },
-            "& .fc-daygrid-block-event .fc-event-title" :{
+            "& .fc-daygrid-block-event .fc-event-title": {
               overflow: "auto",
             },
-          
+
             "& .fc .fc-daygrid-day-frame": {
               cursor: "cell",
             },
@@ -173,56 +181,51 @@ const ContainerCalendar = () => {
               cursor: "pointer",
             },
 
-            ".fc-toolbar-chunk" :{
-              display:"flex",
-              justifyContent:"center",
-              alignItems:"center",
+            ".fc-toolbar-chunk": {
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             },
 
-            ".fc .fc-toolbar-title" :{
+            ".fc .fc-toolbar-title": {
               // display: 'inline-block',
               // margin: 0,
-              marginX: {xs:1, sm:2, md:3},
+              fontSize: {xs:'1.1em', sm:'1.5em', md:'1.75em'},
+              marginX: { xs: 1, sm: 2, md: 3 },
             },
-            ".fc .fc-prev-button , .fc .fc-next-button" :{
-              backgroundColor:"transparent",
-              border: 'none',
+            ".fc .fc-prev-button , .fc .fc-next-button": {
+              backgroundColor: "transparent",
+              border: "none",
               margin: 0,
-              padding:0 ,
+              padding: 0,
             },
-            ".fc  .fc-prev-button:active  , .fc .fc-next-button:active" :{
-              backgroundColor:"transparent !important",
-              border: 'none !important',
+            ".fc  .fc-prev-button:active  , .fc .fc-next-button:active": {
+              backgroundColor: "transparent !important",
+              border: "none !important",
               color: themeColorDark,
-
             },
-            ".fc .fc-prev-button span , .fc .fc-next-button span" :{
+            ".fc .fc-prev-button span , .fc .fc-next-button span": {
               color: themeColorMain,
-            //  width:12,
+              //  width:12,
             },
-            ".fc .fc-prev-button .fc-icon , .fc .fc-next-button .fc-icon" :{
+            ".fc .fc-prev-button .fc-icon , .fc .fc-next-button .fc-icon": {
               fontSize: "2em",
-            }
+            },
+
           }}
         >
           <Suspense fallback={<LoadComponent />}>
             <Await resolve={data.events}>
               {(loadEvents) => (
-             
-            
                 <Calendar
-               
                   setModal={setModal}
-                  // headerCalendar={headerCalendar}
+                 
                   setOpen={setOpen}
                   setDate={setDate}
                   setDateToday={setDateToday}
                   setRemove={setRemove}
                   events={loadEvents}
                 />
-             
-              
-            
               )}
             </Await>
           </Suspense>
@@ -241,15 +244,7 @@ export async function eventLoader() {
 const fetchEvent = async () => {
   let { data, error } = await supabase.from("event").select("*");
 
-  //  const events = {
-  //   id: id,
-  //   title: title,
-  //   start:startDate,
-  //   end: endDate,
-  //   color:color,
-  //  }
-
-  // setEvent(events);
+ 
   return data;
 };
 

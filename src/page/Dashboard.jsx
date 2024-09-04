@@ -9,7 +9,7 @@ import React, { Suspense, useState } from "react";
 import { Await, defer, useLoaderData } from "react-router-dom";
 import DashboardBox from "../components/box/DashboardBox";
 import { supabase } from "../core/createClient";
-// import Line from "../components/charts/Line";
+
 import NewCourse from "../components/course/NewCourse";
 import NewUser from "../components/user/NewUser";
 
@@ -22,31 +22,17 @@ import { useAppContext } from "../context/app/app-context";
 
 const Dashboard = () => {
   const data = useLoaderData();
-  // const {chartValue, setChartValue}= useChartContext();
-  const { mode, themeColor } = useAppContext();
+ 
+  const { mode  } = useAppContext();
   const { t } = useTranslation();
 
-  const iconColor = themeColor.palette.primary.dark;
-  const linkColor = themeColor.palette.primary.dark;
-  const boxBgColor = mode.palette.boxBg;
+ 
   const typography = mode.palette.typography;
 
-  const [newUser, setNewUser] = useState();
-  const [newCourse, setNewCourse] = useState();
+
 
   
-  // const CustomChart = styled(LineChart)(() => ({
-  //   [`& .${lineElementClasses.root}`]: {
-  //     stroke: "#8884d8",
-  //     strokeWidth: 2,
-  //   },
-  //   [`& .${markElementClasses.root}`]: {
-  //     stroke: "#8884d8",
-  //     scale: "0.6",
-  //     fill: "#fff",
-  //     strokeWidth: 0,
-  //   },
-  // }));
+ 
 
   const BoxContent = [
     {
@@ -96,8 +82,7 @@ const Dashboard = () => {
         width="100%"
         flexDirection={{ xs: "column", md: "row" }}
         gap={4}
-        // px={4}
-        // gridTemplateColumns="repeat(3, 1fr)"
+       
         maxWidth="md"
         alignItems="center"
         justifyContent="center"
@@ -111,21 +96,7 @@ const Dashboard = () => {
         ))}
       </Box>
 
-      {/* <Box
-        component={Paper}
-        square={false}
-        elevation={3}
-        sx={{
-          display: "flex",
-          marginX: "auto",
-          borderRadius: 2,
-          padding: 3,
-          marginTop: 6,
-          backgroundColor: boxBgColor,
-        }}
-      >
-        <Line {...chartData} />
-      </Box> */}
+ 
 
       <Stack
         width="100%"
@@ -181,8 +152,7 @@ const fetchNewUser = async () => {
     .select("*")
     .order("date", { ascending: false })
     .limit(7);
-  // console.log("limit", data)
-  // setNewUser(data)
+  
   return data;
 };
 
@@ -192,8 +162,7 @@ const fetchNewCourse = async () => {
     .select("*")
     .order("lastUpdate", { ascending: false })
     .limit(5);
-  // console.log("limit", data)
-  // setNewCourse(data)
+ 
   return data;
 };
 

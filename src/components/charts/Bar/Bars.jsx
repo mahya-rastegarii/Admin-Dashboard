@@ -21,7 +21,7 @@ const ChartColor=  themeColor.palette.primary.main;
         stroke:typography
       }
     }}
-      series={ chartData}
+      series={chartData}
       width={widthChart}
       height={heightChart}
       xAxis={[{ 

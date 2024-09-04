@@ -11,8 +11,7 @@ import VisitSite from "../components/analytics/VisitSite";
 const Analytics = () => {
   
 
-  
-  const [value, setValue] = useState("1");
+
 
 
 

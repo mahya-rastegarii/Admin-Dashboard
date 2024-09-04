@@ -7,7 +7,7 @@ import faLocale from "@fullcalendar/core/locales/fa";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
-import "./calendar.css";
+// import "./calendar.css";
 import { Box, styled } from '@mui/material';
 import { useAppContext } from '../../context/app/app-context';
 
@@ -18,9 +18,9 @@ const Calendar = ({setDate, setRemove, setOpen, setModal, events, setDateToday})
     const CalendarEl = styled(FullCalendar)(({ theme }) => ({
 
     
-        ".fc.fc-button-primary": {
-          backgroundColor: theme.palette.grey[200],
-        },
+        // ".fc.fc-button-primary": {
+        //   backgroundColor: theme.palette.grey[200],
+        // },
         // ".fc.fc-toolbar-title": {
         //   display: "inline"
         // }
@@ -51,11 +51,11 @@ const Calendar = ({setDate, setRemove, setOpen, setModal, events, setDateToday})
      }
     
     
-    // eventClick=  {(info) =>  deleteEvent(info.event.title)}
+  
     eventClick={(info) => {
       const itemId = Number(info.event.id);
 
-      // setModal(info.event.id)
+    
       setModal("removeEvent");
       setOpen(true);
       setRemove(itemId);
@@ -63,7 +63,7 @@ const Calendar = ({setDate, setRemove, setOpen, setModal, events, setDateToday})
       
     }}
     locale= { language === 'fa' ? faLocale : enLocale}
-    //  editable = {true}
+   
 
     customButtons={{
       addEvent: {

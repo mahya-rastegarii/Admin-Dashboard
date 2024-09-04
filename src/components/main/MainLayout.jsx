@@ -64,13 +64,7 @@ const MainLayout = () => {
       <Sidebar drawerWidth={drawerWidth} open={open} />
 
       <Main
-        // sx={{
-        //   my: 14,
-        //   mx: "auto",
-        //   padding: 3,
-        //   // width: "100%",
-        //   // overflow: { sx: "scroll", md: "hidden" },
-        // }}
+      
         className={darkMode  ? "dark" : "light"}
       >
         <ModalProvider>

@@ -10,9 +10,7 @@ import {
   TableBody,
   TableCell,
   tableCellClasses,
-  TableContainer,
-  TableFooter,
-  TableHead,
+ 
   TablePagination,
   TableRow,
   TableSortLabel,
@@ -23,10 +21,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigation } from "react-router-dom";
 import { useAppContext } from "../../context/app/app-context";
 import LoadComponent from "../Loading/LoadComponent";
-//   import { debounce } from "lodash";
-//   import SearchBox from "../components/search/SearchBox";
-//   import SortBox from "../components/table/sort/SortBox";
-//   import { rows } from "../components/user/UserData";
+import TableContainers from "../table/TableContainers";
 
 const UserList = ({ users, loading, usersValue }) => {
   const navigation = useNavigation();
@@ -40,9 +35,10 @@ const UserList = ({ users, loading, usersValue }) => {
   const headerTableColor = alpha(themeColor.palette.primary.light, 0.2);
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const [dataValue, setDataValue] = useState(users);
+ 
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -97,12 +93,6 @@ const UserList = ({ users, loading, usersValue }) => {
       align: "center",
       minWidth: 130,
     },
-    // {
-    //   id: 6,
-    //   label: "Courses",
-    //   align: "center",
-    //   minWidth: 10,
-    // },
   ];
 
   const rowTable = dataValue?.slice(
@@ -116,68 +106,22 @@ const UserList = ({ users, loading, usersValue }) => {
     } else {
       setDataValue(users);
     }
-    //  console.log("dataValue", dataValue)
+ 
   }, [usersValue, users]);
 
   return (
     <>
-      {/*{ navigation.state !== 'idle' && <LoadComponent }*/}
+     
 
       {loading ? (
         <LoadComponent />
       ) : (
+        
         <Box>
-        <TableContainer >
-          <Table >
-            <TableHead>
-              <TableRow>
-                {headCells.map((headCell) => (
-                  <StyledTableCell
-                    key={headCell.id}
-                    align={headCell.align}
-                    style={{ minWidth: headCell.minWidth }}
-                  >
-                    {/* {
-                headCell.label === "name" ?  
-                <TableSortLabel  > 
-             <Typography variant="body1" component="h2">
-
-                {headCell.label}
-                </Typography>
-                </TableSortLabel> :
-                
-                <Typography variant="body1" component="h2">
-                {headCell.label}
-                </Typography>
-              } */}
-
-                    {headCell.label === "name" ? (
-                      <TableSortLabel active>
-                        <Typography
-                          variant="body1"
-                          component="h2"
-                          sx={{ fontWeight: "bold" }}
-                        >
-                          {headCell.label}
-                        </Typography>
-                      </TableSortLabel>
-                    ) : (
-                      <Typography
-                        variant="body1"
-                        component="h2"
-                        sx={{ fontWeight: "bold" }}
-                      >
-                        {headCell.label}
-                      </Typography>
-                    )}
-                  </StyledTableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
+        <TableContainers headCells={headCells}>
               {rowTable.map((item) => (
                 <TableRow hover sx={{}} key={item.id}>
-                  {/* <TableCell align="center"><Avatar>{ item.avatar}</Avatar></TableCell> */}
+                
                   <TableCell sx={{ borderColor: borderColor }} align="center">
                     <Stack
                       direction="row"
@@ -191,7 +135,7 @@ const UserList = ({ users, loading, usersValue }) => {
                       </Typography>
                     </Stack>
                   </TableCell>
-                  {/* <TableCell align="center">{item.lastName}</TableCell> */}
+                 
                   <TableCell sx={{ borderColor: borderColor }} align="center">
                     <Typography variant="body2" sx={{ color: typography }}>
                       {language === "fa" ? item.fullNameFa : item.fullNameEn}
@@ -212,46 +156,30 @@ const UserList = ({ users, loading, usersValue }) => {
                       {item.date}
                     </Typography>
                   </TableCell>
-                  {/* <TableCell align="center">
-               
-
-                <Typography variant="body2">
-                {item.numberOfCourses}  
-                </Typography> 
-                </TableCell> */}
+              
                 </TableRow>
               ))}
-            </TableBody>
-            {/* <TableFooter
-              sx={{
-                "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
-                  fill: typography,
-                },
-              }}
-            > */}
-              {/* <TableRow> */}
-              
-              {/* </TableRow> */}
-            {/* </TableFooter> */}
-          </Table>
-        </TableContainer>
-        <TablePagination
-                  sx={{ border: "none", color: typography, direction: "ltr",display:'flex',
-                    justifyContent:{ xs: 'center', md:'flex-start'},
-                    "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
-                      fill: typography,
-                    },
-                   }}
-                  rowsPerPageOptions={[5, 10, 15]}
-                  // colSpan={3}
-                  component="div"
-                  count={dataValue.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-        </Box>
+              </TableContainers>
+              <TablePagination
+                      sx={{ border: "none", color: typography, direction: "ltr",display:'flex',
+                        justifyContent:{ xs: 'center', md:'flex-start'},
+                        "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
+                          fill: typography,
+                        },
+                       }}
+                      rowsPerPageOptions={[5, 10, 15]}
+                 
+                      // component="div"
+                      count={dataValue.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+              </Box>
+           
+         
+
       )}
     </>
   );

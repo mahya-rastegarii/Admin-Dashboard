@@ -7,7 +7,7 @@
 
         "dashboard" : "داشبورد",
         "courses":"دوره های آمورشی",
-        "users": "کاربران",
+        "users": "دانشجویان",
         "calendar": "تقویم",
         "analytics":"آنالیز"
     },
@@ -15,7 +15,7 @@
 
     "dashboardBox" : {
         "course" : "دوره ها",
-        "user" : "کاربران",
+        "user" : "دانشجو",
         "liked" :  "رضایت" 
     },
 
@@ -145,6 +145,7 @@
       "titleModal": "افزودن رویداد" ,
       "titleText": "متن ",
       "startDate": "تاریخ شروع",
+      "date": "تاریخ",
       "endDate": "تاریخ پایان", 
       "addBtn":"افزودن",
     

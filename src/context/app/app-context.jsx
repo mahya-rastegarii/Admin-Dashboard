@@ -7,7 +7,7 @@ import appReducer from "./app-reducer";
 
 const AppContext = createContext();
 const initialState = {
-  language: localStorage.getItem("language") || "en",
+  language: localStorage.getItem("language") || "fa",
   darkMode: localStorage.getItem("darkMode") || false,
   theme: localStorage.getItem("theme") || "teal",
 };

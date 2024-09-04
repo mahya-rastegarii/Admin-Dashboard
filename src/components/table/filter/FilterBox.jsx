@@ -20,7 +20,7 @@ import MenuContainer from "../../menu/MenuContainer";
 const FilterBox = ({ setCoursesData, setLoading }) => {
  
 
-  const { language, themeColor, mode } = useAppContext();
+  const { language, mode } = useAppContext();
 
   const { t } = useTranslation();
 
@@ -37,7 +37,6 @@ const FilterBox = ({ setCoursesData, setLoading }) => {
     t("filter.status.completed"),
     t("filter.status.inProgress"),
   ];
-  const navigate = useNavigate();
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
@@ -53,7 +52,7 @@ const FilterBox = ({ setCoursesData, setLoading }) => {
         .eq(columnStatus, filterData)
         .order("lastUpdate", { ascending: false });
 
-      console.log("data", data);
+     
       setCoursesData(data);
     } else {
       setCoursesData(null);
@@ -63,14 +62,13 @@ const FilterBox = ({ setCoursesData, setLoading }) => {
     setLoading(false);
   };
 
-  // const handleChange = (event) => {
-  //   setFilterBy(event.target.value);
-  // };
+  
   const filter = language === "fa" ? "همه" : "All";
 
   useEffect(() => {
     setFilterData(filter);
   }, [language]);
+
 
   return (
     <Box sx={{ border: `1px solid ${borderColor}`, borderRadius: 2 }}>
@@ -90,7 +88,7 @@ const FilterBox = ({ setCoursesData, setLoading }) => {
         </Typography>
       </IconButton>
       <MenuComponent anchorEl={anchorEl} handleCloseMenu={handleCloseMenu}>
-        {/* <Box sx={{ width: "100%", backgroundColor: bgColor, color: typography }}> */}
+       
         <Box
           display="flex"
           sx={{

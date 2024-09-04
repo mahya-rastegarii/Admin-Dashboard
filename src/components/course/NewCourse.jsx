@@ -18,6 +18,7 @@ import {
 
 import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/app/app-context";
+import TableContainers from "../table/TableContainers";
 
 const NewCourse = ({newCourse}) => {
   
@@ -34,83 +35,33 @@ const NewCourse = ({newCourse}) => {
       id: 1,
       label: t('courses.table.tableHeader.title'),
       align:language === 'fa' ? "right" : "left",
-      //  minWidth: 20,
+       minWidth: 330,
     },
     {
       id: 2,
       label: t('courses.table.tableHeader.lastUpdate'),
       align: "center",
-      //  minWidth: 20,
+       minWidth: 130,
     },
     {
       id: 3,
       label: t('courses.table.tableHeader.status'),
       align: "center",
-      //  minWidth: 20,
+       minWidth: 60,
     },
     {
       id: 4,
       label: t('courses.table.tableHeader.star'),
       align: "center",
-      //  minWidth: 20,
+       minWidth: 40,
     },
   ];
 
-  // const rows = [
-  //   {
-  //     id: 1,
-  //     avatar: jsPic,
-  //     title: "javascript",
-  //     date: "2024/3/1",
-  //     status: "Completed",
-  //     rating: "4.9",
-  //   },
-  //   {
-  //     id: 2,
-  //     avatar: jsPic,
-  //     title: "javascript",
-  //     date: "2024/3/1",
-  //     status: "Completed",
-  //     rating: "5.0",
-  //   },
-  //   {
-  //     id: 3,
-  //     avatar: jsPic,
-  //     title: "javascript",
-  //     date: "2024/3/1",
-  //     status: "Completed",
-  //     rating: "4.3",
-  //   },
-
-  //   {
-  //     id: 4,
-  //     avatar: jsPic,
-  //     title: "javascript",
-  //     date: "2024/3/1",
-  //     status: "Completed",
-  //     rating: "4.6",
-  //   },
-  // ];
+  
 
   return (
-    <TableContainer>
-      <Table sx={{ padding: 0 }}>
-        <TableHead sx={{ bgColor: "#212121" }}>
-          <TableRow>
-            {headCells.map((headCell) => (
-              <TableCell key={headCell.id} align={headCell.align} sx={{borderColor: borderColor}}>
-                <Typography
-                  variant="body1"
-                  component="span"
-                  sx={{ fontWeight: "bold", color: typography }}
-                >
-                  {headCell.label}
-                </Typography>
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody >
+   
+    <TableContainers headCells={headCells } >
           {newCourse.map((row) => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row" sx={{borderColor: borderColor }}>
@@ -120,11 +71,12 @@ const NewCourse = ({newCourse}) => {
                   display="flex"
                   alignItems="center "
                 >
-                  <Avatar
+                     <img  src={row.picture} width={80} height={40} />
+                  {/* <Avatar
                     sx={{ width: 45 }}
                     src={row.picture}
                     variant="square"
-                  ></Avatar>
+                  ></Avatar> */}
                   <Typography variant="body1" sx={{ color: typography }}>
                     {row.title}
                   </Typography>
@@ -152,13 +104,11 @@ const NewCourse = ({newCourse}) => {
                     {row.star}
                   </Typography>
                 </Box>
-                {/* <Rating name="half-rating-read" defaultValue={row.rating} precision={0.5} readOnly size="small" /> */}
+               
               </TableCell>
             </TableRow>
           ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        </TableContainers>
   );
 };
 

@@ -62,31 +62,7 @@ const EditCourse = ({ courseData, editCourse }) => {
   //   width: "97%",
   //   margin: 3,
   // });
-  // const course = [
-  //   {
-  //     label: "CourseName",
-  //     icon: <SchoolOutlined />,
-  //     value: title,
-  //     error: "فیلد نام نمیتواند خالی باشد",
-  //     name: "title",
-  //   },
-  //   {
-  //     label: "Time",
-  //     icon: <AccessTimeOutlined />,
-  //     value: time,
-  //     error: "فیلد زمان نمیتواند خالی باشد",
-  //     name: "time",
-  //     type: "number",
-  //   },
-  //   {
-  //     label: "teacher",
-  //     icon: <PersonOutline />,
-  //     value: teacher,
-  //     error: "فیلد زمان نمیتواند خالی باشد",
-  //     name: "time",
-  //     type: "number",
-  //   },
-  // ];
+ 
 
   const selectField = [
     t("filter.status.presell"),
@@ -127,7 +103,7 @@ const EditCourse = ({ courseData, editCourse }) => {
       statusFa: statusFA,
     };
 
-    // console.log("newData", newData);
+  
     editCourse(newData);
   };
 
@@ -136,9 +112,7 @@ const EditCourse = ({ courseData, editCourse }) => {
     reset();
   };
 
-  // useEffect(() => {
-  //   console.log('CourseData', courseData)
-  // }, [])
+ 
 
   return (
     <ModalComponent
@@ -181,44 +155,7 @@ const EditCourse = ({ courseData, editCourse }) => {
           >
             <img src={courseData?.picture} width="100%" />
           </Box>
-          {/* {course.map((item) => (
-            <Stack
-              key={item.label}
-              direction="row"
-              spacing={2}
-              alignItems="center"
-            >
-              {item.icon}
-              <TextField
-                {...register(item.name, {required:item.error})}
-                id="outlined-basic"
-                label={item.label}
-                type={item.type ? item.type : "text"}
-                color="secondary"
-                variant="outlined"
-                size="small"
-                InputProps={{
-                  endAdornment:
-                    item.type === "number" ? (
-                      <InputAdornment position="end">hour</InputAdornment>
-                    ) : null,
-                }}
-                defaultValue={item.value}
-              />
-
-              {
-             
-              item.error && (
-               <Typography sx={{color:"red"}}>
-                {
-                  item.error
-                }
-
-               </Typography>
-              )
-            }
-            </Stack>
-          ))} */}
+        
 
           <Stack direction="row" gap={2} alignItems="center">
             <SchoolOutlined />
@@ -332,22 +269,7 @@ const EditCourse = ({ courseData, editCourse }) => {
             justifyContent="center"
           >
             <InfoOutlined />
-            {/* <TextField
-              {...register("select")}
-              id="outlined-basic"
-              label="status"
-              select
-              color="secondary"
-              size="small"
-              defaultValue={statusEn}
-              variant="outlined"
-            >
-              {selectField.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </TextField> */}
+           
 
             <Box sx={{ border: ` 1px solid ${borderColor}`, borderRadius: 1 }}>
               <MenuContainer

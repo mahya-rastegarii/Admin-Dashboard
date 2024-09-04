@@ -23,7 +23,7 @@ import { PaletteMenu } from "./PaletteMenu";
 import { useAppContext } from "../../context/app/app-context";
 
 const Navbar = ({ drawerWidth, handleDrawer, open }) => {
-  // const [language, setLanguage] = useState("en")
+ 
 
 
   
@@ -37,7 +37,7 @@ const Navbar = ({ drawerWidth, handleDrawer, open }) => {
 
   const badgeColor = themeColor.palette.primary.dark;
  
-  // const widthNavbar = `calc(${theme.spacing(7)} + 1px)`;
+
 const arrow = language=== 'fa' ? <KeyboardDoubleArrowRight/> : <KeyboardDoubleArrowLeft  />
   const AppBar = styled(MuiAppBar, {
 
@@ -46,13 +46,11 @@ const arrow = language=== 'fa' ? <KeyboardDoubleArrowRight/> : <KeyboardDoubleAr
     shouldForwardProp: (prop) => prop !== "open",
   })(({ theme, open }) => ({
     zIndex: theme.zIndex.drawer + 1,
-    // width: `calc(100% - ${drawerWidth}px)`,
+   
     direction: language === 'fa' ? 'rtl' : 'ltr',
     backdropFilter: "blur(3px)",
     backgroundColor: alpha(bgColor , 0.9),
-    // boxShadow: "none",
-    // backgroundColor:"transparent",
-    // backgroundImage:"none",
+   
     
 
     transition: theme.transitions.create(["margin", "width"], {
@@ -71,9 +69,7 @@ const arrow = language=== 'fa' ? <KeyboardDoubleArrowRight/> : <KeyboardDoubleAr
   }));
 
  
-  // const handleDrawerClose = () => {
-  //   setOpen(false);
-  // };
+ 
   return (
     <AppBar position="fixed" open={open}>
       <Toolbar >
@@ -96,10 +92,10 @@ const arrow = language=== 'fa' ? <KeyboardDoubleArrowRight/> : <KeyboardDoubleAr
             onClick={handleDrawer}
             aria-label="open drawer"
            
-            // sx={{ ...(open && { display: "none" }) }}
+          
             sx={{ mx: 2, color: iconColor,  display: {xs:"none", md:"flex"}}}
           >
-            {/* <MenuIcon /> */}
+             
             {open ? arrow : <Menu/>}
           </IconButton>
         
@@ -114,15 +110,7 @@ const arrow = language=== 'fa' ? <KeyboardDoubleArrowRight/> : <KeyboardDoubleAr
             gap:1
           }}
         >
-          {/* <IconButton
-            size="large"
-            aria-label="show  new mails"
-            // color="inherit"
-          >
-            <Badge badgeContent={4} color="error">
-              <Mail />
-            </Badge>
-          </IconButton> */}
+        
           <IconButton
             size="large"
             aria-label="show  new notifications"
@@ -140,12 +128,12 @@ const arrow = language=== 'fa' ? <KeyboardDoubleArrowRight/> : <KeyboardDoubleAr
           <IconButton
             size="large"
             edge="end"
-            aria-label={!darkMode  ? " dark Mode " :  " light Mode "}
+            aria-label={darkMode  ? " light Mode " :  " dark Mode "}
             onClick={() => darkTheme(!darkMode)}
             sx={{ color: iconColor }}
             
           >
-            {!darkMode  ?   <DarkMode/> : <LightMode />}
+            { darkMode  ? <LightMode /> :   <DarkMode/>}
           </IconButton>
 
           <LanguageMenu />
@@ -162,18 +150,7 @@ const arrow = language=== 'fa' ? <KeyboardDoubleArrowRight/> : <KeyboardDoubleAr
             </ListItemIcon>
         </Box>
 
-        {/* <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box> */}
+       
       </Toolbar>
     </AppBar>
   );

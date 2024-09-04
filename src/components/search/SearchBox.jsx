@@ -27,9 +27,9 @@ const borderColor = mode.palette.borderColor;
  }
   return (
     <Stack direction="row"  spacing={1}   sx={{ border:` 1px solid ${borderColor}`, borderRadius: 1, display:"flex", alignItems:"center", paddingX:1, backgroundColor:bgColor}}>
-       {/* <IconButton aria-label="search"> */}
+     
         <Search sx={{ color: typography}}/>
-      {/* </IconButton> */}
+    
              <InputBase
              value={searchInput}
         placeholder= {placeholderText}

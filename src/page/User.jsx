@@ -15,27 +15,18 @@ import { supabase } from "../core/createClient";
 export default function User() {
   const data = useLoaderData();
 
-  const { themeColor, mode } = useAppContext();
+  const { mode  } = useAppContext();
   const { t } = useTranslation();
 
   const boxBgColor = mode.palette.boxBg;
-  const headerTableColor = alpha(themeColor.palette.primary.light, 0.2);
-  const borderColor = mode.palette.borderColor;
-  const typography = mode.palette.typography;
-  const btnColor = themeColor.palette.primary.main;
+ 
 
-  const [users, setUsers] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+ 
   const [usersValue, setUsersValue] = useState(null);
   
   const [loading, setLoading] = useState(false);
 
-  // const debouncedFetchUser = debounce((value) => {
-  //   if (value.length > 1) {
-  //     searchUser(value);
-  //   } else if (!value) setUsers(rows);
-  // }, 500);
+
 
   const searchUser = async (name) => {
     const lowerName = name.toLowerCase();
@@ -54,23 +45,9 @@ export default function User() {
       searchUser(value);
     } else if (!value) setUsersValue(null);
   }, 500);
-  // const ascendingSort = () => {
-  //   const sortUsers = users.sort((a, b) => {
-  //     const date1 = new Date(a.date);
-  //     const date2 = new Date(b.date);
-  //     return date1 - date2;
-  //   });
-  //   setUsers(sortUsers);
-  // };
+ 
 
-  // const descendingSort = () => {
-  //   const sortUsers = users.sort((a, b) => {
-  //     const date1 = new Date(a.date);
-  //     const date2 = new Date(b.date);
-  //     return date2 - date1;
-  //   });
-  //   setUsers(sortUsers);
-  // };
+ 
 
   const descendingSort = async () => {
     setLoading(true);
@@ -91,13 +68,7 @@ export default function User() {
     }
   };
 
-  // const sortUserDate = () => {
-  //   if (userSortValue === "Newest") {
-  //     ascendingSort();
-  //   } else {
-  //     descendingSort();
-  //   }
-  // };
+ 
 
   return (
     <Box component={Paper} elevation={2} sx={{ backgroundColor: boxBgColor, marginX:{xs: 2, md: 4}, overflow:"hidden" }}>
@@ -110,8 +81,7 @@ export default function User() {
       >
         <SortBox
           sortData={sortUserDate}
-          // selectedIndex={userSortValue}
-          // setSelectedIndex={setUserSortValue}
+        
         />
 
         <SearchBox
@@ -148,5 +118,5 @@ const fetchUsers = async () => {
     .order("date", { ascending: false });
 
   return data;
-  // console.log("Data", data)
+ 
 };

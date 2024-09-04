@@ -29,6 +29,7 @@ const AddCourse = ({ insertCourse }) => {
   const { setOpen } = useModalContext();
   const { language, mode, themeColor } = useAppContext();
 
+
   const { t } = useTranslation();
 
   const {
@@ -37,28 +38,6 @@ const AddCourse = ({ insertCourse }) => {
     formState: { errors },
     reset,
   } = useForm();
-
-  // const course = [
-  //   {
-  //     label: t("courses.modalCourse.courseNameLabel"),
-  //     icon: <SchoolOutlined />,
-  //     name: "title",
-  //     error: "فیلد نام دوره نمیتواند خالی باشد",
-  //   },
-  //   {
-  //     label: t("courses.modalCourse.teacherLabel"),
-  //     icon: <PersonOutline />,
-  //     name: "teacher",
-  //     error: "فیلد نام مدرس دوره نمیتواند خالی باشد",
-  //   },
-  //   {
-  //     label: t("courses.modalCourse.timeLabel"),
-  //     icon: <AccessTimeOutlined />,
-  //     name: "time",
-  //     error: "فیلد زمان دوره نمیتواند خالی باشد",
-  //     type: "number",
-  //   },
-  // ];
 
   const selectField = [
     t("filter.status.presell"),
@@ -102,12 +81,14 @@ const AddCourse = ({ insertCourse }) => {
     const { data } = await supabase.storage
       .from("Images")
       .upload("Course_pic/" + imageFile.name, imageFile);
-    console.log("data", data);
+    
   };
 
+  
   const addCourseHandler = (data) => {
     const { title, teacher, time } = data;
-
+    
+    const supabaseStorageURL = "https://qjfoypokbphqxocozpfj.supabase.co/storage/v1/object/public/Images/Course_pic/";
     const date = new Date();
     const today = date.toISOString().split("T")[0];
 
@@ -120,20 +101,19 @@ const AddCourse = ({ insertCourse }) => {
     const statusEN = language ==='en'? item : typeEn
     const newCourse = {
       title,
-      picture: `https://qjfoypokbphqxocozpfj.supabase.co/storage/v1/object/public/Images/Course_pic/${imageFile.name}`,
+      picture: supabaseStorageURL+imageFile.name,
       teacher,
       statusEn: statusEN,
       statusFa: statusFA,
       lastUpdate: today,
-      // imageName:imageFile.name,
-      // picFile: imageFile,
+      
       time,
     };
 
     insertCourse(newCourse);
 
     // setCourses((preState) => [...preState, newCourse]);
-
+    console.log("imageURL" , newCourse.picture)
     reset();
     setUploadImage(null);
     setOpen(false);
@@ -196,7 +176,7 @@ const AddCourse = ({ insertCourse }) => {
             }}
             padding={uploadImage ? 0 : {xs:5, sm:6}}
           >
-            <img src={uploadImage} />
+            <img src={uploadImage} width={uploadImage ?300 : 0} height={ uploadImage ?150 :0}/>
 
             <Box
             
@@ -215,102 +195,17 @@ const AddCourse = ({ insertCourse }) => {
               <VisuallyHiddenInput type="file" onChange={ChangeImages} />
             </Box>
           </Box>
-          {/* {course.map((item) => (
-            <Stack
-
-              key={item.label}
-              direction="row"
-              spacing={2}
-              alignItems="center"
-
-              // sx={{
-              //   color:typography,
-              //   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root , .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root " :{
-              //     color: typography
-              //   },
-              //   "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline" :{
-              //     borderColor: borderColor,
-              //   },
-              //   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline" :{
-              //     borderColor: focusColor,
-                
-              //   },
-              //   "& .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused" :{
-              //     color:focusColor
-              //   }
-               
-                
-
-              // }}
-            >
-              {item.icon}
-              <TextField
-              sx={{
-
-              //   "& p , label":{
-              //     color:typography,
-                 
-              //   },
-              //   "&  label" :{
-              //     opacity:0.5
-              //   },
-                
-              //     // "& .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root .Mui-focused" :{
-              //     //   color:focusColor
-              //     // }
-                  
-                // "& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper" :{
-                //       backgroundColor:`${boxBg} 
-                // }
-              }}
-                {...register(item.name)}
-                id="outlined-basic"
-                label={item.label}
-                type={item.type ? item.type : "text"}
-                // color="secondary"
-                // color={typography}
-                
-                variant="outlined"
-                size="small"
-                InputProps={{
-                  endAdornment:
-                    item.type === "number" ? (
-                      <InputAdornment position="end" >hour</InputAdornment>
-                    ) : null,
-                }}
-              />
-              
-            </Stack>
-          ))} */}
-
+          
+         
           <Stack
         
             direction="row"
             gap={2}
-            alignItems="center"
-            // sx={{direction:language === 'fa' ? "rtl": "ltr"}}
-            // sx={{
-            //   color:typography,
-            //   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root , .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root " :{
-            //     color: typography
-            //   },
-            //   "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline" :{
-            //     borderColor: borderColor,
-            //   },
-            //   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline" :{
-            //     borderColor: focusColor,
-
-            //   },
-            //   "& .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused" :{
-            //     color:focusColor
-            //   }
-
-            // }}
-          >
+            alignItems="center" >
             <SchoolOutlined />
 
           
-          <Box  dir='rtl' >
+          <Box  >
               <TextField
             
             sx={{
@@ -360,17 +255,11 @@ const AddCourse = ({ insertCourse }) => {
                 id="outlined-basic"
                 label={t("courses.modalCourse.teacherLabel")}
                 type="text"
-                // color="secondary"
-                // color={typography}
+               
 
                 variant="outlined"
                 size="small"
-                // InputProps={{
-                //   endAdornment:
-                //     item.type === "number" ? (
-                //       <InputAdornment position="end" >hour</InputAdornment>
-                //     ) : null,
-                // }}
+              
               />
 
               {errors.teacher && errors.teacher.type === "required" && (
@@ -424,67 +313,7 @@ const AddCourse = ({ insertCourse }) => {
             justifyContent="center"
           >
             <InfoOutlined />
-            {/* <TextField
-           
-            sx={{
-              // "& .css-t0v85v-MuiButtonBase-root-MuiMenuItem-root.Mui-selected" :{
-                backgroundColor:boxBg
-              // }
-            //   "& .css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input" :{
-            //     color:typography,
-            //   },
-            //   "& label , svg" :{
-            //     color:typography,
-            //     opacity:0.5
-            //   },
-            //   "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline" :{
-            //     borderColor: borderColor,
-            //   },
-            //   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root:hover" :{
-            //     borderColor: typography,
-            //   },
-            //   "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline" :{
-            //     borderColor: focusColor,
-              
-            //   },
-            //   "& .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused" :{
-            //     color:focusColor
-            //   },
-          
-           
-            }}
-              {...register("select")}
-              id="outlined-basic"
-              label="status"
-              select
-              
-              size="small"
-              defaultValue= {selectField[2]}
-              variant="outlined"
-            >
-           
-               
-                 {/* {selectField.map((option) => (
-                  <MenuItem key={option} value={option} 
-                sx={{
-
-                  backgroundColor:boxBg,
-                  color:typography,
-                  "&:hover" :{
-                    backgroundColor:boxBg,
-                  },
-                  // "& .css-9m7eo1-MuiButtonBase-root-MuiMenuItem-root.Mui-selected" :{
-                  //   backgroundColor:boxBg,
-                  // }
-                 
-                }}
-                >
-                  {option}
-                </MenuItem> 
-              ))}
-
-              
-            </TextField> */}
+            
             <Box sx={{ border: ` 1px solid ${borderColor}`, borderRadius: 1 }}>
               <MenuContainer
                 menuItem={selectField}

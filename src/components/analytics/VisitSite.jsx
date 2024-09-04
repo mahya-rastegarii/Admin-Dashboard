@@ -5,23 +5,16 @@ import { Person } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import Bars from "../charts/Bar/Bars";
+import ChartData from "../charts/ChartData";
+
 
 const VisitSite = ({ chartWidth, boxWidth }) => {
 
+  const {visit, days} = ChartData();
   const {t} = useTranslation();
 
 
-  const visit =  [{ data: [35, 51, 74, 60, 80, 35, 86] }]; ;
-
-  const days = [
-    t("charts.days.sat"),
-    t("charts.days.sun"),
-    t("charts.days.mon"),
-    t("charts.days.tues"),
-    t("charts.days.wed"),
-    t("charts.days.thurs"),
-    t("charts.days.fri"),
-  ];
+ 
 
   const barsChartData = {
     chartData : visit,

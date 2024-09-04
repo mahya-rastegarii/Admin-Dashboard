@@ -30,10 +30,7 @@ import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/app/app-context";
 
 
-// const navigate = useNavigate();
-// const clickHandler = (path) => {
-//   navigate(path);
-// };
+
 const Sidebar = ({ drawerWidth, open }) => {
 
   
@@ -76,7 +73,7 @@ const [active, setActive] = useState(false)
     padding: theme.spacing(0, 1),
     backgroundColor: bgColor,
   
-    // necessary for content to be below app bar
+  
     ...theme.mixins.toolbar,
   }));
 
@@ -84,7 +81,7 @@ const [active, setActive] = useState(false)
     shouldForwardProp: (prop) => prop !== "open",
   })(({ theme, open }) => ({
     width: drawerWidth,
-    // boxShadow: theme.shadows[3],
+   
 
     flexShrink: 0,
     whiteSpace: "nowrap",
@@ -115,7 +112,7 @@ const [active, setActive] = useState(false)
  
 
 
-  // const AdminName = "Mahya Rastegari";
+ 
   const sideBarMenu = [
     {
       title: t('sideBar.dashboard'),
@@ -142,11 +139,7 @@ const [active, setActive] = useState(false)
       icon: <MultilineChart />,
       path: "/analytics",
     },
-    // {
-    //   title: "Support",
-    //   icon: <ContactSupport />,
-    //   path: "/support",
-    // },
+  
   ];
 
   return (
@@ -195,14 +188,13 @@ const [active, setActive] = useState(false)
                 }
               }}
               
-              // onClick={() => clickHandler(menu.path)}
+           
               >
               <ListItemIcon
-              // style={({isActive}) => ({ color: isActive ? active : typography})}
+             
                 sx= {{
                   minWidth: 0,
                   padding: "4px",
-                  // mr: open ? 3 : "auto",
                   justifyContent: "center",
                   color: "inherit"
                 }}
@@ -221,19 +213,7 @@ const [active, setActive] = useState(false)
       
       </List>
     </Drawer>
-    {/* <IconButton
-            size="small"
-            edge="end"
-            component={Paper}
-           
-            // onClick={handleDrawer}
-            aria-label="open drawer"
-            // sx={{ ...(open && { display: "none" }) }}
-            sx={{position:"absolute", color: iconColor, left:"3%"}}
-          >
-            {/* <MenuIcon /> 
-            {open ? <KeyboardDoubleArrowLeft  /> : <KeyboardDoubleArrowRight />}
-          </IconButton> */}
+    
     </>
   );
 };

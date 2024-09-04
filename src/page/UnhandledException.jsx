@@ -20,14 +20,7 @@ const UnhandledException = () => {
        
        <Typography variant="h3" sx={{ color: color}}> 500 </Typography>
        <Typography variant="h6" sx={{color: typography}} > {t('unhandledException.text')} </Typography>
-       {/* <Link to="/">
-       <Button
-            variant="contained"
-            sx={{ borderRadius: 3, backgroundColor: color }}
-          >
-            {t("unhandledException.btn")}
-          </Button>
-       </Link> */}
+      
     </Box>
   )
 }

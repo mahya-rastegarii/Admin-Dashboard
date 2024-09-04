@@ -5,28 +5,19 @@ import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import Line from "../charts/Line/Line";
 import ChartContainer from "./ChartContainer";
-// import { useChartContext } from '../../context/chart/ChartContext'
+import ChartData from "../charts/ChartData";
+
 
 const Sales = ({ chartWidth, boxWidth }) => {
+
+  const {sale, monthChart} = ChartData();
+
   const {t} = useTranslation();
-  //  const {chartValue}= useChartContext()
+  
 
-  const sale = [50, 50, 55, 65, 75, 75, 73, 69, 70, 68, 60, 60];
+ 
 
-  const monthChart = [
-    t("charts.month.jan"),
-    t("charts.month.feb"),
-    t("charts.month.mar"),
-    t("charts.month.apr"),
-    t("charts.month.may"),
-    t("charts.month.jun"),
-    t("charts.month.jul"),
-    t("charts.month.aug"),
-    t("charts.month.sep"),
-    t("charts.month.oct"),
-    t("charts.month.nov"),
-    t("charts.month.dec"),
-  ];
+ 
 
   const LineChartData = {
     monthChart,
@@ -39,9 +30,7 @@ const Sales = ({ chartWidth, boxWidth }) => {
     showMark: true,
   };
 
-  // useEffect(()=>{
-  //   console.log('chartValue', chartValue)
-  // },[])
+  
   return (
     <Box width={boxWidth}>
       <ChartContainer icon={<AttachMoney />} title={t("charts.sales")}>

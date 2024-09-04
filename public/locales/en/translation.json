@@ -6,7 +6,7 @@
 
         "dashboard" : "Dashboard",
         "courses":"Courses",
-        "users": "Users",
+        "users": "Students",
         "calendar": "Calendar",
         "analytics":"Analytics"
     },
@@ -14,7 +14,7 @@
 
     "dashboardBox" : {
         "course" : "Course",
-        "user" : "User",
+        "user" : "Student",
         "liked" :  "Like" 
     },
 
@@ -145,6 +145,7 @@
         "titleModal": "Add Event" ,
         "titleText": "Text",
         "startDate": "Start Date",
+        "date": "Date",
         "endDate": "End Date", 
         "addBtn":"Add",
          

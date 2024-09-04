@@ -8,7 +8,7 @@ import MenuContainer from "../../menu/MenuContainer";
 import { useTranslation } from "react-i18next";
 import { useAppContext } from '../../../context/app/app-context';
 const SortBox = ({ sortData }) => {
-  // const [value, setValue] = useState("Newest");
+ 
 
   
  const {language, mode, themeColor }= useAppContext()
@@ -24,7 +24,7 @@ const SortBox = ({ sortData }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   let menuItem = [t('sort.new'), t('sort.old')]
-  // //  const openMenu = Boolean(anchorEl)
+  
 
   const handleClickItem = (item) => {
     setSelected(item);

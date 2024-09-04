@@ -3,7 +3,7 @@ import { Box, Paper, Stack, Typography } from '@mui/material'
 
 import { useAppContext } from '../../context/app/app-context';
 
-const ChartContainer = ({icon, title, width, children}) => {
+const ChartContainer = ({icon, title, children}) => {
 
     const { themeColor, mode } = useAppContext();
 
@@ -31,7 +31,7 @@ const ChartContainer = ({icon, title, width, children}) => {
             }
           }
         }
-          // width={width}
+         
           bgcolor={bgColor}
           mt={6}
           gap={2}

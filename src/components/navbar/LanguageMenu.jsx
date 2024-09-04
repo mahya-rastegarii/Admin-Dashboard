@@ -52,11 +52,9 @@ const typography = mode.palette.typography;
         size="large"
         edge="start"
         onClick={(e) => setAnchorEl(e.currentTarget)}
-        // aria-controls={openMenu ? 'basic-menu' : undefined}
-        // aria-haspopup="true"
-        // aria-expanded={openMenu ? 'true' : undefined}
+       
         sx={{ color: iconColor}}
-        // color="inherit"
+        
       >
         <Avatar
           alt=" united kingdom Flag "

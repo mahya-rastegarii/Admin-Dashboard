@@ -3,7 +3,7 @@ import { Box, Paper, Stack, Typography } from '@mui/material'
 import { useAppContext } from '../../context/app/app-context';
 const DashboardBox = ({item, children}) => {
 
- const {themeColor, mode } =useAppContext();
+ const {mode } =useAppContext();
 
  const boxBgColor = mode.palette.boxBg
  const typography = mode.palette.typography
@@ -18,15 +18,11 @@ const DashboardBox = ({item, children}) => {
             square={false}
             elevation={3}
             width={{xs:"80%", md:"30%"}}
-            //  gridColumn=" span 4"
+            
             sx={{ padding:2,  borderRadius:2, backgroundColor: boxBgColor}}
             key={item.id}
             >
-             {/* <Box  sx={{ width:"40%", display:" flex", justifyContent:"space-around"}}> */}
-           
-           
-          
-                {/* </Box>    */}
+            
           <Box>
 
          
