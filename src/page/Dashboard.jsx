@@ -23,7 +23,7 @@ import { useAppContext } from "../context/app/app-context";
 const Dashboard = () => {
   const data = useLoaderData();
  
-  const { mode  } = useAppContext();
+  const { mode, language  } = useAppContext();
   const { t } = useTranslation();
 
  
@@ -39,21 +39,25 @@ const Dashboard = () => {
       id: 1,
       title: t("dashboard.dashboardBox.course"),
       count: 50,
-      before: "+",
+      before: language === "en" && "+",
+      after: language === "fa" && "+",
       icon: <School sx={{ fontSize: 50, color: typography }} />,
     },
     {
       id: 2,
       title: t("dashboard.dashboardBox.user"),
       count: 600,
-      before: "+",
+      before: language === "en" && "+",
+      after: language === "fa" && "+",
+
       icon: <PeopleAlt sx={{ fontSize: 50, color: typography }} />,
     },
     {
       id: 3,
       title: t("dashboard.dashboardBox.liked"),
       count: 70,
-      after: "%",
+      before: language === "fa" && "%",
+      after: language === "en" && "%",
       icon: <Favorite sx={{ fontSize: 50, color: typography }} />,
     },
   ];

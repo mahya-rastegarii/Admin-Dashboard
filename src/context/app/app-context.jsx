@@ -8,7 +8,7 @@ import appReducer from "./app-reducer";
 const AppContext = createContext();
 const initialState = {
   language: localStorage.getItem("language") || "fa",
-  darkMode: localStorage.getItem("darkMode") || false,
+  themeMode: localStorage.getItem("themeMode") || "light",
   theme: localStorage.getItem("theme") || "teal",
 };
 
@@ -46,11 +46,11 @@ const AppProvider = ({ children }) => {
 
   const mode = createTheme({
     palette: {
-      bg: state.darkMode   ? alpha("#000", 0.9) : "#fff",
-      typography: state.darkMode   ? alpha("#fff", 0.9) : alpha("#000", 0.8),
-      boxBg: state.darkMode  ? "#212121" : "#fff",
-      borderColor: state.darkMode  ? alpha("#fff", 0.1) : alpha("#000", 0.1),
-      shadow: state.darkMode  ? "#242424" : "#ccc",
+      bg: state.themeMode === "light"   ?   "#fff" : alpha("#000", 0.9),
+      typography: state.themeMode === "light"   ?  alpha("#000", 0.8) : alpha("#fff", 0.9),
+      boxBg: state.themeMode === "light"  ?  "#fff" :  "#212121" ,
+      borderColor: state.themeMode === "light"  ? alpha("#000", 0.1) :  alpha("#fff", 0.1),
+      shadow: state.themeMode === "light"  ? "#ccc"  : "#242424",
     },
   });
 
@@ -58,8 +58,8 @@ const AppProvider = ({ children }) => {
     dispatch({ type: "CHANGE_LANGUAGE", payload: language });
   };
 
-  const darkTheme = (theme) => {
-    dispatch({ type: "DARK_THEME", payload: theme });
+  const changeThemeMode = (theme) => {
+    dispatch({ type: "CHANGE_THEME_MODE", payload: theme });
   };
 
   const changeTheme = (color) => {
@@ -73,9 +73,9 @@ const AppProvider = ({ children }) => {
   }, [state.language]);
 
   useEffect(() => {
-    localStorage.setItem("darkMode", state.darkMode);
+    localStorage.setItem("themeMode", state.themeMode);
     document.body.style.background = mode.palette.bg;
-  }, [state.darkMode]);
+  }, [state.themeMode]);
 
   useEffect(() => {
     localStorage.setItem("theme", state.theme);
@@ -86,7 +86,7 @@ const AppProvider = ({ children }) => {
       value={{
         ...state,
         changeLanguage,
-        darkTheme,
+        changeThemeMode,
         changeTheme,
         themeColor,
         mode,

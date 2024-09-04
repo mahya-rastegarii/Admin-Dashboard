@@ -34,11 +34,11 @@ import { useAppContext } from "../../context/app/app-context";
 const Sidebar = ({ drawerWidth, open }) => {
 
   
-  const {language, darkMode, themeColor, mode}= useAppContext();
+  const {language, themeMode, themeColor, mode}= useAppContext();
   
   const {t} = useTranslation()
   const activeMenu = themeColor.palette.primary.main;
-  const hover = darkMode  ? alpha(themeColor.palette.primary.light, 0.1) : alpha(themeColor.palette.primary.light, 0.7);
+  const hover = themeMode === "light"  ?   alpha(themeColor.palette.primary.light, 0.7) : alpha(themeColor.palette.primary.light, 0.1);
   const bgColor = mode.palette.boxBg;
   const typography = mode.palette.typography;
   const avatarColor = themeColor.palette.primary.main ;

@@ -9,14 +9,14 @@ import { useAppContext } from "./context/app/app-context";
 import "./core/i18next";
 
 function App() {
-  const { language, darkMode } = useAppContext();
+  const { language, themeMode } = useAppContext();
 
   return (
     <>
       <RouterProvider router={router} />
       <ToastContainer
         rtl={language === "fa" ? true : false}
-        theme={darkMode  ? "dark" : "light"}
+        theme={themeMode === "dark"  ? "dark" : "light"}
         position={language === "fa" ? "top-right" : "top-left"}
       />
     </>

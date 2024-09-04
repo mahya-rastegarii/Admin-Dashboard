@@ -28,7 +28,7 @@ const Navbar = ({ drawerWidth, handleDrawer, open }) => {
 
   
 
-  const {language, themeColor, mode, darkMode, darkTheme }= useAppContext();
+  const {language, themeColor, mode, themeMode, changeThemeMode }= useAppContext();
 
 
   const iconColor = mode.palette.typography;
@@ -128,12 +128,12 @@ const arrow = language=== 'fa' ? <KeyboardDoubleArrowRight/> : <KeyboardDoubleAr
           <IconButton
             size="large"
             edge="end"
-            aria-label={darkMode  ? " light Mode " :  " dark Mode "}
-            onClick={() => darkTheme(!darkMode)}
+            aria-label={themeMode === "light"  ? " dark Mode "  :  " light Mode "}
+            onClick={() => changeThemeMode(themeMode === "light" ? "dark" : "light")}
             sx={{ color: iconColor }}
             
           >
-            { darkMode  ? <LightMode /> :   <DarkMode/>}
+            { themeMode === "light"  ? <DarkMode/>:  <LightMode />  }
           </IconButton>
 
           <LanguageMenu />

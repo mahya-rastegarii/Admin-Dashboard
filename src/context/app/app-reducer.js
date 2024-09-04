@@ -8,11 +8,11 @@ const appReducer = (state, action) =>{
             }
         }
 
-       case 'DARK_THEME':{
+       case 'CHANGE_THEME_MODE':{
 
         return {
             ...state,
-            darkMode:action.payload,
+            themeMode:action.payload,
         }
        } 
        case 'CHANGE_THEME':{

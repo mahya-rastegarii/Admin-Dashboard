@@ -37,7 +37,7 @@ const MainLayout = () => {
     },
   }));
 
-  const { language, themeColor, mode, darkMode } = useAppContext();
+  const { language, themeColor, mode, themeMode } = useAppContext();
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -65,7 +65,7 @@ const MainLayout = () => {
 
       <Main
       
-        className={darkMode  ? "dark" : "light"}
+        className={themeMode === "dark"  ? "dark" : "light"}
       >
         <ModalProvider>
           <Outlet />
