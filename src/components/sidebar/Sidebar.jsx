@@ -98,15 +98,10 @@ const [active, setActive] = useState(false)
       "& .MuiDrawer-paper": closedMixin(theme),
     }),
 
-    "& .css-12i7wg6-MuiPaper-root-MuiDrawer-paper , .css-1ciwpa8":{
+    "& .css-12i7wg6-MuiPaper-root-MuiDrawer-paper ,  .css-18sg6k4-MuiPaper-root-MuiDrawer-paper , .css-1ciwpa8 , .css-1l8j5k8":{
       backgroundColor: bgColor,
       boxShadow: theme.shadows[2],
      },
-
-     " & .css-18sg6k4-MuiPaper-root-MuiDrawer-paper , .css-1ciwpa8": {
-      backgroundColor: bgColor,
-      boxShadow: theme.shadows[2],
-     }
   }));
 
  

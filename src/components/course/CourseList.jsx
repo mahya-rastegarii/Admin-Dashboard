@@ -253,6 +253,8 @@ const CourseList = ({
                 direction: "ltr",
                 display: "flex",
                 justifyContent:{ xs: 'center', md:language === "fa" ? 'flex-end' :'flex-start'},
+              
+               
                         
 
                 "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon , .css-1utq5rl": {
@@ -263,7 +265,8 @@ const CourseList = ({
                 color:typography,
                }
               }}
-              rowsPerPageOptions={[5, 10, 15]}
+              rowsPerPageOptions= {5}
+            
               count={dataValue.length}
               rowsPerPage={rowsPerPage}
               page={page}

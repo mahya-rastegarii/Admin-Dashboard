@@ -19,6 +19,7 @@ import { useNavigation } from "react-router-dom";
 import { useAppContext } from "../../context/app/app-context";
 import LoadComponent from "../Loading/LoadComponent";
 import TableContainers from "../table/TableContainers";
+import EmptyData from "../table/EmptyData";
 
 const UserList = ({ users, loading, usersValue }) => {
   const navigation = useNavigation();
@@ -47,17 +48,7 @@ const UserList = ({ users, loading, usersValue }) => {
     setPage(0);
   };
 
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: headerTableColor,
-      color: theme.palette.common.black,
-      borderTop: "1px solid  ",
-      borderColor: borderColor,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
+
 
   const headCells = [
     {
@@ -116,6 +107,12 @@ const UserList = ({ users, loading, usersValue }) => {
       ) : (
         
         <Box >
+            {
+            rowTable < 1 ? 
+             
+               <EmptyData/>
+              : 
+              <>
         <TableContainers headCells={headCells}>
               {rowTable.map((item) => (
                 <TableRow hover sx={{}} key={item.id}>
@@ -174,15 +171,18 @@ const UserList = ({ users, loading, usersValue }) => {
                      
                       
                        }}
-                      rowsPerPageOptions={[5, 10, 15]}
+                      rowsPerPageOptions= {10}
                  
                       // component="div"
                       count={dataValue.length}
                       rowsPerPage={rowsPerPage}
                       page={page}
                       onPageChange={handleChangePage}
-                      onRowsPerPageChange={handleChangeRowsPerPage}
+                      // onRowsPerPageChange={handleChangeRowsPerPage}
                     />
+
+ </>
+      }
               </Box>
            
          
