@@ -13,7 +13,7 @@ const MenuComponent = ({ children, anchorEl, handleCloseMenu }) => {
     <Menu
       sx={{
       
-        "& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper": {
+        "& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper, .css-pwxzbm": {
           backgroundColor: bgColor,
         
         },

@@ -48,7 +48,8 @@ const Courses = () => {
       .from("course")
       .select("*")
       .ilike("title", `%${lowerTitle}%`);
-
+      
+   console.log("data", data)
     setCoursesValue(data);
     setLoading(false);
   };

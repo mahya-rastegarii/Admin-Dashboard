@@ -1,4 +1,4 @@
-import { alpha, Box, Paper } from "@mui/material";
+import { alpha, Box, Paper, styled } from "@mui/material";
 import React, { Suspense, useState } from "react";
 import AddEvent from "../components/calendar/AddEvent";
 import { useModalContext } from "../context/modal/ModalContext";
@@ -79,6 +79,17 @@ const ContainerCalendar = () => {
   //     ? "purple"
   //     : "";
 
+  const BoxContainer = styled(Box)(({ theme }) => ({
+ 
+    "& .fc .fc-view-harness": {
+    
+   [theme.breakpoints.down('sm')]: {
+    height:"400px !important",
+   },
+  //  overflow: { xs: "scroll", md: "hidden" },
+  }
+
+  }));
   const insertEvent = async (newData) => {
     const response = supabase.from("event").insert(newData).select("*");
 
@@ -131,7 +142,7 @@ const ContainerCalendar = () => {
           marginX: { xs: 2, md: 4 },
         }}
       >
-        <Box
+        <BoxContainer
           // className={classNameTheme}
           sx={{
             
@@ -162,11 +173,11 @@ const ContainerCalendar = () => {
 
             "& .fc .fc-view-harness": {
               overflow: { xs: "scroll", md: "hidden" },
-              // height: {xs:"400px !important", sm:"600px !important", md:"1190px !important"},
+              // height: {xs:"400px !important", sm:"600px !important", md:"1190px !important",},
             },
 
             "& .fc .fc-view-harness-active > .fc-view": {
-              width: { xs: "600px", sm: "100%" },
+              width: { xs: "650px", sm: "100%" },
               // height:"400px",
               // overflow: "scroll",
             },
@@ -192,6 +203,7 @@ const ContainerCalendar = () => {
               // margin: 0,
               fontSize: {xs:'1.1em', sm:'1.5em', md:'1.75em'},
               marginX: { xs: 1, sm: 2, md: 3 },
+              textAlign:"center",
             },
             ".fc .fc-prev-button , .fc .fc-next-button": {
               backgroundColor: "transparent",
@@ -229,7 +241,7 @@ const ContainerCalendar = () => {
               )}
             </Await>
           </Suspense>
-        </Box>
+        </BoxContainer>
       </Box>
     </>
   );

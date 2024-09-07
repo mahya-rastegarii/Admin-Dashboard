@@ -155,7 +155,7 @@ const fetchNewUser = async () => {
     .from("users")
     .select("*")
     .order("date", { ascending: false })
-    .limit(7);
+    .limit(6);
   
   return data;
 };

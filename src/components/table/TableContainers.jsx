@@ -47,7 +47,7 @@ const TableContainers = ({   children, headCells, count }) => {
     
     return (
       
-            <TableContainer>
+            <TableContainer >
               <Table sx={{ padding: 0 }}>
                 <TableHead>
                   <TableRow>
@@ -71,10 +71,11 @@ const TableContainers = ({   children, headCells, count }) => {
                     ))}
                   </TableRow>
                 </TableHead>
-                <TableBody>
-
-                 { children }
+                <TableBody sx={{}}>
                
+            
+                 { children }
+                 
                 </TableBody>
                
               </Table>

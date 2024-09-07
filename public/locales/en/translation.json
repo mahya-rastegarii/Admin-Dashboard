@@ -69,6 +69,8 @@
       "titleModal" : "Remove Course",
       "text": "Remove this Course ?"
     }
+
+   
   },
  
   "search" : {
@@ -182,7 +184,9 @@
 
     "unhandledException": {
       "text": " Server IS Not Responding"
-    }
+    },
+
+    "empty": "No Data Found"
   }
 
 

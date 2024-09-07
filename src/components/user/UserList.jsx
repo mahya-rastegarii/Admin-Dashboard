@@ -6,15 +6,12 @@ import {
   Box,
   Stack,
   styled,
-  Table,
-  TableBody,
   TableCell,
   tableCellClasses,
- 
+
   TablePagination,
   TableRow,
-  TableSortLabel,
-  Typography,
+  Typography
 } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
@@ -32,6 +29,7 @@ const UserList = ({ users, loading, usersValue }) => {
 
   const borderColor = mode.palette.borderColor;
   const typography = mode.palette.typography;
+  const bgColor = mode.palette.boxBg;
   const headerTableColor = alpha(themeColor.palette.primary.light, 0.2);
 
   const [page, setPage] = useState(0);
@@ -117,7 +115,7 @@ const UserList = ({ users, loading, usersValue }) => {
         <LoadComponent />
       ) : (
         
-        <Box>
+        <Box >
         <TableContainers headCells={headCells}>
               {rowTable.map((item) => (
                 <TableRow hover sx={{}} key={item.id}>
@@ -161,11 +159,20 @@ const UserList = ({ users, loading, usersValue }) => {
               ))}
               </TableContainers>
               <TablePagination
-                      sx={{ border: "none", color: typography, direction: "ltr",display:'flex',
-                        justifyContent:{ xs: 'center', md:'flex-start'},
-                        "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
+                      sx={{ border: "none", color: typography, direction: "ltr", display:'flex',
+                        justifyContent:{ xs: 'center', md:language === "fa" ? 'flex-end' :'flex-start'},
+                        
+
+                        "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon , .css-1utq5rl": {
                           fill: typography,
                         },
+                       "& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper , .css-pwxzbm": {
+                        backgroundColor:bgColor,
+                        color:typography,
+                       },
+
+                     
+                      
                        }}
                       rowsPerPageOptions={[5, 10, 15]}
                  

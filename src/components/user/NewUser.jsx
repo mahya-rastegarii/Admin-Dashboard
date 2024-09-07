@@ -40,7 +40,8 @@ const NewUser = ({ newUser }) => {
               </ListItemAvatar>
               <Stack
                 width="100%"
-                direction={{ sx: "column", sm: "row" }}
+                alignItems= {{xs:"flex-start" , md:"center"}}
+                direction={{ xs: "column", sm: "row" }}
                 gap={1}
               >
                 <ListItemText

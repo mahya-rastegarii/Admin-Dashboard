@@ -8,12 +8,8 @@ import {
   IconButton,
   Stack,
   styled,
-  Table,
-  TableBody,
   TableCell,
   tableCellClasses,
-  
-  TableHead,
   TablePagination,
   TableRow,
   Typography,
@@ -25,6 +21,7 @@ import { useAppContext } from "../../context/app/app-context";
 import { useTranslation } from "react-i18next";
 import LoadComponent from "../Loading/LoadComponent";
 import TableContainers from "../table/TableContainers";
+import EmptyData from "../table/EmptyData";
 
 const CourseList = ({
   openModalDelete,
@@ -46,6 +43,7 @@ const CourseList = ({
 
   const headerTableColor = alpha(themeColor.palette.primary.light, 0.2);
   const borderColor = mode.palette.borderColor;
+  const bgColor = mode.palette.boxBg;
   const typography = mode.palette.typography;
 
   const handleChangePage = (event, newPage) => {
@@ -141,18 +139,32 @@ const CourseList = ({
       {loading ? (
         <LoadComponent />
       ) : (
-        <Box sx={{ width: "100%", overflow: "hidden" }}>
+        <Box
+          sx={{
+            width: "100%",
+            overflow: "hidden",
+             
+          }}
+        >
+
           
-              <TableContainers headCells={headCells }>
-                {rowTable.map((item) => (
+          {
+            rowTable < 1 ? 
+             
+               <EmptyData/>
+              : 
+              <>
+            <TableContainers headCells={headCells}>
+            
+              {rowTable.map((item) => (
                   <TableRow key={item.id}>
-                  
                     <TableCell sx={{ borderColor: borderColor }}>
                       <Stack
                         direction="row"
                         gap={2}
                         display="flex"
-                        alignItems="center " >
+                        alignItems="center "
+                      >
                         <img src={item.picture} width={120} height={80} />
                         {/* <Avatar
                       // sx={{ width:"35%"}}
@@ -227,33 +239,40 @@ const CourseList = ({
                         >
                           <Delete />
                         </IconButton>
-                     
                       </Stack>
                     </TableCell>
                   </TableRow>
                 ))}
-                </TableContainers>
-           
-            
-          <TablePagination
-            sx={{
-              border: "none",
-              color: typography,
-              direction: "ltr",
-              display: "flex",
-              justifyContent: { xs: "center", md: "flex-start" },
-              "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
-                fill: typography,
-              },
-            }}
-            rowsPerPageOptions={[5, 10, 15]}
-            
-            count={dataValue.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+              
+            </TableContainers>
+
+            <TablePagination
+              sx={{
+                border: "none",
+                color: typography,
+                direction: "ltr",
+                display: "flex",
+                justifyContent:{ xs: 'center', md:language === "fa" ? 'flex-end' :'flex-start'},
+                        
+
+                "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon , .css-1utq5rl": {
+                  fill: typography,
+                },
+               "& .css-pwxzbm": {
+                backgroundColor:bgColor,
+                color:typography,
+               }
+              }}
+              rowsPerPageOptions={[5, 10, 15]}
+              count={dataValue.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+        </>
+      }
+      
         </Box>
       )}
     </>

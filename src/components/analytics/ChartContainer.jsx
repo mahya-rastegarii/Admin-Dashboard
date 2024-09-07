@@ -26,7 +26,7 @@ const ChartContainer = ({icon, title, children}) => {
 
         sx={
           {
-            '& .css-1k2u9zb-MuiChartsAxis-root .MuiChartsAxis-line': {
+            '& .css-1k2u9zb-MuiChartsAxis-root .MuiChartsAxis-line , .css-34hspi .MuiChartsAxis-line': {
               stroke: typography
             }
           }
