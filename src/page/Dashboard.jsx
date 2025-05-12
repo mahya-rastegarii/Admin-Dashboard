@@ -1,11 +1,7 @@
 import { Favorite, People, PeopleAlt, School } from "@mui/icons-material";
-import { Box, Stack, styled } from "@mui/material";
-import {
-  LineChart,
-  lineElementClasses,
-  markElementClasses,
-} from "@mui/x-charts";
-import React, { Suspense, useState } from "react";
+import { Box, Stack } from "@mui/material";
+
+import  { Suspense } from "react";
 import { Await, defer, useLoaderData } from "react-router-dom";
 import DashboardBox from "../components/box/DashboardBox";
 import { supabase } from "../core/createClient";

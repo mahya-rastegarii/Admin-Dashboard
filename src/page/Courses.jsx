@@ -1,7 +1,7 @@
-import { Add } from "@mui/icons-material";
+import { Add, RestaurantMenu } from "@mui/icons-material";
 import { Box, Button, Paper, Stack } from "@mui/material";
 import _ from "lodash";
-import React, { Suspense, useState } from "react";
+import  { Suspense, useState } from "react";
 import { Await, defer, useLoaderData, useNavigate } from "react-router-dom";
 import AddCourse from "../components/course/AddCourse";
 import CourseList from "../components/course/CourseList";
@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import SearchBox from "../components/search/SearchBox";
 import FilterBox from "../components/table/filter/FilterBox";
 import { supabase } from "../core/createClient";
+
 
 const Courses = () => {
   const { courses } = useLoaderData();
@@ -48,9 +49,11 @@ const Courses = () => {
       .from("course")
       .select("*")
       .ilike("title", `%${lowerTitle}%`);
-      
-   console.log("data", data)
-    setCoursesValue(data);
+    
+
+        console.log("data", data)
+         setCoursesValue(data);
+    
     setLoading(false);
   };
 
@@ -70,8 +73,10 @@ const Courses = () => {
       .from("course")
       .select("*")
       .order("lastUpdate", { ascending: true });
+  
 
-    setCoursesValue(data);
+     setCoursesValue(data);
+   
     setLoading(false);
   };
 
@@ -108,32 +113,52 @@ const Courses = () => {
     const { data, error } = await supabase.storage
       .from("Images")
       .remove([courseData.slice(73)]);
+    if(error){
+      return false
+    } else{
 
-    console.log("response", data);
+      console.log("response", data);
+      return true;
+    }
+
   };
   const deleteCourse = async () => {
-    
+     
+    const toastId = toast.loading(t("promise.pendingDelete"));
+
     setOpen(false);
-    const response = supabase.from("course").delete().eq("id", CourseId);
-    deleteImageCourse();
-    toast.promise(response, {
-      pending: t("promise.pendingDelete"),
-      success: {
-        render() {
+    try{
+       
+      const deleteImage = deleteImageCourse();
+      if(deleteImage){
+        const {error} =await supabase.from("course").delete().eq("id", CourseId);
+        if(error){
+          throw error;
+        } else{
+          toast.update(toastId, {
+            render:t("promise.success"),
+            type: "success",
+            isLoading: false,
+            autoClose: 3000, 
+          });
           const url = new URL(window.location.href);
           navigate(url.pathname);
-          setCourseId(null);
-          setCourseData(null);
+        }
+      } else{
+        throw new Error(t("promise.error"));
+      }
+    } catch(err){
+      toast.update(toastId, {
+        render:  t("promise.error"),
+        type: "error",
+        isLoading: false,
+        autoClose: 5000, 
+      });
+    }
 
-          return t("promise.success");
-        },
-      },
-      error: {
-        render() {
-          return t("promise.error");
-        },
-      },
-    });
+     
+  
+          
     
 
   
@@ -142,24 +167,51 @@ const Courses = () => {
  
 
   const insertCourse = async (newCourse) => {
-    const response = supabase.from("course").insert(newCourse).select("*");
 
-    toast.promise(response, {
-      pending: t("promise.pending"),
-      success: {
-        render() {
-          const url = new URL(window.location.href);
-          navigate(url.pathname);
-         
-          return t("promise.success");
-        },
-      },
-      error: {
-        render() {
-          return t("promise.error");
-        },
-      },
+    const toastId = toast.loading(t("promise.pending"));
+   try{
+
+    const {data, error} =await supabase.from("course").insert(newCourse).select("*");
+    if(error){
+      throw error;
+    } 
+    else {
+      toast.update(toastId, {
+        render: t("promise.success"),
+        type: "success",
+        isLoading: false,
+        autoClose: 3000, 
+      });
+      const url = new URL(window.location.href);
+        navigate(url.pathname);
+      console.log("data", data)
+    }
+   }
+   catch(error){
+    toast.update(toastId, {
+      render: t("promise.error"),
+      type: "error",
+      isLoading: false,
+      autoClose: 5000, 
     });
+   }
+
+    // toast.promise(response, {
+    //   pending: t("promise.pending"),
+    //   success: {
+    //     render() {
+    //       const url = new URL(window.location.href);
+    //       navigate(url.pathname);
+         
+    //       return t("promise.success");
+    //     },
+    //   },
+    //   error: {
+    //     render() {
+    //       return t("promise.error");
+    //     },
+    //   },
+    // });
    
 
    
@@ -279,11 +331,12 @@ export async function courseLoader() {
 }
 
 const fetchCourse = async () => {
+
   let { data, error } = await supabase
     .from("course")
     .select("*")
     .order("lastUpdate", { ascending: false });
-
+ 
   return data;
 };
 

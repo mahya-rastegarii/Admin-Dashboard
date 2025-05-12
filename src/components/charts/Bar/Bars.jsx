@@ -25,9 +25,7 @@ const ChartColor=  themeColor.palette.primary.main;
       width={widthChart}
       height={heightChart}
       xAxis={[{ 
-        // colorMap:{
-        //   color: ChartColor
-        // },
+      
         data: xLable,
          scaleType: 'band',
           
@@ -35,8 +33,6 @@ const ChartColor=  themeColor.palette.primary.main;
       margin={marginChart}
       grid={{ horizontal: true }}
      
-      // layout ="horizontal"
-      // layout={layout ? "horizontal" : "vertical"}
     />
   )
 }

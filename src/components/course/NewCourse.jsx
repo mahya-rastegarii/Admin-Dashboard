@@ -72,11 +72,7 @@ const NewCourse = ({newCourse}) => {
                   alignItems="center "
                 >
                      <img  src={row.picture} width={80} height={40} />
-                  {/* <Avatar
-                    sx={{ width: 45 }}
-                    src={row.picture}
-                    variant="square"
-                  ></Avatar> */}
+                     
                   <Typography variant="body1" sx={{ color: typography }}>
                     {row.title}
                   </Typography>

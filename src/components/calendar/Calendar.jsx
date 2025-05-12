@@ -18,23 +18,12 @@ const Calendar = ({setDate, setRemove, setOpen, setModal, events, setDateToday})
     const CalendarEl = styled(FullCalendar)(({ theme }) => ({
 
     
-        // ".fc.fc-button-primary": {
-        //   backgroundColor: theme.palette.grey[200],
-        // },
-        // ".fc.fc-toolbar-title": {
-        //   display: "inline"
-        // }
-        // ".fc .fc-view-harness":{
-        //   overflow:"scroll",
-        // },
-        // ".fc-scrollgrid-sync-inner" :{
-        //   width:"35px",
-        // },
+      
       }));
   return (
    
  
-    <CalendarEl
+    <FullCalendar
    
  
     plugins={[dayGridPlugin, interactionPlugin]}
@@ -79,7 +68,7 @@ const Calendar = ({setDate, setRemove, setOpen, setModal, events, setDateToday})
         },
       },
     }}
-    // dateClick={ (info) =>  alert('clicked ' + info.dateStr)}
+   
 
     select={(info) => {
       {
@@ -89,7 +78,7 @@ const Calendar = ({setDate, setRemove, setOpen, setModal, events, setDateToday})
         setOpen(true);
       }
     }}
-    // weekends={false}/
+   
     eventColor="green"
     events={events}
   />

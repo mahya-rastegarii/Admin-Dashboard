@@ -95,60 +95,11 @@ const SortBox = ({ sortData }) => {
   }
 
 </MenuComponent>
-   
-
- 
-
-
-  
   
     </Box>
 
 
-/* <Box 
-  sx={{
-    // "& div , ul" :{
-    //   backgroundColor:boxBg
-    // }
-      // backgroundColor:boxBg,
-      // color:typography,
-    //   "& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper" : {
-    //     backgroundColor: boxBg ,
-  //   // } ,
-  //   "& .css-6hp17o-MuiList-root-MuiMenu-list" : {
-  //     backgroundColor: boxBg ,
-  // } 
-  }}>
- 
-      <Select
-      value={value}
-      size="small"
-      sx={{
-        color: typography,
-        backgroundColor: boxBg,
-        border:` 1px solid ${borderColor}`,
-        " & svg":
-        {
-          color: typography,
-        },
 
-     
-     
-      }}
-      onChange={handleChange}
-      displayEmpty
-      inputProps={{ "aria-label": "sort Table" }}
-    >
-        {menuItem.map((item, index) => (
-     
-          <MenuItem key={index}  value={item}>
-            {item}
-          </MenuItem>
-       
-        ))}
-    </Select> 
-    
-    </Box>  */
   );
 };
 

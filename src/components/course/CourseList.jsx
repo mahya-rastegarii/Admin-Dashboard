@@ -166,11 +166,7 @@ const CourseList = ({
                         alignItems="center "
                       >
                         <img src={item.picture} width={120} height={80} />
-                        {/* <Avatar
-                      // sx={{ width:"35%"}}
-                      src={item.pic}
-                      variant="square"
-                    ></Avatar> */}
+                      
                         <Typography
                           variant={{ xs: "body1", md: "h6" }}
                           sx={{ color: typography, fontWeight: "bold" }}

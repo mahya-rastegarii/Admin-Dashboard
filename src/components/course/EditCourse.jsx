@@ -145,7 +145,7 @@ const EditCourse = ({ courseData, editCourse }) => {
           }}
         >
           <Box
-            // role={undefined}
+           
             sx={{
               position: "relative",
               marginBottom: 3,
@@ -163,7 +163,7 @@ const EditCourse = ({ courseData, editCourse }) => {
               <TextField
                 sx={{
                   "& label": {
-                    // direction:"rtl"
+                   
                     right: language === "fa" && "20px",
                     transformOrigin:
                       language === "fa" ? "top right" : "top left",
@@ -176,10 +176,10 @@ const EditCourse = ({ courseData, editCourse }) => {
                 id="outlined-basic"
                 label={t("courses.modalCourse.courseNameLabel")}
                 type="text"
-                // color="secondary"
+              
                 variant="outlined"
                 size="small"
-                // defaultValue={title}
+    
               />
 
               {errors.title && errors.title.type === "required" && (
@@ -196,7 +196,7 @@ const EditCourse = ({ courseData, editCourse }) => {
               <TextField
                 sx={{
                   "& label": {
-                    // direction:"rtl"
+                   
                     right: language === "fa" && "20px",
                     transformOrigin:
                       language === "fa" ? "top right" : "top left",
@@ -209,10 +209,10 @@ const EditCourse = ({ courseData, editCourse }) => {
                 id="outlined-basic"
                 label={t("courses.modalCourse.teacherLabel")}
                 type="text"
-                // color="secondary"
+               
                 variant="outlined"
                 size="small"
-                // defaultValue={teacher}
+               
               />
 
               {errors.teacher && errors.teacher.type === "required" && (
@@ -228,7 +228,7 @@ const EditCourse = ({ courseData, editCourse }) => {
               <TextField
                 sx={{
                   "& label": {
-                    // direction:"rtl"
+                  
                     right: language === "fa" && "20px",
                     transformOrigin:
                       language === "fa" ? "top right" : "top left",
@@ -241,7 +241,7 @@ const EditCourse = ({ courseData, editCourse }) => {
                 id="outlined-basic"
                 label={t("courses.modalCourse.timeLabel")}
                 type="number"
-                // color="secondary"
+              
                 variant="outlined"
                 size="small"
                 InputProps={{
@@ -251,7 +251,7 @@ const EditCourse = ({ courseData, editCourse }) => {
                     </InputAdornment>
                   ),
                 }}
-                // defaultValue={time}
+              
               />
 
               {errors.time && errors.time.type === "required" && (

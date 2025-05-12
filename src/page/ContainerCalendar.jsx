@@ -42,26 +42,37 @@ const ContainerCalendar = () => {
 
   const removeHandler = async () => {
    
+    const toastId = toast.loading(t("promise.pending"));
+
     setOpen(false);
-    const response = supabase.from("event").delete().eq("id", remove);
 
-    toast.promise(response, {
-      pending: t("promise.pendingDelete"),
-      success: {
-        render() {
-          const url = new URL(window.location.href);
-          navigate(url.pathname);
+    try{
 
-          return t("promise.success");
-        },
-      },
-      error: {
-        render() {
-          return t("promise.error");
-        },
-      },
-    });
-   
+      const {data, error} = await supabase.from("event").delete().eq("id", remove);
+      if(error){
+        throw error;
+      } else{
+        console.log("CalendarDataDelete", data)
+        toast.update(toastId, {
+                    render:t("promise.success"),
+                    type: "success",
+                    isLoading: false,
+                    autoClose: 3000, 
+                  });
+
+                  const url = new URL(window.location.href);
+                  navigate(url.pathname);
+                
+      }
+    } catch(err){
+      toast.update(toastId, {
+        render:  t("promise.error"),
+        type: "error",
+        isLoading: false,
+        autoClose: 5000, 
+      });
+    }
+
   };
 
   // const classNameTheme =
@@ -91,24 +102,35 @@ const ContainerCalendar = () => {
 
   }));
   const insertEvent = async (newData) => {
-    const response = supabase.from("event").insert(newData).select("*");
 
-    toast.promise(response, {
-      pending: t("promise.pending"),
-      success: {
-        render() {
-          const url = new URL(window.location.href);
-          navigate(url.pathname);
+    const toastId = toast.loading(t("promise.pending"));
 
-          return t("promise.success");
-        },
-      },
-      error: {
-        render() {
-          return t("promise.error");
-        },
-      },
-    });
+    try{
+
+      const {data, error} =await supabase.from("event").insert(newData).select("*");
+      if(error){
+        throw error;
+      }else{
+        console.log("CalendarData", data)
+        toast.update(toastId, {
+                    render:t("promise.success"),
+                    type: "success",
+                    isLoading: false,
+                    autoClose: 3000, 
+                  });
+
+                  const url = new URL(window.location.href);
+                  navigate(url.pathname);
+                }
+    } catch(err){
+      toast.update(toastId, {
+        render:  t("promise.error"),
+        type: "error",
+        isLoading: false,
+        autoClose: 5000, 
+      });
+    }
+
   
 
    
