@@ -2,13 +2,15 @@
 
 ## 📝 Description | توضیحات
 
-A responsive, multilingual admin dashboard with light and dark mode themes.  
-Includes a dynamic calendar for managing events and a course management page with full CRUD operations.
+A responsive, multilingual admin dashboard with light and dark themes.
+- Includes a dynamic calendar for managing events
+- Features a course management page with full CRUD operations
 
 ---
 
 داشبورد مدیریتی رسپانسیو، دوزبانه، با قابلیت تغییر تم به حالت روشن و تاریک.  
-دارای تقویم برای مدیریت رویدادها و صفحه مدیریت دوره‌ها با قابلیت افزودن، ویرایش و حذف.
+- دارای تقویم برای مدیریت رویدادها
+- دارای صفحه مدیریت دوره‌ها با قابلیت های کامل افزودن، ویرایش و حذف و مشاهده اطلاعات
 
 ## 🔗 Live Demo | نسخه آنلاین
 👉 [admin-dashboard-alpha-five-14.vercel.app](https://admin-dashboard-alpha-five-14.vercel.app)
@@ -79,4 +81,4 @@ npm run dev
 💼 [LinkedIn](https://www.linkedin.com/in/mahya-rastegarii)
 
 
-<p align="center"> <img src="https://img.shields.io/badge/react-%2361DAFB.svg?style=for-the-badge&logo=react&logoColor=white" /> <img src="https://img.shields.io/badge/mui-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white" /> <img src="https://img.shields.io/badge/i18next-26A69A?style=for-the-badge&logo=translate&logoColor=white" /> <img src="https://img.shields.io/badge/supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white" /> <img src="https://img.shields.io/badge/fullcalendar-6666FF?style=for-the-badge&logo=calendar&logoColor=white" /> <img src="https://img.shields.io/badge/react--hook--form-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white" /> </p> ```
+<p align="center"> <img src="https://img.shields.io/badge/react-%2361DAFB.svg?style=for-the-badge&logo=react&logoColor=white" /> <img src="https://img.shields.io/badge/mui-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white" /> <img src="https://img.shields.io/badge/i18next-26A69A?style=for-the-badge&logo=translate&logoColor=white" /> <img src="https://img.shields.io/badge/supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white" /> <img src="https://img.shields.io/badge/fullcalendar-6666FF?style=for-the-badge&logo=calendar&logoColor=white" /> <img src="https://img.shields.io/badge/react--hook--form-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white" /> </p> 
