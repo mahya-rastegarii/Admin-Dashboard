@@ -16,15 +16,16 @@ A responsive, multilingual admin dashboard with light and dark themes.
 👉 [admin-dashboard-alpha-five-14.vercel.app](https://admin-dashboard-alpha-five-14.vercel.app)
 
 ## 🚀 Tech Stack | تکنولوژی‌ها
-- ⚛️ React
-- 🎨 MUI
-- 🌐 i18next
-- 🗄️ Supabase
-- 📅 FullCalendar
-- 🧩 Lodash
-- ✅ React Hook Form
-- 🔔 React Toastify
-- 🧠 Context API
+- React
+- MUI
+- i18next
+- Supabase
+- FullCalendar
+- Lodash
+- React Router DOM
+- React Hook Form
+- React Toastify
+- Context API
 
 ## ⚙️ Features | امکانات
 - ✅ Light / Dark Theme toggle  
