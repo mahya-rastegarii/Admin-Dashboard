@@ -11,21 +11,21 @@ A responsive, multilingual admin dashboard with light and dark themes.
 داشبورد مدیریتی رسپانسیو، دوزبانه، با قابلیت تغییر تم به حالت روشن و تاریک.  
 - دارای تقویم برای مدیریت رویدادها
 - دارای صفحه مدیریت دوره‌ها با قابلیت های کامل افزودن، ویرایش و حذف و مشاهده اطلاعات
-
 ## 📸 Screenshots
 
 ### 🖥️ Desktop Version | نسخه دسکتاپ  
-### 🖥️ Dashboard 
-![Dashboard](public/README-Pic/desktop-screen-dashboard.png)
 
-### 📅 Calendar
-![Calendar](public/README-Pic/desktop-screen-calendar.png)
+### 🖥️ Dashboard  
+<img src="public/README-Pic/desktop-screen-dashboard.png" width="100%" alt="Dashboard" />
 
-### 📚 Course Management
-![Courses](public/README-Pic/desktop-screen-course.png)
+### 📅 Calendar  
+<img src="public/README-Pic/desktop-screen-calendar.png" width="100%" alt="Calendar" />
 
-### 📱 Mobile Version | نسخه موبایل
-![Dashboard](public/README-Pic/mobile-screen.png)
+### 📚 Course Management  
+<img src="public/README-Pic/desktop-screen-course.png" width="100%" alt="Courses" />
+
+### 📱 Mobile Version | نسخه موبایل  
+<img src="public/README-Pic/mobile-screen.png" width="60%" alt="Mobile version" />
 
 
 ## 🔗 Live Demo | نسخه آنلاین
