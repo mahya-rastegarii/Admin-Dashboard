@@ -15,7 +15,7 @@ A responsive, multilingual admin dashboard with light and dark themes.
 ## 📸 Screenshots
 
 ### 🖥️ Desktop Version | نسخه دسکتاپ  
-### 🖥️ Dashboard (Light Mode)
+### 🖥️ Dashboard 
 ![Dashboard](public/README-Pic/desktop-screen-dashboard.png)
 
 ### 📅 Calendar
@@ -25,7 +25,7 @@ A responsive, multilingual admin dashboard with light and dark themes.
 ![Courses](public/README-Pic/desktop-screen-course.png)
 
 ### 📱 Mobile Version | نسخه موبایل
-![Dashboard](./public/screenshots/dashboard-dark.png)
+![Dashboard](public/README-Pic/mobile-screen.png)
 
 
 ## 🔗 Live Demo | نسخه آنلاین
