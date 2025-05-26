@@ -12,6 +12,22 @@ A responsive, multilingual admin dashboard with light and dark themes.
 - دارای تقویم برای مدیریت رویدادها
 - دارای صفحه مدیریت دوره‌ها با قابلیت های کامل افزودن، ویرایش و حذف و مشاهده اطلاعات
 
+## 📸 Screenshots
+
+### 🖥️ Desktop Version | نسخه دسکتاپ  
+### 🖥️ Dashboard (Light Mode)
+![Dashboard](public/README-Pic/desktop-screen-dashboard.png)
+
+### 📅 Calendar
+![Calendar](public/README-Pic/desktop-screen-calendar.png)
+
+### 📚 Course Management
+![Courses](public/README-Pic/desktop-screen-course.png)
+
+### 📱 Mobile Version | نسخه موبایل
+![Dashboard](./public/screenshots/dashboard-dark.png)
+
+
 ## 🔗 Live Demo | نسخه آنلاین
 👉 [admin-dashboard-alpha-five-14.vercel.app](https://admin-dashboard-alpha-five-14.vercel.app)
 
