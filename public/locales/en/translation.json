@@ -170,7 +170,8 @@
       "pending": "Please wait...",
       "pendingDelete": "deleting ...",
       "success" : "successful",
-      "error": "please try again"
+      "error": "please try again",
+      "info": "Default courses cannot be changed or deleted."
     },
     
     "cancelBtn":"Cancel",
