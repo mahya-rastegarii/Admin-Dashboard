@@ -123,31 +123,39 @@ const Courses = () => {
 
   };
 
-   const checkDefaultCourse = async () => {
+    const checkDefaultCourse = async () => {
 
-
-      const { data } = await supabase
+    const { data, error } = await supabase
     .from("course")
     .select("is_default")
     .eq("id", CourseId)
     .single();
 
-  if (data?.is_default) {
-    toast.info("promise.info");
-    return;
+      if (error) {
+    throw error;
   }
 
-  };
+  return !!data?.is_default;
+  
+};
+
   
   const deleteCourse = async () => {
      
+ 
+    try{
+        const isDefault = await checkDefaultCourse();
+
+    if (isDefault) {
+      toast.info(t("promise.info"));
+      return;
+    }
+      
     const toastId = toast.loading(t("promise.pendingDelete"));
 
     setOpen(false);
-    await checkDefaultCourse();
-    try{
-       
-      const deleteImage = deleteImageCourse();
+      
+    const deleteImage = deleteImageCourse();
       if(deleteImage){
         const {error} =await supabase.from("course").delete().eq("id", CourseId);
         if(error){
@@ -236,8 +244,16 @@ const Courses = () => {
   };
 
   const editCourse = async (newData) => {
+
+    const isDefault = await checkDefaultCourse();
+
+    if (isDefault) {
+      toast.info(t("promise.info"));
+      return;
+    }
+    
     setOpen(false);
-    await checkDefaultCourse();
+    
     const response = supabase
       .from("course")
       .update(newData)
